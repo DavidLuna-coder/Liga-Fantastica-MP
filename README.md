@@ -1,2 +1,2 @@
-# Liga-Fant-stica-MP
-Proyecto universitario de Liga Fantastica
+# Liga-Fantástica-MP
+Proyecto universitario de Liga Fantástica
