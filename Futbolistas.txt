@@ -1,0 +1,220 @@
+01-01-Thibaut Courtois-45-0
+02-01-Andriy Lunin-45-0
+03-01-Diego Altube-45-0
+04-01-Luis Lopez-45-0
+05-01-Lucas Cañizares-45-0
+06-01-Daniel Carvajal-45-0
+07-01-Eder Militao-45-0
+08-01-Sergio Ramos-45-0
+09-01-Raphael Varane-45-0
+10-01-Nacho-45-0
+11-01-Marcelo-45-0
+01-02-MarcAndre ter Stegen-45-0
+02-02-Neto-45-0
+03-02-Iñaki Peña-45-0
+04-02-Arnau Tenas-45-0
+05-02-Sergiño Dest-45-0
+06-02-Gerard Pique-45-0
+07-02-Ronald Araujo-45-0
+08-02-Lionel Messi-45-0
+09-02-Jordi Alba-45-0
+10-02-Sergi Roberto-45-0
+11-02-Samuel Umtiti-45-0
+01-03-Ivo Grbic-45-0
+02-03-Jan Oblak-45-0
+03-03-Miguel San Roman-45-0
+04-03-Jose Gimenez-45-0
+05-03-Renan Lodi-45-0
+06-03-Stefan Savic-45-0
+07-03-Felipe-45-0
+08-03-Mario Hermoso-45-0
+09-03-Kieran Trippier-45-0
+10-03-Luis Suarez-45-0
+11-03-Alvaro Garcia-45-0
+01-04-Tomas Vaclik-45-0
+02-04-Yassine Bounou-45-0
+03-04-Adrian Gonzalez-45-0
+04-04-Javi Diaz-45-0
+05-04-Alfonso Pastor-45-0
+06-04-Joris Gnagnon-45-0
+07-04-Sergi Gomez-45-0
+08-04-Karim Rekik-45-0
+09-04-Jules Kounde-45-0
+10-04-Jesus Navas-45-0
+11-04-Aleix Vidal-45-0
+01-05-Alex Remiro-45-0
+02-05-Miguel Angel Moya-45-0
+03-05-Unai Marrero-45-0
+04-05-Gaizka Ayesa-45-0
+05-05-Joseba Zaldua-45-0
+06-05-Aritz Elustondo-45-0
+07-05-Aihen Muñoz-45-0
+08-05-Modibo Sagnan-45-0
+09-05-Andoni Gorosabel-45-0
+10-05-Nacho Montreal-45-0
+11-05-Robin Le Normand-45-0
+01-06-Joel Robles-45-0
+02-06-Dani Martin-45-0
+03-06-Claudio Bravo-45-0
+04-06-Daniel Rebollo-45-0
+05-06-Carlos Marin-45-0
+06-06-Martin Montoya-45-0
+07-06-Marc Bartra-45-0
+08-06-Victor Ruiz-45-0
+09-06-Sidnei-45-0
+10-06-Alex Moreno-45-0
+11-06-Emerson-45-0
+01-07-Sergio Asenjo-45-0
+02-07-Geronimo Rulli-45-0
+03-07-Filip Jorgensen-45-0
+04-07-Mario Gaspar-45-0
+05-07-Raul Albiol-45-0
+06-07-Pau Torres-45-0
+07-07-Ramiro Funes Mori-45-0
+08-07-Juan Foyth-45-0
+09-07-Pervis Estupiñan-45-0
+10-07-Alberto Moreno-45-0
+11-07-Jaume Costa-45-0
+01-08-Ivan Villar-45-0
+02-08-Ruben Blanco-45-0
+03-08-Sergio Alvarez-45-0
+04-08-Iago Dominguez-45-0
+05-08-Raul Blanco-45-0
+06-08-Alvaro Fernandez-45-0
+07-08-Hugo Mallo-45-0
+08-08-David Costas-45-0
+09-08-Nestor Araujo-45-0
+10-08-Jorge Saenz-45-0
+11-08-David Junca-45-0
+01-09-Ivan Villar-45-0
+02-09-Rui Silva-45-0
+03-09-Aaron Escandell-45-0
+04-09-Arnau Fabrega-45-0
+05-09-Andorinha-45-0
+06-09-Angel Jimenez-45-0
+07-09-Rafael Romero-45-0
+08-09-Dimitri Foulquier-45-0
+09-09-Nehuen Perez-45-0
+10-09-German Sanchez-45-0
+11-09-Carlos Neva-45-0
+01-10-Aitor Fernandez-45-0
+02-10-Daniel Cardenas-45-0
+03-10-Petr Kudakovskiy-45-0
+04-10-Son-45-0
+05-10-Toño-45-0
+06-10-Rober Pier-45-0
+07-10-Oscar Duarte-45-0
+08-10-Ruben Vezo-45-0
+09-10-Sergio Postigo-45-0
+10-10-Carlos Clerc-45-0
+11-10-Jorge Miramon-45-0
+01-11-Unai Simon-45-0
+02-11-Jokin Ezkieta-45-0
+03-11-Iago Herrerin-45-0
+04-11-Unai Nuñez-45-0
+05-11-Iñigo Martinez-45-0
+06-11-Yeray Alvarez-45-0
+07-11-Iñigo Lekue-45-0
+08-11-Yuri Berchiche-45-0
+09-11-Oscar De Marcos-45-0
+10-11-Ander Capa-45-0
+11-11-Peru Nolaskoain-45-0
+01-12-Jaume Domenech-45-0
+02-12-Jasper Cillessen-45-0
+03-12-Cristian Rivero-45-0
+04-12-Unai Etxebarria-45-0
+05-12-Thierry Correia-45-0
+06-12-Toni Lato-45-0
+07-12-Eliaquim Mangala-45-0
+08-12-Gabriel Paulista-45-0
+09-12-Ferro-45-0
+10-12-Mouctar Diakhaby-45-0
+11-12-Jose Gaya-45-0
+01-13-Sergio Herrera-45-0
+02-13-Ruben Martinez-45-0
+03-13-Juan Perez-45-0
+04-13-Iñaki Alvarez-45-0
+05-13-Ivan Martinez-45-0
+06-13-Nacho Vidal-45-0
+07-13-Juan Cruz-45-0
+08-13-Unai Garcia-45-0
+09-13-David Garcia-45-0
+10-13-Oier Sanjurjo-45-0
+11-13-Facundo Roncaglia-45-0
+01-14-Jeremias Lendesma-45-0
+02-14-David Gil-45-0
+03-14-Juan Flere-45-0
+04-14-Juanjo Garrancho-45-0
+05-14-Fali-45-0
+06-14-Marcos Mauro-45-0
+07-14-Carlos Akapo-45-0
+08-14-Juan Cala-45-0
+09-14-Pedro Alcala-45-0
+10-14-Iza-45-0
+11-14-Alfonso Espino-45-0
+01-15-Ruben Yañez-45-0
+02-15-David Soria-45-0
+03-15-Djene Dakonam-45-0
+04-15-Erick Cabaco-45-0
+05-15-Xabier Etxeita-45-0
+06-15-Chema Rodriguez-45-0
+07-15-AllanRomeo Nyom-45-0
+08-15-Mathias Olivera-45-0
+09-15-Sofian Chakla-45-0
+10-15-Damian Suarez-45-0
+11-15-Juan Iglesias-45-0
+01-16-Ruben Yañez-45-0
+02-16-Ruben Yañez-45-0
+03-16-Ruben Yañez-45-0
+04-16-Ruben Yañez-45-0
+05-16-Ruben Yañez-45-0
+06-16-Ruben Yañez-45-0
+07-16-Ruben Yañez-45-0
+08-16-Ruben Yañez-45-0
+09-16-Ruben Yañez-45-0
+10-16-Ruben Yañez-45-0
+11-16-Ruben Yañez-45-0
+01-17-Paulo Gazzaniga-45-0
+02-17-Edgar Badia-45-0
+03-17-Luis Castillo-45-0
+04-17-Lluis Andreu-45-0
+05-17-Diego Gonzalez-45-0
+06-17-Gonzalo Verdu-45-0
+07-17-Dani Calvo-45-0
+08-17-Helibelton Palacios-45-0
+09-17-Antonio Barragan-45-0
+10-17-Cifu-45-0
+11-17-Josema-45-0
+01-18-Marko Dmitrovic-45-0
+02-18-Yoel Rodriguez-45-0
+03-18-Jon Mikel Magunagoitia-45-0
+04-18-Esteban Burgos-45-0
+05-18-Pedro Bigas-45-0
+06-18-Paulo Oliveira-45-0
+07-18-Rafa Soares-45-0
+08-18-Cote-45-0
+09-18-Rober Correa-45-0
+10-18-Anaitz Arbilla-45-0
+11-18-Kevin Rodrigues-45-0
+01-19-Fernando Pacheco-45-0
+02-19-Antonio Sivera-45-0
+03-19-Aritz Castro-45-0
+04-19-Tachi-45-0
+05-19-Ruben Duarte-45-0
+06-19-Rodrigo Ely-45-0
+07-19-Victor Laguardia-45-0
+08-19-Martin Aguirregabiria-45-0
+09-19-Florian Lejeune-45-0
+10-19-Ximo Navarro-45-0
+11-19-Javier Lopez-45-0
+01-20-Alvaro Fernandez-45-0
+02-20-Andres Fernandez-45-0
+03-20-Antonio Valera-45-0
+04-20-Javi Gasca-45-0
+05-20-Pablo Maffeo-45-0
+06-20-Pablo Insua-45-0
+07-20-Javi Galan-45-0
+08-20-Jorge Pulido-45-0
+09-20-Luisinho-45-0
+10-20-Dimitrios Siovas-45-0
+11-20-Pedro Lopez-45-0

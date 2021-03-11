@@ -1,0 +1,20 @@
+01-Real Madrid
+02-Barcelona
+03-Atletico de Madrid
+04-Sevilla
+05-R.Sociedad
+06-Betis
+07-Villareal
+08-Celta
+09-Granada
+10-Levante
+11-Athletic de Bilbao
+12-Valencia
+13-Osasuna
+14-Cadiz
+15-Getafe
+16-Valladolid
+17-Elche
+18-Eibar
+19-Alaves
+20-Huesca
