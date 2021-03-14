@@ -53,9 +53,9 @@ void vaciar (char *);
 void copiar (char*, int t);
 
 int main(){
+	int pruebazo;
     equipo equipos[20];
     cargarEquipos (equipos);
-    printf ("hola ;D");
     return 0;
 }
 
@@ -96,7 +96,7 @@ void cargarEquipos(equipo equipos[]){
         equipos[i].id = atoi(temporal);
         vaciar(temporal);
         aux = '0';
-        for (int k=0; aux !='\n'; k++){
+        for (int k=0; aux !='\n'&&!feof(f); k++){
             aux = fgetc(f);
             if(aux != '\n'){
                 temporal[k] = aux;
