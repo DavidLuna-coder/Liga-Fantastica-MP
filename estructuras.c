@@ -48,48 +48,64 @@ typedef struct{
 }usuario;
 
 
-void cargarEquipos(equipo *);
-void cargarJugadores(jugador *);
+void cargarEquipos(FILE *,equipo *);
+void cargarJugadores(FILE *,jugador *);
 void vaciar (char *);
 void copiar (char*, int t);
-int recorrerFichero (FILE *,char*);
+int contadorLineas(FILE *);
+int recorrerFichero (FILE *,char*);//No se para que coño sirve esta funcion pero yo la dejo por si acaso ;D
 
 int main(){
+    int i,cont1,cont2;
+    FILE *FUTBOLISTASs;
+    FUTBOLISTASs=fopen("Futbolistas.txt","r");
+    if(FUTBOLISTASs==NULL){
+	    printf("No se pudo abrir");
+	    exit (1);
+    }
+    FILE *ff;
+    ff = fopen("equipos.txt","r");
+    if(ff == NULL){
+    printf ("Ha ocurrido un error en la carga de equipos\n");
+    exit(1);
+    } 
     equipo *equipos;
     jugador *jugadores;
-    cargarEquipos (equipos);
+    cont1=contadorLineas(ff);//Cuenta el numero de lineas del fichero equipos.txt
+    rewind(ff); //Rebobina el fichero
+   // Reservamos memoria del vector de estructuras en funcion de las filas
+    equipos = (equipo *)malloc(cont1*sizeof(equipo));
+    if (equipos == NULL){
+        printf("Error en la reserva de memoria en la carga de equipos\n");
+        exit(1);
+    }
+    cont2=contadorLineas(FUTBOLISTASs);//cuenta el numero de lineas del fichero futbolistas.txt
+    jugadores = (jugador *)malloc(cont2*sizeof(jugador));//Reserva memoria para el vector dinamico respectivo a los datos de los jugadores
+    rewind(FUTBOLISTASs); //Rebobina el fichero
+    cargarEquipos (ff,equipos);
     printf ("CARGADO EQUIPOS \n");
-    cargarJugadores (jugadores);
+    cargarJugadores (FUTBOLISTASs,jugadores);
     printf ("JUGADORES CARGADOS \n");
+    printf("Lista:\n");//PREVIA DEL TEST
+    for(i=0;i<cont2;i++){//IMPORTANTE!! Esto no es más que un test para comprobar que los datos estan bien cargados IMPORTANTE!!
+	    printf("Jugador:%i-%i-%s-%i-%i\n",jugadores[i].id,jugadores[i].equipo,jugadores[i].nombre,jugadores[i].precio,jugadores[i].valoracion);
+    }
+    for(i=0;i<cont1;i++){//IMPORTANTE!! Esto no es más que un test para comprobar que los datos esten bien cargados IMPORTANTE!!
+	    printf("Equipos:%i-%s\n",equipos[i].id,equipos[i].nombre);
+    }
+    fclose(ff);
+    fclose(FUTBOLISTASs);
     return 0;
 }
 
 
 
 //Carga los datos del fichero equipos.txt en la estructura equipo
-void cargarEquipos(equipo *equipos){
-    FILE *f;
+void cargarEquipos(FILE *f,equipo *equipos){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
     char aux;
     int cont = 0;
-    f = fopen("equipos.txt","r");
-    if(f == NULL){
-    printf ("Ha ocurrido un error en la carga de equipos\n");
-    exit(1);
-    } 
 
-    while (!feof(f)) //Cuenta las líneas del fichero
-    {
-        fgets(temporal,50,f);
-        cont++;
-    }
-    rewind(f); //Rebobina el fichero
-   // Reservamos memoria del vector de estructuras en funcion de las filas
-    equipos = (equipo *)malloc(cont*sizeof(equipo));
-    if (equipos == NULL){
-        printf("Error en la reserva de memoria en la carga de equipos\n");
-        exit(1);
-    }
     
     //Recorre todo el fichero
    for(int i=0; !feof(f) ;i++){
@@ -115,37 +131,16 @@ void cargarEquipos(equipo *equipos){
         //Copia el nombre en la estructura
         strcpy (equipos[i].nombre,temporal);
     }
-
-    fclose(f);
 }
 //Carga los datos del fichero futbolista en la estructura jugadores.
 
-void cargarJugadores (jugador *jugadores){
-    FILE *FUTBOLISTAS;
+void cargarJugadores (FILE *FUTBOLISTAS,jugador *jugadores){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
     char aux;
     int cont = 0;
     int i,j;
-    FUTBOLISTAS = fopen("Futbolistas.txt","r");
-    if(FUTBOLISTAS == NULL){
-    printf ("Ha ocurrido un error en la carga de equipos\n");
-    exit(1);
-    } 
-    
-    
-    while (!feof(FUTBOLISTAS)) //Cuenta las líneas del fichero
-    {
-        fgets(temporal,50,FUTBOLISTAS);
-        cont++;
-    }
-    rewind(FUTBOLISTAS); //Rebobina el fichero
+										printf("TestJugadores");
 
-   // Reservamos memoria del vector de estructuras en funcion de las filas
-    jugadores = (jugador *)malloc(cont*sizeof(jugador));
-    if (jugadores == NULL){
-        printf("Error en la reserva de memoria en la carga de jugadores\n");
-        exit(1);
-    }
     
     //Recorre todo el fichero
    for(i=0;!feof(FUTBOLISTAS) ;i++){
@@ -204,8 +199,6 @@ void cargarJugadores (jugador *jugadores){
         jugadores[i].valoracion = atoi(temporal);
         vaciar (temporal);
     }
-
-    fclose(FUTBOLISTAS);
 }
 
 // Vacia la cadena de caracteres donde se almacenaremos los datos antes te volcarlos en la estructura
@@ -217,4 +210,12 @@ void vaciar (char temp[]){
 
 }
 
-
+int contadorLineas(FILE *FICHERO){
+	int contador=0;
+	char temp[50];
+	while(!feof(FICHERO)){
+		fgets(temp,50,FICHERO);
+		contador++;
+	}
+	return contador;
+}
