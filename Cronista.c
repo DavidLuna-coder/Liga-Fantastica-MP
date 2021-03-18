@@ -3,7 +3,7 @@
 //void cronista(jugador *);
 void lista(jugador *);
 void valorar (jugador *);
-//prueba del cambio
+
 
 void cronista(jugador *jugadores){
 int elec,res;
