@@ -52,8 +52,12 @@ void valorar (jugador *jugadores){
 
     for(i=0;i<=100 || find==0;i++){
         if(jugadores[i].id==id){
-            printf("/n introduzca una valoracion %s: ",jugadores[i].nombre);
+            printf("/n introduzca una valoracion entre 0-10 para %s: ",jugadores[i].nombre);
             scanf("%i",&val);
+            while(val<0 || val>10){
+                printf("introduce un valor entre 0-10\n");
+                scanf("%i",&val);
+            }
             jugadores[i].valoracion=val;
             find=1;
         }
