@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #ifndef _Carga
 #define _Carga
 
@@ -51,8 +54,8 @@ jugador *jugadores;
 FILE *EQUIPOS;
 FILE *FUTBOLISTAS;
 
-void cargarEquipos(equipo *);
-void cargarJugadores(jugador *);
+void cargarEquipos();
+void cargarJugadores ();
 void vaciar (char *);
 int contadorLineas(FILE *);
 

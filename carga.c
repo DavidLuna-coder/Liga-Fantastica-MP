@@ -1,9 +1,10 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include "carga.h"
 
 //Carga los datos del fichero equipos.txt en la estructura equipo
-void cargarEquipos(equipo *equipos){
+void cargarEquipos(){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
     char aux;
     int cont = 0;
@@ -15,7 +16,7 @@ void cargarEquipos(equipo *equipos){
     } 
     cont = contadorLineas(EQUIPOS);
     rewind (EQUIPOS);
-
+    equipos = (equipo*)malloc(cont*(sizeof(equipo)));
    for(int i=0; !feof(EQUIPOS) ;i++){
        vaciar(temporal);
         aux = '0';
@@ -38,12 +39,14 @@ void cargarEquipos(equipo *equipos){
         }
         //Copia el nombre en la estructura
         strcpy (equipos[i].nombre,temporal);
+
+        
     }
     fclose(EQUIPOS);
 }
 //Carga los datos del fichero futbolista en la estructura jugadores.
 
-void cargarJugadores (jugador *jugadores){
+void cargarJugadores (){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
     char aux;
     int cont = 0;
@@ -56,7 +59,7 @@ void cargarJugadores (jugador *jugadores){
     } 
 
     cont = contadorLineas(FUTBOLISTAS);
-    jugadores = (int *)malloc(cont*sizeof(jugador));
+    jugadores = (jugador *)malloc(cont*sizeof(jugador));
     rewind (FUTBOLISTAS);
     for(i=0;!feof(FUTBOLISTAS);i++){
         vaciar(temporal);
