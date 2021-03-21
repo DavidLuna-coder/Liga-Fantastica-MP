@@ -49,13 +49,18 @@ typedef struct{
     plantilla *plantillas;
 }usuario;
 
+int numeroEquipos;
+int numeroJugadores;
+configuracion config;
 equipo *equipos;
 jugador *jugadores;
 FILE *EQUIPOS;
 FILE *FUTBOLISTAS;
+FILE *CONFIGURACION;
 
 void cargarEquipos();
 void cargarJugadores ();
+void cargarConfiguracion();
 void vaciar (char *);
 int contadorLineas(FILE *);
 

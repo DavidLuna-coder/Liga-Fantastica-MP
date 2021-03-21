@@ -7,20 +7,19 @@
 void cargarEquipos(){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
     char aux;
-    int cont = 0;
-    
+    int i,j,k;
     EQUIPOS = fopen("Equipos.txt","r");
     if(EQUIPOS == NULL){
     printf ("Ha ocurrido un error en la carga de equipos\n");
     exit(1);
     } 
-    cont = contadorLineas(EQUIPOS);
+    numeroEquipos = contadorLineas(EQUIPOS);
     rewind (EQUIPOS);
-    equipos = (equipo*)malloc(cont*(sizeof(equipo)));
-   for(int i=0; !feof(EQUIPOS) ;i++){
+    equipos = (equipo*)malloc(numeroEquipos*(sizeof(equipo)));
+   for(i=0; !feof(EQUIPOS) ;i++){
        vaciar(temporal);
         aux = '0';
-        for (int j = 0; aux!= '-'&& !feof(EQUIPOS);j++){ //Cuando encuentra un guión  almacena el texto previo de la linea en temporal
+        for ( j = 0; aux!= '-'&& !feof(EQUIPOS);j++){ //Cuando encuentra un guión  almacena el texto previo de la linea en temporal
             aux = fgetc(EQUIPOS);
             if(aux!='-'){
                 temporal[j]= aux;
@@ -31,10 +30,10 @@ void cargarEquipos(){
         aux = '0';
 
         //Cada vez que encuentra un salto de línea copia el texto anterior en temporal
-        for (int k=0; aux !='\n'&&!feof(EQUIPOS); k++){
+        for ( j=0; aux !='\n'&&!feof(EQUIPOS); j++){
             aux = fgetc(EQUIPOS);
             if(aux != '\n'){
-                temporal[k] = aux;
+                temporal[j] = aux;
             }
         }
         //Copia el nombre en la estructura
@@ -42,14 +41,30 @@ void cargarEquipos(){
 
         
     }
+    
+
+    for(i = 0; i<=numeroEquipos;i++){
+        k = 0;
+        
+        for (j=0; j<= numeroJugadores && k<5;j++){
+            if(equipos[i].id == jugadores[j].equipo){
+                equipos[i].jugadores[k].id = jugadores[j].id;
+                strcpy(equipos[i].jugadores[k].nombre,jugadores[j].nombre);
+                k++;
+            }
+            
+        }
+
+    }
     fclose(EQUIPOS);
+    
+
 }
 //Carga los datos del fichero futbolista en la estructura jugadores.
 
 void cargarJugadores (){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
     char aux;
-    int cont = 0;
     int i,j;
 
     FUTBOLISTAS = fopen("Futbolistas.txt","r");
@@ -58,8 +73,8 @@ void cargarJugadores (){
     exit(1);
     } 
 
-    cont = contadorLineas(FUTBOLISTAS);
-    jugadores = (jugador *)malloc(cont*sizeof(jugador));
+    numeroJugadores = contadorLineas(FUTBOLISTAS);
+    jugadores = (jugador *)malloc(numeroJugadores*sizeof(jugador));
     rewind (FUTBOLISTAS);
     for(i=0;!feof(FUTBOLISTAS);i++){
         vaciar(temporal);
@@ -116,11 +131,62 @@ void cargarJugadores (){
         }
         jugadores[i].valoracion = atoi(temporal);
         vaciar (temporal);
-    }
 
+    }
     fclose(FUTBOLISTAS);
 }
 
+void cargarConfiguracion(){
+    char temp[50];
+    int i;
+    int j;
+    int aux;
+    CONFIGURACION = fopen("Configuracion.txt", "r");
+    if (CONFIGURACION == NULL){
+        printf("Error al cargar la configuración.\n");
+        exit(1);
+    }
+
+    for (i=0; !feof(CONFIGURACION);i++){
+        vaciar(temp);
+        for (j=0;aux != '-'&& !feof(CONFIGURACION);j++){
+            aux = fgetc(CONFIGURACION);
+        };
+
+        for (j=0;aux != '\n'&&!feof(CONFIGURACION);j++){
+            aux = fgetc(CONFIGURACION);
+            if (aux!='\n')
+            temp[j]=aux;
+        }
+        config.maxPlantillas= atoi(temp);
+        vaciar(temp);
+
+        for (j=0;aux != '-'&& !feof(CONFIGURACION);j++){
+            aux = fgetc(CONFIGURACION);
+        };
+
+        for (j=0;aux != '\n'&&!feof(CONFIGURACION);j++){
+            aux = fgetc(CONFIGURACION);
+            if (aux!='\n')
+            temp[j]=aux;
+        }
+        config.presupuesto= atoi(temp);
+        vaciar(temp);
+
+        for (j=0;aux != '-'&& !feof(CONFIGURACION);j++){
+            aux = fgetc(CONFIGURACION);
+        };
+
+        for (j=0;aux != '\n'&&!feof(CONFIGURACION);j++){
+            aux = fgetc(CONFIGURACION);
+            if (aux!='\n')
+            temp[j]=aux;
+        }
+        config.maxJugadores= atoi(temp);
+        vaciar(temp);
+    }
+    fclose(CONFIGURACION);
+}
 // Vacia la cadena de caracteres donde se almacenaremos los datos antes te volcarlos en la estructura
 void vaciar (char temp[]){
     for ( int i = 0; i < 50; i++)
