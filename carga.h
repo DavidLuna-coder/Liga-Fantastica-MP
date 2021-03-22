@@ -7,7 +7,7 @@
 typedef struct {
     int id;
     int equipo;
-    char nombre [20];
+    char nombre [21];
     int precio;
     int valoracion;
 }jugador;
@@ -15,7 +15,7 @@ typedef struct {
 
 typedef struct equipo {
     int id;
-    char nombre[20];
+    char nombre[21];
     jugador jugadores[5];
 }equipo;
 
@@ -31,37 +31,41 @@ typedef struct{
 }jugadorPlantilla;
 
 typedef struct{
+    char nombre[21];
+    int id;
+    char tipoPerfil[15];
+    char perfil [6];
+    char contrasena [9];
+}usuario;
+
+typedef struct{
     int id;
     char nombre[30];
     int presupuestoDisponible;
     int puntuacion;
     jugadorPlantilla *jugadores;
+    usuario usuarios;
 }plantilla;
 
 
 
-typedef struct{
-    char nombre[20];
-    int id;
-    char tipoPerfil[10];
-    char perfil [5];
-    char contrasena [8]; 
-    int numeroPlantillas;
-    plantilla *plantillas;
-}usuario;
 
 int numeroEquipos;
 int numeroJugadores;
+int numeroUsuarios;
 configuracion config;
 equipo *equipos;
 jugador *jugadores;
+usuario *usuarios;
 FILE *EQUIPOS;
 FILE *FUTBOLISTAS;
 FILE *CONFIGURACION;
+FILE *USUARIOS;
 
 void cargarEquipos();
 void cargarJugadores ();
 void cargarConfiguracion();
+void cargarUsuarios();
 void vaciar (char *);
 int contadorLineas(FILE *);
 

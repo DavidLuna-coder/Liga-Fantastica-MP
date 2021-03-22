@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "carga.h"
 
+
 //Carga los datos del fichero equipos.txt en la estructura equipo
 void cargarEquipos(){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
@@ -140,7 +141,7 @@ void cargarConfiguracion(){
     char temp[50];
     int i;
     int j;
-    int aux;
+    char aux;
     CONFIGURACION = fopen("Configuracion.txt", "r");
     if (CONFIGURACION == NULL){
         printf("Error al cargar la configuración.\n");
@@ -188,6 +189,88 @@ void cargarConfiguracion(){
     fclose(CONFIGURACION);
 }
 // Vacia la cadena de caracteres donde se almacenaremos los datos antes te volcarlos en la estructura
+
+void cargarUsuarios(){
+    char aux = '0';
+    int i,j;
+    char temp[50];
+
+    USUARIOS = fopen("Usuarios.txt","r");
+    if(USUARIOS == NULL){
+        printf("Ha ocurrido un error en la carga de usuarios\n");
+        exit(1);
+    }
+    
+    numeroUsuarios = contadorLineas(USUARIOS);
+    usuarios = (usuario *)malloc(numeroUsuarios*sizeof(usuario));
+    if(usuarios == NULL){
+        printf("Error en la reserva de memoria de usuarios\n");
+        exit(1);
+    }
+    rewind(USUARIOS);
+
+    for(i=0;!feof(USUARIOS);i++){
+        vaciar(temp);
+
+        for ( j = 0; aux != '-'&&!feof(USUARIOS); j++)
+        {
+            aux = fgetc(USUARIOS);
+            if(aux != '-'){
+                temp[j]=aux;
+            }
+        }
+        usuarios[i].id = atoi(temp);
+        aux = '0';
+        vaciar(temp);
+        for ( j = 0; aux != '-'&&!feof(USUARIOS); j++)
+        {
+            aux = fgetc(USUARIOS);
+            if(aux != '-'){
+                temp[j]=aux;
+            }
+        }
+        strcpy(usuarios[i].nombre,temp);
+        aux = '0';
+        vaciar (temp);
+
+        for ( j = 0; aux != '-'&&!feof(USUARIOS); j++)
+        {
+            aux = fgetc(USUARIOS);
+            if(aux != '-'){
+                temp[j]=aux;
+            }
+        }
+        strcpy(usuarios[i].tipoPerfil,temp);
+        aux = '0';
+        vaciar (temp);
+
+        for ( j = 0; aux != '-'&&!feof(USUARIOS); j++)
+        {
+            aux = fgetc(USUARIOS);
+            if(aux != '-'){
+                temp[j]=aux;
+            }
+        }
+        strcpy(usuarios[i].perfil,temp);
+        aux = '0';
+        vaciar (temp);
+
+        for ( j = 0; aux != '\n'&&!feof(USUARIOS); j++)
+        {
+            aux = fgetc(USUARIOS);
+            if(aux != '\n'){
+                temp[j]=aux;
+            }
+        }
+        strcpy(usuarios[i].contrasena,temp);
+        vaciar (temp);
+        
+    }
+
+    fclose(USUARIOS);
+}
+
+
 void vaciar (char temp[]){
     for ( int i = 0; i < 50; i++)
     {
@@ -199,9 +282,11 @@ void vaciar (char temp[]){
 int contadorLineas(FILE *FICHERO){
 	int contador=0;
 	char temp[50];
+    rewind(FICHERO);
 	while(!feof(FICHERO)){
 		fgets(temp,50,FICHERO);
 		contador++;
+
 	}
 	return contador;
 }
