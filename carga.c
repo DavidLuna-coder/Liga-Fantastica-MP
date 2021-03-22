@@ -270,6 +270,86 @@ void cargarUsuarios(){
     fclose(USUARIOS);
 }
 
+void cargarPlantillas(){
+    char temp[50];
+    char aux;
+    int i,j;
+
+    PLANTILLAS = fopen("Plantillas.txt","r");
+
+    if(PLANTILLAS == NULL){
+        printf ("Error al cargar las plantillas\n");
+        exit(1);
+    }
+    numeroPlantillas = contadorLineas(PLANTILLAS);
+
+    plantillas = (plantilla *)malloc(numeroPlantillas * sizeof(plantillas)); 
+
+    if(plantillas == NULL){
+        printf ("Error en la reserva de memoria de plantillas\n");
+        exit(1);
+    }
+
+    rewind(PLANTILLAS);
+
+    for(i=0;!feof(PLANTILLAS);i++){
+        vaciar(temp);
+        aux = '0';
+
+        for ( j = 0; aux != '-' && !feof(PLANTILLAS); j++){
+            aux = fgetc(PLANTILLAS);
+            if(aux!='-'){
+                temp[j]=aux;
+            }
+        }
+        plantillas[i].idUsuario = atoi(temp);
+        vaciar(temp);
+        aux = '0';
+
+        for ( j = 0; aux != '-' && !feof(PLANTILLAS); j++){
+            aux = fgetc(PLANTILLAS);
+            if(aux!='-'){
+                temp[j]=aux;
+            }
+        }
+        plantillas[i].idPlantilla = atoi(temp);
+        vaciar(temp);
+        aux = '0';
+
+        for ( j = 0; aux != '-' && !feof(PLANTILLAS); j++){
+            aux = fgetc(PLANTILLAS);
+            if(aux!='-'){
+                temp[j]=aux;
+            }
+        }
+        strcpy(plantillas[i].nombre,temp);
+        vaciar(temp);
+        aux = '0';
+
+        for ( j = 0; aux != '-' && !feof(PLANTILLAS); j++){
+            aux = fgetc(PLANTILLAS);
+            if(aux!='-'){
+                temp[j]=aux;
+            }
+        }
+        plantillas[i].presupuestoDisponible = atoi(temp);
+        vaciar(temp);
+        aux = '0';
+
+        for ( j = 0; aux != '\n' && !feof(PLANTILLAS); j++){
+            aux = fgetc(PLANTILLAS);
+            if(aux!='\n'){
+                temp[j]=aux;
+            }
+        }
+        plantillas[i].puntuacion = atoi(temp);
+        vaciar(temp);
+        aux = '0';
+        
+    }
+    printf("TEST\n");
+    fclose(PLANTILLAS);
+}
 
 void vaciar (char temp[]){
     for ( int i = 0; i < 50; i++)
