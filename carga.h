@@ -46,6 +46,7 @@ typedef struct{
     char tipoPerfil[10];
     char perfil [5];
     char contrasena [8]; 
+    int numeroPlantillas;
     plantilla *plantillas;
 }usuario;
 
