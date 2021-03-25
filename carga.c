@@ -26,7 +26,7 @@ void cargarEquipos(){
                 temporal[j]= aux;
             }
         }
-         equipos[i].id = atoi(temporal);//Copiamos en la id de equipo la cadena guardada
+        equipos[i].id = atoi(temporal);//Copiamos en la id de equipo la cadena guardada
         vaciar(temporal);
         aux = '0';
 
@@ -58,8 +58,6 @@ void cargarEquipos(){
 
     }
     fclose(EQUIPOS);
-    
-
 }
 //Carga los datos del fichero futbolista en la estructura jugadores.
 
@@ -188,7 +186,6 @@ void cargarConfiguracion(){
     }
     fclose(CONFIGURACION);
 }
-// Vacia la cadena de caracteres donde se almacenaremos los datos antes te volcarlos en la estructura
 
 void cargarUsuarios(){
     char aux = '0';
@@ -263,8 +260,7 @@ void cargarUsuarios(){
             }
         }
         strcpy(usuarios[i].contrasena,temp);
-        vaciar (temp);
-        
+        vaciar (temp);  
     }
 
     fclose(USUARIOS);
@@ -273,7 +269,7 @@ void cargarUsuarios(){
 void cargarPlantillas(){
     char temp[50];
     char aux;
-    int i,j;
+    int i,j,contador;
 
     PLANTILLAS = fopen("Plantillas.txt","r");
 
@@ -345,12 +341,87 @@ void cargarPlantillas(){
         plantillas[i].puntuacion = atoi(temp);
         vaciar(temp);
         aux = '0';
-        
     }
-    printf("TEST\n");
     fclose(PLANTILLAS);
+
+    
+    for ( i = 0; i < numeroPlantillas; i++){
+        plantillas[i].numJugadores = 0;
+        plantillas[i].jugadores = (jugador*)malloc(1*sizeof(jugador));
+        if(plantillas[i].jugadores==NULL){
+             printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+            }
+        for ( j = 0; j < numeroJugadoresPlantillas; j++){
+
+            if(jugadoresPlantillas[j].idPlantilla == plantillas[i].idPlantilla){
+                for (int k = 0; k < numeroJugadores; k++)
+                {
+                    if(jugadoresPlantillas[j].idJugador == jugadores[k].id){
+    
+                        plantillas[i].jugadores[plantillas[i].numJugadores].id = jugadores[k].id;
+                        plantillas[i].jugadores[plantillas[i].numJugadores].equipo = jugadores[k].equipo;
+                        plantillas[i].jugadores[plantillas[i].numJugadores].precio = jugadores[k].precio;
+                        plantillas[i].jugadores[plantillas[i].numJugadores].valoracion = jugadores[k].valoracion;
+                        strcpy(plantillas[i].jugadores[plantillas[i].numJugadores].nombre,jugadores[k].nombre);
+                        plantillas[i].numJugadores ++;
+                        plantillas[i].jugadores = (jugador*)realloc(plantillas[i].jugadores,(plantillas[i].numJugadores + 1)*sizeof(jugador));
+                        if(plantillas[i].jugadores==NULL){
+                        printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+                        }
+                    }    
+                }
+            }
+        }
+    }
 }
 
+
+void cargarJugadorPlantilla(){
+    char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
+    char aux;
+    int i,j;
+
+    JUGADORESPLANTILLAS = fopen("Jugadores_Plantillas.txt","r");
+
+    if (JUGADORESPLANTILLAS==NULL){
+        printf("Error al abrir el fichero de Jugadores_Plantillas.txt\n");
+        exit (1);
+    }
+    numeroJugadoresPlantillas = contadorLineas(JUGADORESPLANTILLAS);
+
+    jugadoresPlantillas = (jugadorPlantilla*)malloc(numeroJugadoresPlantillas*sizeof(jugadorPlantilla));
+    if(jugadoresPlantillas == NULL){
+        printf("Error en la reserva de memoria\n");
+    }
+
+    rewind(JUGADORESPLANTILLAS);
+
+    for (i=0; !feof(JUGADORESPLANTILLAS);i++){
+        aux = '0';
+        for(j=0; aux != '-' && !feof(JUGADORESPLANTILLAS); j++){
+            aux = fgetc(JUGADORESPLANTILLAS);
+            if(aux != '-'){
+                temporal[j] = aux;
+            }
+        }
+        jugadoresPlantillas[i].idJugador = atoi(temporal);
+        aux = '0';
+        vaciar(temporal);
+        for(j=0; aux != '\n'&& !feof(JUGADORESPLANTILLAS); j++){
+            aux = fgetc(JUGADORESPLANTILLAS);
+            if(aux != '\n'){
+                temporal[j] = aux;
+            }
+        }
+        jugadoresPlantillas[i].idPlantilla = atoi(temporal);
+        aux = '0';
+        vaciar(temporal);
+    }
+    
+    fclose(JUGADORESPLANTILLAS);
+
+}
+// Vacia la cadena de caracteres donde se almacenaremos los datos antes te volcarlos en la estructura
 void vaciar (char temp[]){
     for ( int i = 0; i < 50; i++)
     {

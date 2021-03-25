@@ -44,6 +44,7 @@ typedef struct{
     char nombre[30];
     int presupuestoDisponible;
     int puntuacion;
+    int numJugadores;
     jugador *jugadores;
 }plantilla;
 
@@ -54,24 +55,28 @@ int numeroEquipos;
 int numeroJugadores;
 int numeroUsuarios;
 int numeroPlantillas;
+int numeroJugadoresPlantillas;
 
 configuracion config;
 equipo *equipos;
 jugador *jugadores;
 usuario *usuarios;
 plantilla *plantillas;
+jugadorPlantilla *jugadoresPlantillas;
 
 FILE *EQUIPOS;
 FILE *FUTBOLISTAS;
 FILE *CONFIGURACION;
 FILE *USUARIOS;
 FILE *PLANTILLAS;
+FILE *JUGADORESPLANTILLAS;
 
 void cargarEquipos();
-void cargarJugadores ();
+void cargarJugadores();
 void cargarConfiguracion();
 void cargarUsuarios();
 void cargarPlantillas();
+void cargarJugadorPlantilla();
 void vaciar (char *);
 int contadorLineas(FILE *);
 
