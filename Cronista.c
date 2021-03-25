@@ -30,7 +30,6 @@ switch(elec){
 
     default:
     printf("introduce un numero valido [1,2 ó 3]: \n");
-    scanf("%i",&elec);
     break;
 }   
     
