@@ -269,7 +269,7 @@ void cargarUsuarios(){
 void cargarPlantillas(){
     char temp[50];
     char aux;
-    int i,j,contador;
+    int i,j,k,l;
 
     PLANTILLAS = fopen("Plantillas.txt","r");
 
@@ -277,100 +277,107 @@ void cargarPlantillas(){
         printf ("Error al cargar las plantillas\n");
         exit(1);
     }
-    numeroPlantillas = contadorLineas(PLANTILLAS);
 
-    plantillas = (plantilla *)malloc(numeroPlantillas * sizeof(plantillas)); 
 
-    if(plantillas == NULL){
-        printf ("Error en la reserva de memoria de plantillas\n");
-        exit(1);
-    }
 
     rewind(PLANTILLAS);
+    for(i=0; i<numeroUsuarios;i++){
+        usuarios[i].numeroPlantillas = 0;
+        usuarios[i].plantillas = (plantilla*)malloc(1*sizeof(plantilla));
 
-    for(i=0;!feof(PLANTILLAS);i++){
+    for(j=0;!feof(PLANTILLAS)&&j<=usuarios[i].numeroPlantillas;j++){
         vaciar(temp);
         aux = '0';
-
-        for ( j = 0; aux != '-' && !feof(PLANTILLAS); j++){
+        for ( k = 0; aux != '-' && !feof(PLANTILLAS); k++){
             aux = fgetc(PLANTILLAS);
             if(aux!='-'){
-                temp[j]=aux;
+                temp[k]=aux;
             }
         }
-        plantillas[i].idUsuario = atoi(temp);
+        usuarios[i].plantillas[j].idUsuario = atoi(temp);
         vaciar(temp);
         aux = '0';
 
-        for ( j = 0; aux != '-' && !feof(PLANTILLAS); j++){
+        for ( k = 0; aux != '-' && !feof(PLANTILLAS); k++){
             aux = fgetc(PLANTILLAS);
             if(aux!='-'){
-                temp[j]=aux;
+                temp[k]=aux;
             }
         }
-        plantillas[i].idPlantilla = atoi(temp);
+        usuarios[i].plantillas[j].idPlantilla = atoi(temp);
         vaciar(temp);
         aux = '0';
-
-        for ( j = 0; aux != '-' && !feof(PLANTILLAS); j++){
+        
+        for ( k = 0; aux != '-' && !feof(PLANTILLAS); k++){
             aux = fgetc(PLANTILLAS);
             if(aux!='-'){
-                temp[j]=aux;
+                temp[k]=aux;
             }
         }
-        strcpy(plantillas[i].nombre,temp);
+        strcpy(usuarios[i].plantillas[j].nombre,temp);
         vaciar(temp);
         aux = '0';
 
-        for ( j = 0; aux != '-' && !feof(PLANTILLAS); j++){
+        for ( k = 0; aux != '-' && !feof(PLANTILLAS); k++){
             aux = fgetc(PLANTILLAS);
             if(aux!='-'){
-                temp[j]=aux;
+                temp[k]=aux;
             }
         }
-        plantillas[i].presupuestoDisponible = atoi(temp);
+        usuarios[i].plantillas[j].presupuestoDisponible = atoi(temp);
         vaciar(temp);
         aux = '0';
 
-        for ( j = 0; aux != '\n' && !feof(PLANTILLAS); j++){
+        for ( k = 0; aux != '\n' && !feof(PLANTILLAS); k++){
             aux = fgetc(PLANTILLAS);
             if(aux!='\n'){
-                temp[j]=aux;
+                temp[k]=aux;
             }
         }
-        plantillas[i].puntuacion = atoi(temp);
+        usuarios[i].plantillas[j].puntuacion = atoi(temp);
         vaciar(temp);
         aux = '0';
+        usuarios[i].numeroPlantillas++;
+        usuarios[i].plantillas = (plantilla*)realloc(usuarios[i].plantillas,(usuarios[i].numeroPlantillas+1)*sizeof(plantilla));
+        
+        
     }
-    fclose(PLANTILLAS);
-
     
-    for ( i = 0; i < numeroPlantillas; i++){
-        plantillas[i].numJugadores = 0;
-        plantillas[i].jugadores = (jugador*)malloc(1*sizeof(jugador));
-        if(plantillas[i].jugadores==NULL){
+}
+    fclose(PLANTILLAS);
+    
+  
+    for ( i = 0; i < numeroUsuarios; i++){
+        for(j=0;j<usuarios[i].numeroPlantillas;j++){
+        
+        usuarios[i].plantillas[j].numJugadores = 0;
+        
+        usuarios[i].plantillas[j].jugadores = (jugador*)malloc(1*sizeof(jugador));
+        if(usuarios[i].plantillas[j].jugadores==NULL){
              printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
             }
-        for ( j = 0; j < numeroJugadoresPlantillas; j++){
-
-            if(jugadoresPlantillas[j].idPlantilla == plantillas[i].idPlantilla){
-                for (int k = 0; k < numeroJugadores; k++)
+        
+        for ( k = 0; k < numeroJugadoresPlantillas; k++){
+            
+            if(jugadoresPlantillas[k].idPlantilla == usuarios[i].plantillas[j].idPlantilla){
+                for ( l = 0; l < numeroJugadores; l++)
                 {
-                    if(jugadoresPlantillas[j].idJugador == jugadores[k].id){
+                    if(jugadoresPlantillas[k].idJugador == jugadores[l].id){
     
-                        plantillas[i].jugadores[plantillas[i].numJugadores].id = jugadores[k].id;
-                        plantillas[i].jugadores[plantillas[i].numJugadores].equipo = jugadores[k].equipo;
-                        plantillas[i].jugadores[plantillas[i].numJugadores].precio = jugadores[k].precio;
-                        plantillas[i].jugadores[plantillas[i].numJugadores].valoracion = jugadores[k].valoracion;
-                        strcpy(plantillas[i].jugadores[plantillas[i].numJugadores].nombre,jugadores[k].nombre);
-                        plantillas[i].numJugadores ++;
-                        plantillas[i].jugadores = (jugador*)realloc(plantillas[i].jugadores,(plantillas[i].numJugadores + 1)*sizeof(jugador));
-                        if(plantillas[i].jugadores==NULL){
+                        usuarios[i].plantillas[j].jugadores[usuarios[i].plantillas[j].numJugadores].id = jugadores[l].id;
+                        usuarios[i].plantillas[j].jugadores[usuarios[i].plantillas[j].numJugadores].equipo = jugadores[l].equipo;
+                        usuarios[i].plantillas[j].jugadores[usuarios[i].plantillas[j].numJugadores].precio = jugadores[l].precio;
+                        usuarios[i].plantillas[j].jugadores[usuarios[i].plantillas[j].numJugadores].valoracion = jugadores[l].valoracion;
+                        strcpy(usuarios[i].plantillas[j].jugadores[usuarios[i].plantillas[j].numJugadores].nombre,jugadores[l].nombre);
+                        usuarios[i].plantillas[j].numJugadores ++;
+                        usuarios[i].plantillas[j].jugadores = (jugador*)realloc(usuarios[i].plantillas[j].jugadores,(usuarios[i].plantillas[j].numJugadores + 1)*sizeof(jugador));
+                        if(usuarios[i].plantillas[j].jugadores==NULL){
                         printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
                         }
                     }    
                 }
             }
+        }
         }
     }
 }

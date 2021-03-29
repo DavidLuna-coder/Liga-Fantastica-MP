@@ -31,14 +31,6 @@ typedef struct{
 }jugadorPlantilla;
 
 typedef struct{
-    char nombre[21];
-    int id;
-    char tipoPerfil[15];
-    char perfil [6];
-    char contrasena [9];
-}usuario;
-
-typedef struct{
     int idUsuario;
     int idPlantilla;
     char nombre[30];
@@ -48,20 +40,26 @@ typedef struct{
     jugador *jugadores;
 }plantilla;
 
-
+typedef struct{
+    char nombre[21];
+    int id;
+    char tipoPerfil[15];
+    char perfil [6];
+    char contrasena [9];
+    int numeroPlantillas;
+    plantilla *plantillas;
+}usuario;
 
 
 int numeroEquipos;
 int numeroJugadores;
 int numeroUsuarios;
-int numeroPlantillas;
 int numeroJugadoresPlantillas;
 
 configuracion config;
 equipo *equipos;
 jugador *jugadores;
 usuario *usuarios;
-plantilla *plantillas;
 jugadorPlantilla *jugadoresPlantillas;
 
 FILE *EQUIPOS;
