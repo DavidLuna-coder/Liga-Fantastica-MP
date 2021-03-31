@@ -4,7 +4,43 @@
 #include <string.h>
 
 void menuAdmin(){
-	int exit;
+	int select;
+	do{
+		printf("Que opcion quieres?\n1-Listar equipos\n2-Listar Usuarios\n3-Modificar Usuario\n4-Crear Usuario\n5-Eliminar Usuario\n6-Crear Equipo\n7-Modificar presupuestos\n8-Limite de Plantillas\n9-Borrar Equipo\n10-Salir");
+		scanf("%i",&select);
+		switch(select){
+			case 1:
+				listarEquipos();
+			break;
+			case 2:
+				listarUsuarios();
+			break;
+			case 3:
+				modificarUsuarios();
+			break;
+			case 4:
+				anadirUsuario();
+			break;
+			case 5:
+				eliminarUsuario();
+			break;
+			case 6:
+				anadirEquipo();
+			break;
+			case 7:
+				modificarPresupuestos();
+			break;
+			case 8:
+				limitePlantillas();
+			break;
+			case 9:
+				borrarEquipo();
+			break;
+			default:
+				printf("Opcion no disponible\n");
+			break;
+		}
+	}while(select!=10);
 }
 
 
@@ -196,15 +232,121 @@ void anadirEquipo(){
 	}
 }
 	
-void modificarPresupuesto(){
-	int dineroGastado,nuevoPresupuesto,i;
+void modificarPresupuestos(){
+	int dineroGastado,nuevoPresupuesto,i,j,k,l;
 	printf("Introduzca el nuevo presupuesto");
 	scanf("%i",&nuevoPresupuesto);
-	for(i=0;i<numeroPlantillas;i++){
-		dineroGastado=config.presupuesto-plantillas->presupuestoDisponible;
-		if(dineroGastado>nuevoPresupuesto){}
+	for(j=0;j<numeroUsuarios;j++){
+		printf("%i",usuarios[j].numeroPlantillas);
+		for(i=0;i<usuarios[j].numeroPlantillas;i++){
+			dineroGastado=0;
+			for(k=0;k<usuarios[j].plantillas[i].numJugadores;k++){
+				dineroGastado=dineroGastado + usuarios[j].plantillas[i].jugadores[k].precio;
+			}
+			if(dineroGastado>nuevoPresupuesto){
+				printf("U:%i-P:%i\n",j,i);
+				usuarios[j].plantillas[i].numJugadores--;
+				usuarios[j].plantillas[i].presupuestoDisponible=nuevoPresupuesto;
+				for(l=0;l<usuarios[j].plantillas[i].numJugadores;l++){
+					usuarios[j].plantillas[i].presupuestoDisponible=usuarios[j].plantillas[i].presupuestoDisponible-usuarios[j].plantillas[i].jugadores[j].precio;
+				}
+				usuarios[j].plantillas[i].jugadores = (jugador*) realloc (usuarios[j].plantillas[i].jugadores,usuarios[j].plantillas[i].numJugadores*sizeof(jugador));
+				i--;
+			}
+			printf("a");
+		}
+	}
+	config.presupuesto=nuevoPresupuesto;
+	printf("Presupuesto cambiado exitosamente\n");
+}
+
+void limitePlantillas(){
+	int maxPlantillas,k;
+	printf("Cual sera el nuevo limite de plantillas?");
+	scanf("%i",&config.maxPlantillas);
+	for(k=0;k<numeroUsuarios;k++){
+		if(usuarios[k].numeroPlantillas>config.maxPlantillas){
+			usuarios[k].numeroPlantillas=config.maxPlantillas;
+		}
+		usuarios[k].plantillas = (plantilla*) realloc (usuarios[k].plantillas,config.maxPlantillas*sizeof(plantilla));
+		printf("%i",k);
+	}
+	printf("Limite cambiado exitosamente\n");
+}
+	
+void borrarEquipo(){
+	int selectDelete,found,i,j,k,l;
+	do{
+		listarEquipos();
+		printf("Introduzca la id del equipo que desea borrar\n");
+		scanf("%i",&selectDelete);
+		for(i=0;i<numeroEquipos&&found==0;i++){
+			if(selectDelete==equipos[i].id){
+				found=1;
+				printf("Equipo encontrado\n");
+			}
+		}
+	}while(found==0);
+	found=0;
+	for(i=0;i<numeroEquipos&&found==0;i++){
+		if(selectDelete==equipos[i].id){
+			found=1;
+			for(k=i;k<numeroEquipos;k++){
+				equipos[k].id=equipos[k+1].id;
+				strcpy(equipos[k].nombre,equipos[k+1].nombre);
+				for(l=0;l<5;l++){
+					equipos[k].jugadores[l].id=equipos[k+1].jugadores[l].id;
+					equipos[k].jugadores[l].precio=equipos[k+1].jugadores[l].precio;
+					equipos[k].jugadores[l].equipo=equipos[k+1].jugadores[l].equipo;
+					equipos[k].jugadores[l].valoracion=equipos[k+1].jugadores[l].valoracion;
+				}
+			}
+			numeroEquipos--;
+			equipos= (equipo*) realloc (equipos,numeroEquipos*sizeof(equipo));
+		}
+	}
+	for(i=0;i<numeroUsuarios;i++){
+		for(j=0;j<usuarios[i].numeroPlantillas;j++){
+			for(k=0;k<usuarios[i].plantillas[j].numJugadores;k++){
+				printf("%i",k);
+				if(selectDelete==usuarios[i].plantillas[j].jugadores[k].equipo){
+					if(usuarios[i].plantillas[j].numJugadores>1){
+						usuarios[i].plantillas[j].presupuestoDisponible=usuarios[i].plantillas[j].presupuestoDisponible + usuarios[i].plantillas[j].jugadores[k].precio;
+						usuarios[i].plantillas[j].numJugadores--;
+						for(l=k;l<usuarios[i].plantillas[j].numJugadores;l++){
+							strcpy(usuarios[i].plantillas[j].jugadores[l].nombre, usuarios[i].plantillas[j].jugadores[l+1].nombre);
+							usuarios[i].plantillas[j].jugadores[l].id=usuarios[i].plantillas[j].jugadores[l+1].id;
+							usuarios[i].plantillas[j].jugadores[l].equipo=usuarios[i].plantillas[j].jugadores[l+1].equipo;
+							usuarios[i].plantillas[j].jugadores[l].valoracion=usuarios[i].plantillas[j].jugadores[l+1].valoracion;
+							usuarios[i].plantillas[j].jugadores[l].precio=usuarios[i].plantillas[j].jugadores[l+1].precio;
+						}	
+
+						usuarios[i].plantillas[j].jugadores= (jugador*) realloc (usuarios[i].plantillas[j].jugadores,usuarios[i].plantillas[j].numJugadores*sizeof(jugador));
+						k=-1;
+					}
+					else{
+						usuarios[i].plantillas[j].numJugadores=0;
+						k=-1;
+					}
+				}
+			}
+		}
+	}
+	for(i=0;i<numeroJugadores;i++){
+		if(selectDelete==jugadores[i].equipo){
+			for(k=i;k<numeroJugadores;k++){
+				jugadores[k].equipo=jugadores[k+1].equipo;
+				jugadores[k].precio=jugadores[k+1].precio;
+				jugadores[k].valoracion=jugadores[k+1].valoracion;
+				strcpy(jugadores[k].nombre,jugadores[k+1].nombre);
+			}
+			numeroJugadores--;
+			jugadores=(jugador*) realloc (jugadores,numeroJugadores*sizeof(jugador));
+		}
 	}
 }
+				
+
 
 
 
