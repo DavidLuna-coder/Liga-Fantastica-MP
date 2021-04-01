@@ -13,4 +13,6 @@ void eliminarUsuario();
 void anadirEquipo();
 void limitePlantillas();
 void borrarEquipo();
+void jugadoresPlantilla();
+void disponibilidadJugadores();
 #endif

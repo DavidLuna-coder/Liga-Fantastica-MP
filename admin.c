@@ -6,7 +6,7 @@
 void menuAdmin(){
 	int select;
 	do{
-		printf("Que opcion quieres?\n1-Listar equipos\n2-Listar Usuarios\n3-Modificar Usuario\n4-Crear Usuario\n5-Eliminar Usuario\n6-Crear Equipo\n7-Modificar presupuestos\n8-Limite de Plantillas\n9-Borrar Equipo\n10-Salir");
+		printf("Que opcion quieres?\n1-Listar equipos\n2-Listar Usuarios\n3-Modificar Usuario\n4-Crear Usuario\n5-Eliminar Usuario\n6-Crear Equipo\n7-Modificar presupuestos\n8-Limite de Plantillas\n9-Borrar Equipo\n10-Cambiar limite de jugadores por plantilla\n11-Disponibilidad de jugadores\n12-Salir\n");
 		scanf("%i",&select);
 		switch(select){
 			case 1:
@@ -36,11 +36,17 @@ void menuAdmin(){
 			case 9:
 				borrarEquipo();
 			break;
+			case 10:
+				jugadoresPlantilla();
+			break;
+			case 11:
+				disponibilidadJugadores();
+			break;
 			default:
 				printf("Opcion no disponible\n");
 			break;
 		}
-	}while(select!=10);
+	}while(select!=12);
 }
 
 
@@ -288,23 +294,6 @@ void borrarEquipo(){
 		}
 	}while(found==0);
 	found=0;
-	for(i=0;i<numeroEquipos&&found==0;i++){
-		if(selectDelete==equipos[i].id){
-			found=1;
-			for(k=i;k<numeroEquipos;k++){
-				equipos[k].id=equipos[k+1].id;
-				strcpy(equipos[k].nombre,equipos[k+1].nombre);
-				for(l=0;l<5;l++){
-					equipos[k].jugadores[l].id=equipos[k+1].jugadores[l].id;
-					equipos[k].jugadores[l].precio=equipos[k+1].jugadores[l].precio;
-					equipos[k].jugadores[l].equipo=equipos[k+1].jugadores[l].equipo;
-					equipos[k].jugadores[l].valoracion=equipos[k+1].jugadores[l].valoracion;
-				}
-			}
-			numeroEquipos--;
-			equipos= (equipo*) realloc (equipos,numeroEquipos*sizeof(equipo));
-		}
-	}
 	for(i=0;i<numeroUsuarios;i++){
 		for(j=0;j<usuarios[i].numeroPlantillas;j++){
 			for(k=0;k<usuarios[i].plantillas[j].numJugadores;k++){
@@ -315,7 +304,7 @@ void borrarEquipo(){
 						usuarios[i].plantillas[j].numJugadores--;
 						for(l=k;l<usuarios[i].plantillas[j].numJugadores;l++){
 							strcpy(usuarios[i].plantillas[j].jugadores[l].nombre, usuarios[i].plantillas[j].jugadores[l+1].nombre);
-							usuarios[i].plantillas[j].jugadores[l].id=usuarios[i].plantillas[j].jugadores[l+1].id;
+							usuarios[i].plantillas[j].jugadores[l].id=usuarios[i].plantillas[j].jugadores[l+1].id-1;
 							usuarios[i].plantillas[j].jugadores[l].equipo=usuarios[i].plantillas[j].jugadores[l+1].equipo;
 							usuarios[i].plantillas[j].jugadores[l].valoracion=usuarios[i].plantillas[j].jugadores[l+1].valoracion;
 							usuarios[i].plantillas[j].jugadores[l].precio=usuarios[i].plantillas[j].jugadores[l+1].precio;
@@ -344,9 +333,70 @@ void borrarEquipo(){
 			jugadores=(jugador*) realloc (jugadores,numeroJugadores*sizeof(jugador));
 		}
 	}
+	for(i=0;i<numeroEquipos&&found==0;i++){
+		if(selectDelete==equipos[i].id){
+			found=1;
+			for(k=i;k<numeroEquipos;k++){
+				strcpy(equipos[k].nombre,equipos[k+1].nombre);
+				for(l=0;l<5;l++){
+					equipos[k].jugadores[l].id=equipos[k+1].jugadores[l].id;
+					equipos[k].jugadores[l].precio=equipos[k+1].jugadores[l].precio;
+					equipos[k].jugadores[l].equipo=equipos[k+1].jugadores[l].equipo;
+					equipos[k].jugadores[l].valoracion=equipos[k+1].jugadores[l].valoracion;
+				}
+			}
+			numeroEquipos--;
+			equipos= (equipo*) realloc (equipos,numeroEquipos*sizeof(equipo));
+		}
+	}
 }
 				
+void jugadoresPlantilla(){
+	int nuevoLimite,i,j,k;
+	do{
+		printf("Cual sera el nuevo limite de jugadores por plantilla?\n");
+		scanf("%i",&nuevoLimite);
+		if(nuevoLimite<1){
+			printf("Solo numemro naturales mayores a 0\n");
+		}
+	}while(nuevoLimite<1);
+	for(i=0;i<numeroUsuarios;i++){
+		for(j=0;j<usuarios[i].numeroPlantillas;j++){
+			if(nuevoLimite<usuarios[i].plantillas[j].numJugadores){
+				usuarios[i].plantillas[j].jugadores=(jugador*) realloc (usuarios[i].plantillas[j].jugadores,nuevoLimite*sizeof(jugador));
+				usuarios[i].plantillas[j].numJugadores=nuevoLimite;
+			}
+		}
+	}
+}
 
+void disponibilidadJugadores(){
+	int selectDelete,found,i,j,k,l;
+	for(i=0;i<numeroJugadores;i++){
+		printf("-%i-%s-\n",jugadores[i].id,jugadores[i].nombre);
+	}
+	printf("Selecciona la id del jugador que quieres eliminar");
+	scanf("%i",&selectDelete);
+	for(i=0;i<numeroUsuarios;i++){
+		for(j=0;j<usuarios[i].numeroPlantillas;j++){
+			found=0;
+			for(k=0;k<usuarios[i].plantillas[j].numJugadores&&found==0;k++){
+				if(usuarios[i].plantillas[j].jugadores[k].id==selectDelete){
+					found=1;
+					usuarios[i].plantillas[j].presupuestoDisponible=usuarios[i].plantillas[j].presupuestoDisponible+usuarios[i].plantillas[j].jugadores[k].precio;
+					usuarios[i].plantillas[j].numJugadores--;
+					for(l=k;l<usuarios[i].plantillas[j].numJugadores;l++){
+						usuarios[i].plantillas[j].jugadores[l].id= usuarios[i].plantillas[j].jugadores[l+1].id-1;
+						usuarios[i].plantillas[j].jugadores[l].equipo= usuarios[i].plantillas[j].jugadores[l+1].equipo;
+						usuarios[i].plantillas[j].jugadores[l].precio=usuarios[i].plantillas[j].jugadores[l+1].precio;
+						usuarios[i].plantillas[j].jugadores[l].valoracion=usuarios[i].plantillas[j].jugadores[l+1].valoracion;
+						strcpy(usuarios[i].plantillas[j].jugadores[l].nombre,usuarios[i].plantillas[j].jugadores[l+1].nombre);
+					}
+				}
+			}
+		}
+	}
+}
 
 
 
