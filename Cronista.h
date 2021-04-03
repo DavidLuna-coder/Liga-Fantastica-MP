@@ -1,8 +1,10 @@
 #ifndef Cronista
 #define Cronista
-
-void cronista(jugador *);
-void lista(jugador *);
-void valorar (jugador *);
+#include "carga.h"
+#include <stdio.h>
+#include <string.h>
+void cronista();
+void lista();
+void valorar ();
 
 #endif

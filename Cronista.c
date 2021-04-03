@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "carga.h"
+#include "Cronista.h"
 //void cronista(jugador *);
-void lista(jugador *);
-void valorar (jugador *);
 
 
-void cronista(jugador *jugadores){
+void cronista(){
 int elec,res;
 
 
@@ -17,11 +17,11 @@ printf("3-Salir de la sesion\n");
     scanf("%i",&elec);
 switch(elec){
     case 1: 
-    lista(jugadores);
+    lista();
     break;
 
     case 2: 
-    valorar(jugadores);
+    valorar();
     break;
 
     case 3:
@@ -37,14 +37,14 @@ switch(elec){
 system("pause");
 }
 
-void lista(jugador *jugadores){
+void lista(){
 int i;
 for(i=0;i<=100;i++){
     printf("%i-%i-%s-%i\n",jugadores[i].id,jugadores[i].equipo,jugadores[i].nombre,jugadores[i].valoracion);
 }
 }
 
-void valorar (jugador *jugadores){
+void valorar (){
     int id,i,val,find=0;
     printf("introduce la id del jugador a valorar: ");
     scanf("%i",&id);
