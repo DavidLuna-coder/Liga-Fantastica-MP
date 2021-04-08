@@ -33,7 +33,7 @@ void cargarEquipos(){
         //Cada vez que encuentra un salto de línea copia el texto anterior en temporal
         for ( j=0; aux !='\n'&&!feof(EQUIPOS); j++){
             aux = fgetc(EQUIPOS);
-            if(aux != '\n'){
+            if(aux != '\n'&& !feof(EQUIPOS)){
                 temporal[j] = aux;
             }
         }
@@ -124,7 +124,7 @@ void cargarJugadores (){
         aux = '0';
         for(j=0; aux != '\n' && !feof(FUTBOLISTAS);j++){
             aux = fgetc(FUTBOLISTAS);
-            if(aux != '\n'){
+            if(aux != '\n'&&!feof(FUTBOLISTAS)){
                 temporal[j] = aux;
             }
         }
@@ -269,7 +269,7 @@ void cargarUsuarios(){
 void cargarPlantillas(){
     char temp[50];
     char aux;
-    int i,j,k,l,id,numPlantillas;
+    int i,j,k,l;
 
     PLANTILLAS = fopen("Plantillas.txt","r");
 
@@ -278,28 +278,12 @@ void cargarPlantillas(){
         exit(1);
     }
 
-
-    numPlantillas=contadorLineas(PLANTILLAS)-1;
     rewind(PLANTILLAS);
     for(i=0; i<numeroUsuarios;i++){
         usuarios[i].numeroPlantillas = 0;
         usuarios[i].plantillas = (plantilla*)malloc(1*sizeof(plantilla));
-    }
 
-    for(j=0;j<numPlantillas;j++){
-        vaciar(temp);
-	printf("%i",numPlantillas);
-        aux = '0';
-        for ( k = 0; aux != '-' && !feof(PLANTILLAS); k++){
-            aux = fgetc(PLANTILLAS);
-            if(aux!='-'){
-                temp[k]=aux;
-            }
-        }
-        id = atoi(temp);
-	printf("%i\n",id);
-	usuarios[id-1].plantillas[usuarios[id-1].numeroPlantillas].idUsuario = id;
-        printf("FUNCIONA\n");//################################################
+    for(j=0;!feof(PLANTILLAS)&&j<=usuarios[i].numeroPlantillas;j++){
         vaciar(temp);
         aux = '0';
         for ( k = 0; aux != '-' && !feof(PLANTILLAS); k++){
@@ -308,16 +292,7 @@ void cargarPlantillas(){
                 temp[k]=aux;
             }
         }
-        usuarios[id-1].plantillas[usuarios[id-1].numeroPlantillas].idPlantilla = atoi(temp);
-        vaciar(temp);
-        aux = '0';
-        for ( k = 0; aux != '-' && !feof(PLANTILLAS); k++){
-            aux = fgetc(PLANTILLAS);
-            if(aux!='-'){
-                temp[k]=aux;
-            }
-        }
-        strcpy(usuarios[id-1].plantillas[usuarios[id-1].numeroPlantillas].nombre,temp);
+        usuarios[i].plantillas[j].idUsuario = atoi(temp);
         vaciar(temp);
         aux = '0';
 
@@ -327,7 +302,27 @@ void cargarPlantillas(){
                 temp[k]=aux;
             }
         }
-        usuarios[id-1].plantillas[usuarios[id-1].numeroPlantillas].presupuestoDisponible = atoi(temp);
+        usuarios[i].plantillas[j].idPlantilla = atoi(temp);
+        vaciar(temp);
+        aux = '0';
+        
+        for ( k = 0; aux != '-' && !feof(PLANTILLAS); k++){
+            aux = fgetc(PLANTILLAS);
+            if(aux!='-'){
+                temp[k]=aux;
+            }
+        }
+        strcpy(usuarios[i].plantillas[j].nombre,temp);
+        vaciar(temp);
+        aux = '0';
+
+        for ( k = 0; aux != '-' && !feof(PLANTILLAS); k++){
+            aux = fgetc(PLANTILLAS);
+            if(aux!='-'){
+                temp[k]=aux;
+            }
+        }
+        usuarios[i].plantillas[j].presupuestoDisponible = atoi(temp);
         vaciar(temp);
         aux = '0';
 
@@ -337,15 +332,16 @@ void cargarPlantillas(){
                 temp[k]=aux;
             }
         }
-        usuarios[id-1].plantillas[j].puntuacion = atoi(temp);
+        usuarios[i].plantillas[j].puntuacion = atoi(temp);
         vaciar(temp);
         aux = '0';
-        usuarios[id-1].numeroPlantillas++;
-        usuarios[id-1].plantillas = (plantilla*)realloc(usuarios[id-1].plantillas,(usuarios[id-1].numeroPlantillas+1)*sizeof(plantilla));
+        usuarios[i].numeroPlantillas++;
+        usuarios[i].plantillas = (plantilla*)realloc(usuarios[i].plantillas,(usuarios[i].numeroPlantillas+1)*sizeof(plantilla));
         
-        
+        }
     }
     fclose(PLANTILLAS);
+    
   
     for ( i = 0; i < numeroUsuarios; i++){
         for(j=0;j<usuarios[i].numeroPlantillas;j++){
@@ -381,7 +377,6 @@ void cargarPlantillas(){
         }
     }
 }
-
 
 void cargarJugadorPlantilla(){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
