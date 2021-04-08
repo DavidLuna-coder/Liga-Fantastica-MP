@@ -39,7 +39,7 @@ system("pause");
 
 void lista(){
 int i;
-for(i=0;i<=100;i++){
+for(i=0;i<numeroJugadores;i++){
     printf("%i-%i-%s-%i\n",jugadores[i].id,jugadores[i].equipo,jugadores[i].nombre,jugadores[i].valoracion);
 }
 }
@@ -49,7 +49,7 @@ void valorar (){
     printf("introduce la id del jugador a valorar: ");
     scanf("%i",&id);
 
-    for(i=0;i<=100 || find==0;i++){
+    for(i=0;i<numeroJugadores || find==0;i++){
         if(jugadores[i].id==id){
             printf("/n introduzca una valoracion entre 0-10 para %s: ",jugadores[i].nombre);
             scanf("%i",&val);
@@ -62,3 +62,4 @@ void valorar (){
         }
     }
 }
+
