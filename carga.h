@@ -54,6 +54,7 @@ typedef struct{
 int numeroEquipos;
 int numeroJugadores;
 int numeroUsuarios;
+int numeroPlantillas;
 int numeroJugadoresPlantillas;
 
 configuracion config;
@@ -76,6 +77,5 @@ void cargarUsuarios();
 void cargarPlantillas();
 void cargarJugadorPlantilla();
 void vaciar (char *);
-int contadorLineas(FILE *);
 
 #endif

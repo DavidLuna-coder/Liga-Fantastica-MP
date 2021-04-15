@@ -98,10 +98,28 @@ void guardarPlantillas(){
             fprintf(PLANTILLAS,"0");
             if(usuarios[i].plantillas[j].idPlantilla<10)
             fprintf(PLANTILLAS,"0");
-            if(j == numeroPlantillas - 1)
+            if(j == usuarios[i].numeroPlantillas - 1)
             fprintf(PLANTILLAS,"%i-%s-%i-%i",usuarios[i].plantillas[j].idPlantilla,usuarios[i].plantillas[j].nombre,usuarios[i].plantillas[j].presupuestoDisponible,usuarios[i].plantillas[j].puntuacion);
             else
             fprintf(PLANTILLAS,"%i-%s-%i-%i\n",usuarios[i].plantillas[j].idPlantilla,usuarios[i].plantillas[j].nombre,usuarios[i].plantillas[j].presupuestoDisponible,usuarios[i].plantillas[j].puntuacion);
         }
    }
+   fclose(PLANTILLAS);
+}
+
+void guardarJugadorPlantilla(){
+    int i;
+    JUGADORESPLANTILLAS = fopen("Jugadores_Plantillas.txt","w");
+    for(i=0; i<numeroJugadoresPlantillas;i++){
+        if(jugadoresPlantillas[i].idJugador<10)
+        fprintf(JUGADORESPLANTILLAS,"0");
+        fprintf(JUGADORESPLANTILLAS,"%i-",jugadoresPlantillas[i].idJugador);
+        if(jugadoresPlantillas[i].idPlantilla<100)
+        fprintf(JUGADORESPLANTILLAS,"0");
+        if(jugadoresPlantillas[i].idJugador<10)
+        fprintf(JUGADORESPLANTILLAS,"0");
+        fprintf(JUGADORESPLANTILLAS,"%i",jugadoresPlantillas[i].idPlantilla);
+        if(i!=numeroJugadoresPlantillas-1)
+        fprintf(JUGADORESPLANTILLAS,"\n");
+    }
 }

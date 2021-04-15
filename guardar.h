@@ -9,4 +9,6 @@ void guardarEquipos();
 void guardarFutbolistas();
 void guardarUsuarios();
 void guardarPlantillas();
+void guardarJugadorPlantilla();
+
 #endif

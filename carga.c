@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "carga.h"
 
-
+int contadorLineas(FILE *FICHERO);
 //Carga los datos del fichero equipos.txt en la estructura equipo
 void cargarEquipos(){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
@@ -255,7 +255,7 @@ void cargarUsuarios(){
         for ( j = 0; aux != '\n'&&!feof(USUARIOS); j++)
         {
             aux = fgetc(USUARIOS);
-            if(aux != '\n'){
+            if(aux != '\n'&&!feof(USUARIOS)){
                 temp[j]=aux;
             }
         }
@@ -277,7 +277,7 @@ void cargarPlantillas(){
         printf ("Error al cargar las plantillas\n");
         exit(1);
     }
-
+    numeroPlantillas = contadorLineas(PLANTILLAS);
     rewind(PLANTILLAS);
     for(i=0; i<numeroUsuarios;i++){
         usuarios[i].numeroPlantillas = 0;
@@ -328,7 +328,7 @@ void cargarPlantillas(){
 
         for ( k = 0; aux != '\n' && !feof(PLANTILLAS); k++){
             aux = fgetc(PLANTILLAS);
-            if(aux!='\n'){
+            if(aux!='\n'&& !feof(PLANTILLAS)){
                 temp[k]=aux;
             }
         }
@@ -411,7 +411,7 @@ void cargarJugadorPlantilla(){
         vaciar(temporal);
         for(j=0; aux != '\n'&& !feof(JUGADORESPLANTILLAS); j++){
             aux = fgetc(JUGADORESPLANTILLAS);
-            if(aux != '\n'){
+            if(aux != '\n'&&!feof(JUGADORESPLANTILLAS)){
                 temporal[j] = aux;
             }
         }
