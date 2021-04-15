@@ -1,6 +1,6 @@
 01-Real Madrid
 02-Barcelona
-03-Atletico de Madrid
+03-Atletico
 04-Sevilla
 05-R.Sociedad
 06-Betis
@@ -8,7 +8,7 @@
 08-Celta
 09-Granada
 10-Levante
-11-Athletic de Bilbao
+11-Athletic
 12-Valencia
 13-Osasuna
 14-Cadiz

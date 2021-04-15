@@ -1,0 +1,3 @@
+nº_maximo_plantillas-0
+Presupuesto_defecto-0
+Nº_maximo_jugadores_equipo-0
