@@ -122,4 +122,6 @@ void guardarJugadorPlantilla(){
         if(i!=numeroJugadoresPlantillas-1)
         fprintf(JUGADORESPLANTILLAS,"\n");
     }
+
+    fclose(JUGADORESPLANTILLAS);
 }
