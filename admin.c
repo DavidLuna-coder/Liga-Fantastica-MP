@@ -2,11 +2,14 @@
 #include "administrador.h"
 #include <stdio.h>
 #include <string.h>
-
+//void menuAdmin();
+//Precondicion:Debe tener los datos en memoria principal cargados;
+//Postcondicion:Redirecciona a la funcion respectiva que pida el usuario
 void menuAdmin(){
-	int select;
+	int select;//Variable que marcara en el switch a cual de la funciones se redirecciona
+	char aux;
 	do{
-		printf("Que opcion quieres?\n1-Listar equipos\n2-Listar Usuarios\n3-Modificar Usuario\n4-Crear Usuario\n5-Eliminar Usuario\n6-Crear Equipo\n7-Modificar presupuestos\n8-Limite de Plantillas\n9-Borrar Equipo\n10-Cambiar limite de jugadores por plantilla\n11-Disponibilidad de jugadores\n12-Salir\n");
+		printf("Que opcion quieres?\n1-Listar equipos\n2-Listar Usuarios\n3-Modificar Usuario\n4-Crear Usuario\n5-Eliminar Usuario\n6-Crear Equipo\n7-Modificar presupuestos\n8-Limite de Plantillas\n9-Borrar Equipo\n10-Cambiar limite de jugadores por plantilla\n11-Borrar jugador\n12-Crear Jugador\n13-Salir\n");
 		scanf("%i",&select);
 		switch(select){
 			case 1:
@@ -42,14 +45,21 @@ void menuAdmin(){
 			case 11:
 				disponibilidadJugadores();
 			break;
+			case 12:
+				disponibilidadJugadores2();
+			break;
+			case 13:
+				printf("Saliendo...\n");
+			break;
 			default:
 				printf("Opcion no disponible\n");
 			break;
 		}
-	}while(select!=12);
+	}while(select!=13);
 }
-
-
+//void listarEquipos();
+//Precondicion:Debe tener cargado en memoria los datos de los equipos;
+//Postcondicion:Lista todos los equipos disponibles;
 void listarEquipos(){
 	int i;
 	printf("La lista de equipos es:\n");
@@ -57,7 +67,9 @@ void listarEquipos(){
 		printf("-%i-%s-\n",equipos[i].id,equipos[i].nombre);
 	}
 }
-
+//void listarUsuarios();
+//Precondicion:Debe tener cargado en memoria los datos de los usuarios
+//Postcondicion:Lista todos los equipos disponibles
 void listarUsuarios(){
 	int i;
 	printf("La lista de usuarios es:\n");
@@ -65,13 +77,17 @@ void listarUsuarios(){
 		printf("-%s-%i-%s-%s-%s\n",usuarios[i].nombre,usuarios[i].id,usuarios[i].tipoPerfil,usuarios[i].perfil,usuarios[i].contrasena);
 	}
 }
+//void modificarUsuarios();
+//Precondicion:Debe tener cargado en memoria los datos de los usuarios;
+//Postcondicion:Permite al administrador modificar los distintos parametros de un usuario;
 void modificarUsuarios(){
 	int select,select_2,n_id,error,user,i;
 	char temporal[20];
 	char seguir,aux;
 	printf("Dame la ID del usuario que quieras modificar\n");
 	scanf("%i",&user);
-	if(user>numeroUsuarios||select<0){
+	//Comprobador de que que el usuario introduzca la ID de un usuario valido
+	if(user>numeroUsuarios||user<0){
 		printf("Usuario no existe");
 	}
 	else{
@@ -79,6 +95,7 @@ void modificarUsuarios(){
 		printf("Que quieres modificar?:\n1-Nombre de usuario\n2-La ID\n3-Tipo de perfil\n4-Contrasena\n5-Salir\n");
 		error=0;
 		scanf("%i",&select);
+		//Switch que permite seleccionar que es lo que se quiere cambiar
 		switch(select){
 			case 1: 
 				printf("Que nuevo nombre de usuario quieres?");
@@ -109,6 +126,7 @@ void modificarUsuarios(){
 					printf("El usuario es un %s\n A cual lo quieres cambiar?\n1-Participante\n2-Cronista\n3-Administrador\n4-Salir\n",usuarios[user].tipoPerfil);
 			       
 			       		scanf("%i",&select_2);
+					//Switch que permite cambiar el tipo de perfil del usuarios seleccionado
 			       		switch(select_2){
 				       			case 1:
 						       		strcpy(usuarios[user-1].tipoPerfil,"participante");
@@ -148,15 +166,18 @@ void modificarUsuarios(){
 				printf("Opcion no disponible");
 			break;}
 		}while(select!=5);
-		}
 	}
-
+}
+//void anadirUsuario();
+//Precondicion:Debe tener cargado en memoria los datos de los usuarios;
+//Postcondicion:Permite crear un nuevo usuario con sus respectivos datos;
 void anadirUsuario(){
 	int error,i,select;
-	char temporal[20];
-	numeroUsuarios++;
+	char temporal[20];//Cadena que permite guardar parte de los datos
+	//A la variable global de numero de usuarios se le suma uno (ya que se esta creando uno nuevo) y crea un nuevo espacio de memoria donde se almacenaran los datos de este usuario;
 	usuarios = (usuario*) realloc (usuarios,numeroUsuarios*sizeof(usuario));
 	printf("Que nombre le quieres dar a el usuario?");
+	//Bucle que se encarga de revisar que el nombre de usuario este disponible
 	do{
 		error=1;
 		fgets(temporal,20,stdin);
@@ -168,6 +189,7 @@ void anadirUsuario(){
 			}
 		}
 	}while(error==0);
+	numeroUsuarios++;
 	strcpy(usuarios[numeroUsuarios-1].nombre,temporal);
 	printf("Su usuario es %s",usuarios[numeroUsuarios-1].nombre);
 	printf("Que contrasena quieres?");
@@ -199,7 +221,9 @@ void anadirUsuario(){
 			printf("Opcion no disponible");
 	}
 }
-
+//void eliminarUsuario();
+//Precondicion: Debe tener cargado en memoria los datos de los usuarios
+//Postcondicion: Permite eliminar un usurario
 void eliminarUsuario(){
 	int i,user;
 	char seguir;
@@ -237,7 +261,9 @@ void anadirEquipo(){
 		equipos[numeroEquipos-1].id=numeroEquipos;
 	}
 }
-	
+//void modificarPresupuestos();
+//Precondicion: Debe tener en cargado en memoria los datos de la configuracion
+//Postcondicion: Permite modificar el presupuesto con el que contaran los participantes
 void modificarPresupuestos(){
 	int dineroGastado,nuevoPresupuesto,i,j,k,l;
 	printf("Introduzca el nuevo presupuesto");
@@ -245,12 +271,11 @@ void modificarPresupuestos(){
 	for(j=0;j<numeroUsuarios;j++){
 		printf("%i",usuarios[j].numeroPlantillas);
 		for(i=0;i<usuarios[j].numeroPlantillas;i++){
-			dineroGastado=0;
+			dineroGastado=0;//Variable que tiene en cuanta cuanto dinero ha gastado cada usuario en cada plantilla
 			for(k=0;k<usuarios[j].plantillas[i].numJugadores;k++){
 				dineroGastado=dineroGastado + usuarios[j].plantillas[i].jugadores[k].precio;
 			}
 			if(dineroGastado>nuevoPresupuesto){
-				printf("U:%i-P:%i\n",j,i);
 				usuarios[j].plantillas[i].numJugadores--;
 				usuarios[j].plantillas[i].presupuestoDisponible=nuevoPresupuesto;
 				for(l=0;l<usuarios[j].plantillas[i].numJugadores;l++){
@@ -259,13 +284,14 @@ void modificarPresupuestos(){
 				usuarios[j].plantillas[i].jugadores = (jugador*) realloc (usuarios[j].plantillas[i].jugadores,usuarios[j].plantillas[i].numJugadores*sizeof(jugador));
 				i--;
 			}
-			printf("a");
-		}
+		}//Bucle que comprueba que el dinero gastado de cada plantilla no sobrepase el nuevo presupuesto asigando y de ser asi eliminar el ultimo jugador de la plantilla y reajustando el dinero que tiene el susodicho usuario 
 	}
 	config.presupuesto=nuevoPresupuesto;
 	printf("Presupuesto cambiado exitosamente\n");
 }
-
+//void limitePlantillas();
+//Precondicion: Debe tener cargado en memoria los datos de la configuracion
+//Postcondicion: Permite modificar el limite de plantillas por usuario
 void limitePlantillas(){
 	int maxPlantillas,k;
 	printf("Cual sera el nuevo limite de plantillas?");
@@ -275,11 +301,12 @@ void limitePlantillas(){
 			usuarios[k].numeroPlantillas=config.maxPlantillas;
 		}
 		usuarios[k].plantillas = (plantilla*) realloc (usuarios[k].plantillas,config.maxPlantillas*sizeof(plantilla));
-		printf("%i",k);
-	}
+	}//Bucle que revisa si el numero de plantillas de un usuario supera el numero nuevo de plantillas y de ser asi lo reajusta al nuevo limite eliminando la ultima de las plantillas
 	printf("Limite cambiado exitosamente\n");
 }
-	
+//void borrarEquipo();
+//Precondicion: Debe tener cargado en memoria la informacion de: Usuarios,Plantillas,Equipos,Jugadores;
+//Postcondicion: Perminte borrar un equipo arrastrando consigo los jugadores, los borra de las plantillas en los que este y devuelve el presupuesto de los jugadores ya mencionados
 void borrarEquipo(){
 	int selectDelete,found,i,j,k,l;
 	do{
@@ -350,7 +377,9 @@ void borrarEquipo(){
 		}
 	}
 }
-				
+//void jugadoresPlantilla();
+//Precondicion: Debe tener caragado en memoria la informacion de la configuracionl
+//Postcondicion: Permite modficar el limite de jugadores por plantilla
 void jugadoresPlantilla(){
 	int nuevoLimite,i,j,k;
 	do{
@@ -360,6 +389,7 @@ void jugadoresPlantilla(){
 			printf("Solo numemro naturales mayores a 0\n");
 		}
 	}while(nuevoLimite<1);
+	config.maxJugadores=nuevoLimite;
 	for(i=0;i<numeroUsuarios;i++){
 		for(j=0;j<usuarios[i].numeroPlantillas;j++){
 			if(nuevoLimite<usuarios[i].plantillas[j].numJugadores){
@@ -367,9 +397,11 @@ void jugadoresPlantilla(){
 				usuarios[i].plantillas[j].numJugadores=nuevoLimite;
 			}
 		}
-	}
+	}//Bucle que comprueba si una plantilla supera el nuevo 
 }
-
+//void disponibilidadJugadores();
+//Precondicion: Debe estar toda la informacion cargada en memoria
+//Postcondicion: permite eliminar un jugador con lo que ello implica
 void disponibilidadJugadores(){
 	int selectDelete,found,i,j,k,l;
 	for(i=0;i<numeroJugadores;i++){
@@ -386,7 +418,7 @@ void disponibilidadJugadores(){
 					usuarios[i].plantillas[j].presupuestoDisponible=usuarios[i].plantillas[j].presupuestoDisponible+usuarios[i].plantillas[j].jugadores[k].precio;
 					usuarios[i].plantillas[j].numJugadores--;
 					for(l=k;l<usuarios[i].plantillas[j].numJugadores;l++){
-						usuarios[i].plantillas[j].jugadores[l].id= usuarios[i].plantillas[j].jugadores[l+1].id-1;
+						usuarios[i].plantillas[j].jugadores[l].id= usuarios[i].plantillas[j].jugadores[l+1].id;
 						usuarios[i].plantillas[j].jugadores[l].equipo= usuarios[i].plantillas[j].jugadores[l+1].equipo;
 						usuarios[i].plantillas[j].jugadores[l].precio=usuarios[i].plantillas[j].jugadores[l+1].precio;
 						usuarios[i].plantillas[j].jugadores[l].valoracion=usuarios[i].plantillas[j].jugadores[l+1].valoracion;
@@ -397,33 +429,64 @@ void disponibilidadJugadores(){
 		}
 	}
 }
-
-
-
-
-
-				
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
+//void disponibilidadJugadores2();
+//Precondicion: Debe tener los jugadores cargados en memoria
+//Postcondicion: Permite crear jugadores
+void disponibilidadJugadores2(){
+	char temp[21],aux;
+	int i,j,error,id;
+	if(numeroJugadores==100){
+		printf("No hay espacio para mas jugadores, por favor elimine alguno de los ya existentes\n");
+	}
+	else{
+		do{
+			scanf("%c",&aux);
+			error=1;
+			printf("Introduza el nombre del jugador que quiere crear\n");
+			fgets(temp,20,stdin);
+			temp[strlen(temp)-1]='\0';
+			for(i=0;i<numeroJugadores&&error!=0;i++){
+				error=strcmp(temp,jugadores[i].nombre);
+			}
+			if(error==0){
+				printf("Jugador ya existe\n");
+			}
+			else{
+				numeroJugadores++;
+				jugadores=(jugador*) realloc (jugadores,numeroJugadores*sizeof(jugador));
+				strcpy(jugadores[numeroJugadores-1].nombre,temp);
+				printf("Jugador creado correctamente\n");
+				listarEquipos();
+				do{
+					error=0;
+					printf("Introduzca la id del equipo al que pertenece\n");
+					scanf("%i",&jugadores[numeroJugadores-1].equipo);
+					for(i=0;i<numeroEquipos&&error!=1;i++){
+						if(jugadores[numeroJugadores-1].equipo==equipos[i].id){
+							error=1;
+						}
+					}
+					if(error==0){
+						printf("Equipo no existe\n");
+					}
+				}while(error==0);
+				do{
+					error=1;
+					do{
+						printf("Introduzca la id del jugador\n");
+						scanf("%i",&jugadores[numeroJugadores-1].id);
+					}while(jugadores[numeroJugadores-1].id>99);
+					for(i=0;i<numeroJugadores-1&&error!=0;i++){
+						if(jugadores[i].id==jugadores[numeroJugadores-1].id){
+							printf("Id ya en uso, coja otra\n");
+							error=0;
+						}
+					}
+				}while(error==0);
+				printf("Introduzca el precio del jugador\n");
+				scanf("%i",&jugadores[numeroJugadores-1].precio);
+				jugadores[numeroJugadores-1].valoracion=0;
+				}
+		}while(error==0);
+	}
+}	

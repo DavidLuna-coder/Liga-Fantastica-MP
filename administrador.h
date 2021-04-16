@@ -15,4 +15,5 @@ void limitePlantillas();
 void borrarEquipo();
 void jugadoresPlantilla();
 void disponibilidadJugadores();
+void disponibilidadJugadores2();
 #endif
