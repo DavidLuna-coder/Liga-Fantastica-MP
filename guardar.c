@@ -92,7 +92,7 @@ void guardarPlantillas(){
        for(int j = 0; j<usuarios[i].numeroPlantillas;j++){
             if(usuarios[i].plantillas[j].idUsuario<10)
             fprintf (PLANTILLAS,"0");
-            fprintf(PLANTILLAS,"%i-",usuarios[i].plantillas[j].idUsuario,usuarios[i].plantillas[j].idPlantilla,usuarios[i].plantillas[j].nombre,usuarios[i].plantillas[j].presupuestoDisponible,usuarios[i].plantillas[j].puntuacion);
+            fprintf(PLANTILLAS,"%i-%s-%i-%i",usuarios[i].plantillas[j].idUsuario,usuarios[i].plantillas[j].idPlantilla,usuarios[i].plantillas[j].nombre,usuarios[i].plantillas[j].presupuestoDisponible,usuarios[i].plantillas[j].puntuacion);
 
             if(usuarios[i].plantillas[j].idPlantilla<100)
             fprintf(PLANTILLAS,"0");
