@@ -75,7 +75,7 @@ for(i=0;i<usuarios[usuarioActual].numeroPlantillas || found ==0;i++){
  printf("%i\n",usuarios[usuarioActual].numeroPlantillas);
 usuarios[usuarioActual].numeroPlantillas++;
 usuarios[usuarioActual].plantillas = (plantilla*)realloc(usuarios[usuarioActual].plantillas,(usuarios[usuarioActual].numeroPlantillas)*sizeof(plantilla)); 
- if(usuarios[usuarioActual].plantillas[i].jugadores==NULL){
+ if(usuarios[usuarioActual].plantillas==NULL){
         printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
         }
         else{

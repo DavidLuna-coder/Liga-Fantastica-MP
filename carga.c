@@ -139,7 +139,7 @@ void cargarConfiguracion(){
     char temp[50];
     int i;
     int j;
-    char aux;
+    char aux='0';
     CONFIGURACION = fopen("Configuracion.txt", "r");
     if (CONFIGURACION == NULL){
         printf("Error al cargar la configuración.\n");
@@ -268,7 +268,7 @@ void cargarUsuarios(){
 
 void cargarPlantillas(){
     char temp[50];
-    char aux;
+    char aux='0';
     int i,j,k,l,id;
 
     PLANTILLAS = fopen("Plantillas.txt","r");
@@ -280,11 +280,11 @@ void cargarPlantillas(){
     numeroPlantillas = contadorLineas(PLANTILLAS);
     rewind(PLANTILLAS);
     printf("%iNUNM",numeroPlantillas);
-    if(numeroPlantillas!=0){
     for(i=0; i<numeroUsuarios;i++){
         usuarios[i].numeroPlantillas = 0;
         usuarios[i].plantillas = (plantilla*)malloc(1*sizeof(plantilla));
 	}
+    if(numeroPlantillas!=0){
     for(j=0;!feof(PLANTILLAS);j++){
         vaciar(temp);
         aux = '0';
