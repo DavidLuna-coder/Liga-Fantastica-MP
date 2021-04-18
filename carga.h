@@ -77,5 +77,5 @@ void cargarUsuarios();
 void cargarPlantillas();
 void cargarJugadorPlantilla();
 void vaciar (char *);
-
+void Cargar();
 #endif
