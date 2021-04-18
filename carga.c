@@ -3,11 +3,7 @@
 #include <stdlib.h>
 #include "carga.h"
 
-int contadorLineas(FILE *);
-
-//Cabecera:void cargarEquipos();
-//Precondición: Existe fichero Equipos
-//Postcondición:Almacena datos en la estructura equipos.
+int contadorLineas(FILE *FICHERO);
 //Carga los datos del fichero equipos.txt en la estructura equipo
 void cargarEquipos(){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
@@ -47,7 +43,7 @@ void cargarEquipos(){
         
     }
     
-    //Introducimos los jugadores en los equipos
+
     for(i = 0; i<=numeroEquipos;i++){
         k = 0;
         
@@ -65,9 +61,6 @@ void cargarEquipos(){
 }
 //Carga los datos del fichero futbolista en la estructura jugadores.
 
-//Cabecera:void cargarJugadores();
-//Precondición: Existe fichero Jugadores.txt
-//Postcondición:Almacena datos en la estructura jugadores.
 void cargarJugadores (){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
     char aux;
@@ -79,8 +72,8 @@ void cargarJugadores (){
     exit(1);
     } 
 
-    numeroJugadores = contadorLineas(FUTBOLISTAS); //Cuenta la cantidad de jugadores que hay
-    jugadores = (jugador *)malloc(numeroJugadores*sizeof(jugador)); //Se le asigna un tamaño al vector jugadores
+    numeroJugadores = contadorLineas(FUTBOLISTAS);
+    jugadores = (jugador *)malloc(numeroJugadores*sizeof(jugador));
     rewind (FUTBOLISTAS);
     for(i=0;!feof(FUTBOLISTAS);i++){
         vaciar(temporal);
@@ -91,18 +84,18 @@ void cargarJugadores (){
                 temporal[j]= aux;
             }
         }
-        jugadores[i].id = atoi(temporal);//Copiamos en la id del jugador la cadena guardada
+        jugadores[i].id = atoi(temporal);//Copiamos en la id de equipo la cadena guardada
         vaciar(temporal);
         aux = '0';
         
-     
+        //Cada vez que encuentra un salto de línea copia el texto anterior en temporal
         for (j=0; aux !='-'&&!feof(FUTBOLISTAS); j++){
             aux = fgetc(FUTBOLISTAS);
             if(aux != '-'){
                 temporal[j] = aux;
             }
         }
-        jugadores[i].equipo = atoi(temporal); //Guardamos la id del equipo en la estuctura
+        jugadores[i].equipo = atoi(temporal);
 
         vaciar(temporal);
         aux = '0';
@@ -114,7 +107,7 @@ void cargarJugadores (){
                 temporal[j]=aux;
             }
         }
-        strcpy (jugadores[i].nombre,temporal);  //Guarda el nombre del jugador
+        strcpy (jugadores[i].nombre,temporal);
         vaciar (temporal);
         aux = '0';
 
@@ -125,7 +118,7 @@ void cargarJugadores (){
             }
         }
 
-        jugadores[i].precio = atoi(temporal); //Guarda el precio de los jugadores
+        jugadores[i].precio = atoi(temporal);
         vaciar(temporal);
         
         aux = '0';
@@ -142,9 +135,6 @@ void cargarJugadores (){
     fclose(FUTBOLISTAS);
 }
 
-//Cabecera:void cargarConfiguración();
-//Precondición: Existe fichero Configuración.txt
-//Postcondición:Almacena datos en la estructura config.
 void cargarConfiguracion(){
     char temp[50];
     int i;
@@ -196,9 +186,7 @@ void cargarConfiguracion(){
     }
     fclose(CONFIGURACION);
 }
-//Cabecera:void cargarUsuarios();
-//Precondición: Existe fichero Usuarios.txt
-//Postcondición:Almacena datos en la estructura Usuarios.
+
 void cargarUsuarios(){
     char aux = '0';
     int i,j;
@@ -211,7 +199,6 @@ void cargarUsuarios(){
     }
     
     numeroUsuarios = contadorLineas(USUARIOS);
-    
     usuarios = (usuario *)malloc(numeroUsuarios*sizeof(usuario));
     if(usuarios == NULL){
         printf("Error en la reserva de memoria de usuarios\n");
@@ -274,18 +261,15 @@ void cargarUsuarios(){
         }
         strcpy(usuarios[i].contrasena,temp);
         vaciar (temp);  
-        
     }
 
     fclose(USUARIOS);
 }
-//Cabecera:void cargarPlantillas();
-//Precondición: Existe fichero Plantillas.txt
-//Postcondición:Almacena datos en la estructura Plantillas.
+
 void cargarPlantillas(){
     char temp[50];
     char aux;
-    int i,j,k,l;
+    int i,j,k,l,id;
 
     PLANTILLAS = fopen("Plantillas.txt","r");
 
@@ -295,11 +279,13 @@ void cargarPlantillas(){
     }
     numeroPlantillas = contadorLineas(PLANTILLAS);
     rewind(PLANTILLAS);
+    printf("%iNUNM",numeroPlantillas);
+    if(numeroPlantillas!=0){
     for(i=0; i<numeroUsuarios;i++){
         usuarios[i].numeroPlantillas = 0;
         usuarios[i].plantillas = (plantilla*)malloc(1*sizeof(plantilla));
-    
-    for(j=0;!feof(PLANTILLAS)&&j<=usuarios[i].numeroPlantillas;j++){
+	}
+    for(j=0;!feof(PLANTILLAS);j++){
         vaciar(temp);
         aux = '0';
         for ( k = 0; aux != '-' && !feof(PLANTILLAS); k++){
@@ -308,8 +294,8 @@ void cargarPlantillas(){
                 temp[k]=aux;
             }
         }
-        
-        usuarios[i].plantillas[j].idUsuario = atoi(temp);
+	id=atoi(temp);
+        usuarios[id].plantillas[j].idUsuario = atoi(temp);
         vaciar(temp);
         aux = '0';
 
@@ -319,7 +305,7 @@ void cargarPlantillas(){
                 temp[k]=aux;
             }
         }
-        usuarios[i].plantillas[j].idPlantilla = atoi(temp);
+        usuarios[id].plantillas[j].idPlantilla = atoi(temp);
         vaciar(temp);
         aux = '0';
         
@@ -329,7 +315,7 @@ void cargarPlantillas(){
                 temp[k]=aux;
             }
         }
-        strcpy(usuarios[i].plantillas[j].nombre,temp);
+        strcpy(usuarios[id].plantillas[j].nombre,temp);
         vaciar(temp);
         aux = '0';
 
@@ -339,26 +325,24 @@ void cargarPlantillas(){
                 temp[k]=aux;
             }
         }
-        usuarios[i].plantillas[j].presupuestoDisponible = atoi(temp);
+        usuarios[id].plantillas[j].presupuestoDisponible = atoi(temp);
         vaciar(temp);
         aux = '0';
-        
+
         for ( k = 0; aux != '\n' && !feof(PLANTILLAS); k++){
             aux = fgetc(PLANTILLAS);
             if(aux!='\n'&& !feof(PLANTILLAS)){
                 temp[k]=aux;
             }
         }
-        usuarios[i].plantillas[j].puntuacion = atoi(temp);
+        usuarios[id].plantillas[j].puntuacion = atoi(temp);
         vaciar(temp);
         aux = '0';
-        usuarios[i].numeroPlantillas++;
-        usuarios[i].plantillas = (plantilla*)realloc(usuarios[i].plantillas,(usuarios[i].numeroPlantillas+1)*sizeof(plantilla));
-    
-        }
+        usuarios[id].numeroPlantillas++;
+        usuarios[id].plantillas = (plantilla*)realloc(usuarios[id].plantillas,(usuarios[id].numeroPlantillas+1)*sizeof(plantilla));
         
-    }
-    
+        }
+}
     fclose(PLANTILLAS);
     
   
@@ -397,9 +381,6 @@ void cargarPlantillas(){
     }
 }
 
-//Cabecera:void cargarUsuarios();
-//Precondición: Existe fichero Jugadores_Plantillas.txt
-//Postcondición:Almacena datos en la estructura jugadorPlantillas.
 void cargarJugadorPlantilla(){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
     char aux;
@@ -446,9 +427,6 @@ void cargarJugadorPlantilla(){
 
 }
 // Vacia la cadena de caracteres donde se almacenaremos los datos antes te volcarlos en la estructura
-//Cabecera:void vaciar(char *);
-//Precondición: char [N] && N<50
-//Postcondición:Vacia completamente la cadena
 void vaciar (char temp[]){
     for ( int i = 0; i < 50; i++)
     {
@@ -457,28 +435,15 @@ void vaciar (char temp[]){
 
 }
 
-//Cabecera:void Cargar();
-//Precondición: 
-//Postcondición:Carga todos los datos utilizando las funciones de carga.
-void Cargar(){
-    cargarConfiguracion();
-    cargarJugadores();
-    cargarEquipos();
-    cargarJugadorPlantilla();
-    cargarUsuarios();
-    cargarPlantillas();
-}
-
-//Cabecera:int contadorLineas(FILE *);
-//Precondición: FICHERO != NULL
-//Postcondición:Devuelve el numero de lineas del fichero.(contador).
 int contadorLineas(FILE *FICHERO){
 	int contador=0;
-	char temp[50];
+	char temp[50],c;
     rewind(FICHERO);
+    	c=fgetc(FICHERO);
 	while(!feof(FICHERO)){
 		fgets(temp,50,FICHERO);
 		contador++;
+    		c=fgetc(FICHERO);
 
 	}
 	return contador;

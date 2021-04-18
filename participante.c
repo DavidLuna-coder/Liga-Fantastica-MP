@@ -56,14 +56,13 @@ void participantes(){
 
 void Cplantilla(){
 int i,j,found,IDt,selec;
-char plant[30];
+char plant[30],aux;
 printf("\nintroduce nombre para la plantilla: ");
 do{
     found =1;
-    
-    fflush(stdin);
+	scanf("%c",&aux);   
 fgets(plant,30,stdin);
-strtok(plant, "\n");
+plant[strlen(plant)-1]='\0';
 for(i=0;i<usuarios[usuarioActual].numeroPlantillas || found ==0;i++){
     found = strcmp(usuarios[usuarioActual].plantillas[i].nombre,plant);
 
@@ -85,14 +84,10 @@ usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].i
 strcpy(usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].nombre,plant);
 usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].presupuestoDisponible=config.presupuesto;
 usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].numJugadores=0;
-  printf("\npresupuesto disponible: %i $",usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas].presupuestoDisponible);
+usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].puntuacion=0;
+  printf("\npresupuesto disponible: %i $",usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].presupuestoDisponible);
     printf("\n\n----------------------------------------\n");
 
-    printf("%s\n",usuarios[0].plantillas[0].nombre);
-    printf("%s\n",usuarios[usuarioActual].plantillas[0].nombre);
-   printf("%s\n",usuarios[usuarioActual].plantillas[1].nombre);
-   printf("%s\n",usuarios[usuarioActual].plantillas[2].nombre);
-   printf("%i\n",usuarios[usuarioActual].numeroPlantillas);
 }
 }
 void configu(){
