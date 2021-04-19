@@ -32,7 +32,7 @@ void participantes(){
             break;
 
         case 4:
-            /* code */
+            eliminarPlantillas();
             break;
         case 5:
             /* code */
@@ -60,7 +60,7 @@ char plant[30],aux;
 printf("\nintroduce nombre para la plantilla: ");
 do{
     found =1;
-fflush(stdin);
+scanf("%c",&aux);
 fgets(plant,30,stdin);
 plant[strlen(plant)-1]='\0';
 for(i=0;i<usuarios[usuarioActual].numeroPlantillas && found!=0;i++){
@@ -74,12 +74,13 @@ for(i=0;i<usuarios[usuarioActual].numeroPlantillas && found!=0;i++){
 }while(found==0);
 
 usuarios[usuarioActual].numeroPlantillas++;
+numeroPlantillas++;
 usuarios[usuarioActual].plantillas = (plantilla*)realloc(usuarios[usuarioActual].plantillas,(usuarios[usuarioActual].numeroPlantillas)*sizeof(plantilla)); 
  if(usuarios[usuarioActual].plantillas==NULL){
         printf("Error en la reserva de memoria de la plantilla\n");
         }
         else{
-usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].idPlantilla=usuarios[usuarioActual].numeroPlantillas;
+usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].idPlantilla=numeroPlantillas;
 usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].idUsuario=usuarios[usuarioActual].id;
 strcpy(usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].nombre,plant);
 usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].presupuestoDisponible=config.presupuesto;
@@ -242,3 +243,95 @@ void listarPlantillas(){
 	}
 
 }
+//void eliminarPlantillas();
+//Precondicion:Debe tener cargado en memoria los datos de plantillas y de jugadores plantillas
+//Pos
+void eliminarPlantillas(){
+	int i,j,k,select,found=0,plantillaActual;
+	listarPlantillas();
+	if(usuarios[usuarioActual].numeroPlantillas!=0){
+		do{
+			printf("Introduzca la id de la plantilla que quiere eliminar\n");
+			scanf("%i",&select);
+			for(i=0;i<usuarios[usuarioActual].numeroPlantillas&&found!=1;i++){
+				if(select==usuarios[usuarioActual].plantillas[i].idPlantilla){
+					plantillaActual=i;
+					printf("Plantilladortest%i\n",plantillaActual);
+					found=1;
+					select=usuarios[usuarioActual].plantillas[i].idPlantilla;
+					}
+			}
+			if(found==0){
+				printf("Plantilla no encontrada\n");
+			}
+		}while(found==0);
+		for(i=0;i<usuarios[usuarioActual].plantillas[plantillaActual].numJugadores;i++){
+			found=0;
+			for(j=0;j<numeroJugadoresPlantillas&&found!=1;j++){
+				if(usuarios[usuarioActual].plantillas[plantillaActual].jugadores[i].id==jugadoresPlantillas[j].idJugador&&usuarios[usuarioActual].plantillas[plantillaActual].idPlantilla==jugadoresPlantillas[j].idPlantilla){
+					found=1;
+					for(k=j;k<numeroJugadoresPlantillas;k++){
+						jugadoresPlantillas[k].idPlantilla=jugadoresPlantillas[k+1].idPlantilla;
+						jugadoresPlantillas[k].idJugador=jugadoresPlantillas[k+1].idJugador;
+					}
+				numeroJugadoresPlantillas--;
+				jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,numeroJugadoresPlantillas*sizeof(jugadorPlantilla));
+        			if(jugadoresPlantillas==NULL){
+        			printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+        			}
+				}
+			}
+		}
+			for(k=0;k<numeroJugadoresPlantillas;k++){
+				if(select<jugadoresPlantillas[k].idPlantilla){
+					jugadoresPlantillas[k].idPlantilla--;
+				}
+			}
+		if(usuarios[usuarioActual].numeroPlantillas>1){
+			for(i=plantillaActual;i<usuarios[usuarioActual].numeroPlantillas-1;i++){
+				usuarios[usuarioActual].plantillas[i].numJugadores=usuarios[usuarioActual].plantillas[i+1].numJugadores;
+				if(usuarios[usuarioActual].plantillas[i].numJugadores!=0){
+					usuarios[usuarioActual].plantillas[i].jugadores= (jugador*) realloc (usuarios[usuarioActual].plantillas[i].jugadores,usuarios[usuarioActual].plantillas[i].numJugadores*sizeof(jugador));
+        				if(usuarios[usuarioActual].plantillas[plantillaActual].jugadores==NULL){
+        				printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+        				}
+				}
+				else{
+					usuarios[usuarioActual].plantillas[i].jugadores= (jugador*) realloc (usuarios[usuarioActual].plantillas[i].jugadores,1*sizeof(jugador));
+        				if(usuarios[usuarioActual].plantillas[plantillaActual].jugadores==NULL){
+        				printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+					}
+				}	
+				for(k=0;k<usuarios[usuarioActual].plantillas[i].numJugadores;k++){
+					usuarios[usuarioActual].plantillas[i].jugadores[k].id=usuarios[usuarioActual].plantillas[i+1].jugadores[k].id;
+					usuarios[usuarioActual].plantillas[i].jugadores[k].equipo=usuarios[usuarioActual].plantillas[i+1].jugadores[k].equipo;
+					usuarios[usuarioActual].plantillas[i].jugadores[k].precio=usuarios[usuarioActual].plantillas[i+1].jugadores[k].precio;
+					usuarios[usuarioActual].plantillas[i].jugadores[k].valoracion=usuarios[usuarioActual].plantillas[i+1].jugadores[k].valoracion;
+					strcpy(usuarios[usuarioActual].plantillas[i].jugadores[k].nombre,usuarios[usuarioActual].plantillas[i+1].jugadores[k].nombre);
+					}
+				usuarios[usuarioActual].plantillas[i].presupuestoDisponible=usuarios[usuarioActual].plantillas[i+1].presupuestoDisponible;
+				usuarios[usuarioActual].plantillas[i].puntuacion=usuarios[usuarioActual].plantillas[i+1].puntuacion;
+				strcpy(usuarios[usuarioActual].plantillas[i].nombre,usuarios[usuarioActual].plantillas[i+1].nombre);
+			}
+			usuarios[usuarioActual].numeroPlantillas--;
+			numeroPlantillas--;
+			usuarios[usuarioActual].plantillas= (plantilla*) realloc (usuarios[usuarioActual].plantillas,usuarios[usuarioActual].numeroPlantillas*sizeof(plantilla));
+        		if(usuarios[usuarioActual].plantillas==NULL){
+        			printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+        		}
+		}
+		else{
+			usuarios[usuarioActual].numeroPlantillas--;
+		}
+	}
+	else{
+		printf("No hay plantillas que eliminar");
+	}
+}
+
+
+
+
+
+
+

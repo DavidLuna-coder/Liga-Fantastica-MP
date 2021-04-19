@@ -11,4 +11,5 @@ void configu();
 void addJug();
 void remoJug();
 void listarPlantillas();
+void eliminarPlantillas();
 #endif
