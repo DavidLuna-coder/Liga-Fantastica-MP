@@ -4,6 +4,12 @@
 #include "carga.h"
 
 int contadorLineas(FILE *FICHERO);
+void cargarEquipos();
+void cargarJugadores();
+void cargarConfiguracion();
+void cargarUsuarios();
+void cargarPlantillas();
+void cargarJugadorPlantilla();
 //Carga los datos del fichero equipos.txt en la estructura equipo
 //Cabecera: void cargarEquipos()
 //Precondición: Existe fichero Jugadores.txt
@@ -483,4 +489,17 @@ int contadorLineas(FILE *FICHERO){
 
 	}
 	return contador;
+}
+
+
+//Cabecera: void cargar()
+//Precondicion:
+//Postcondicion: Carga todos los ficheros en estructuras
+void cargar(){
+    cargarConfiguracion();
+    cargarJugadores();
+    cargarEquipos();
+    cargarJugadorPlantilla();
+    cargarUsuarios();
+    cargarPlantillas();
 }

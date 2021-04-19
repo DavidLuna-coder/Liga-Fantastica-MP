@@ -70,12 +70,9 @@ FILE *USUARIOS;
 FILE *PLANTILLAS;
 FILE *JUGADORESPLANTILLAS;
 
-void cargarEquipos();
-void cargarJugadores();
-void cargarConfiguracion();
-void cargarUsuarios();
-void cargarPlantillas();
-void cargarJugadorPlantilla();
+
+void cargar();
+
 void vaciar (char *);
 
 #endif
