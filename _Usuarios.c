@@ -198,10 +198,14 @@ else{
                 }
             
                 }while(elec2!=1 && elec2!=2 && elec2!=3);
-                vaciar (usuarios[j].contrasena);
+
                 usuarios[j].id=j;
-                
-                
+                usuarios[j].numeroPlantillas=0;
+                usuarios[j].plantillas = (plantilla*)malloc(1*sizeof(plantilla));
+                if(usuarios[j].plantillas==NULL){
+                    printf("error en la carga de usuarios al registrarse\n");
+                    exit(1);
+                }
                  strcpy(usuarios[j].contrasena, paswordR);
                  strcpy(usuarios[j].perfil, useraccessR);
                  strcpy(usuarios[j].nombre, userR);
