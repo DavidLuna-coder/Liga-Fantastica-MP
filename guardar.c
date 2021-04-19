@@ -69,44 +69,54 @@ void guardarUsuarios(){
         exit(1);
     }
     for (i=0;i<numeroUsuarios;i++){
-        if(usuarios[i].id>=10&&i!=numeroUsuarios-1){
-            fprintf(USUARIOS,"%i-%s-%s-%s-%s\n",usuarios[i].id,usuarios[i].nombre,usuarios[i].tipoPerfil,usuarios[i].perfil,usuarios[i].contrasena);
-        }else if(usuarios[i].id<10&&i!=numeroUsuarios-1){
-            fprintf(USUARIOS,"0%i-%s-%s-%s-%s\n",usuarios[i].id,usuarios[i].nombre,usuarios[i].tipoPerfil,usuarios[i].perfil,usuarios[i].contrasena);
-        }else{
-            fprintf(USUARIOS,"0%i-%s-%s-%s-%s",usuarios[i].id,usuarios[i].nombre,usuarios[i].tipoPerfil,usuarios[i].perfil,usuarios[i].contrasena);
-    }
+        printf("TEST");
+        if(usuarios[i].id<10){
+            fprintf(USUARIOS,"0");
+        }
+        fprintf(USUARIOS,"%i-%s-%s-%s-%s",usuarios[i].id,usuarios[i].nombre,usuarios[i].tipoPerfil,usuarios[i].perfil,usuarios[i].contrasena);
+        if(i!=numeroUsuarios-1)
+        fprintf(USUARIOS,"\n");
     }
 
     fclose(USUARIOS);
+
 }
 
 void guardarPlantillas(){
-    int i,j;
+    int i,j,usuarioLimite;
     PLANTILLAS = fopen("Plantillas.txt","w");
     if(PLANTILLAS == NULL){
         printf("Error al guardar las plantillas\n");
         exit(1);
     }
-    for(int i=0;i<numeroUsuarios;i++){
-       for(int j = 0; j<usuarios[i].numeroPlantillas;j++){
-            if(usuarios[i].plantillas[j].idUsuario<10)
-            fprintf (PLANTILLAS,"0");
-            fprintf(PLANTILLAS,"%i-",usuarios[i].plantillas[j].idUsuario,usuarios[i].plantillas[j].idPlantilla,usuarios[i].plantillas[j].nombre,usuarios[i].plantillas[j].presupuestoDisponible,usuarios[i].plantillas[j].puntuacion);
+    for(i=0;i<numeroUsuarios;i++){
+            if(usuarios[i].numeroPlantillas != 0)
+            usuarioLimite = i;
+    }
+    printf("AQUI: %i\n",usuarioLimite);
 
+    for(i =0 ; i<=usuarioLimite;i++){
+        if(usuarios[i].numeroPlantillas!=0){
+        for(j=0;j<usuarios[i].numeroPlantillas;j++){
+            if(usuarios[i].plantillas[j].idUsuario<10)
+            fprintf(PLANTILLAS,"0");
+            fprintf(PLANTILLAS,"%i-",usuarios[i].plantillas[j].idUsuario);
             if(usuarios[i].plantillas[j].idPlantilla<100)
             fprintf(PLANTILLAS,"0");
             if(usuarios[i].plantillas[j].idPlantilla<10)
             fprintf(PLANTILLAS,"0");
-            if(j == usuarios[i].numeroPlantillas - 1&&i == numeroUsuarios - 1)
-            fprintf(PLANTILLAS,"%i-%s-%i-%i",usuarios[i].plantillas[j].idPlantilla,usuarios[i].plantillas[j].nombre,usuarios[i].plantillas[j].presupuestoDisponible,usuarios[i].plantillas[j].puntuacion);
-            else
-            fprintf(PLANTILLAS,"%i-%s-%i-%i\n",usuarios[i].plantillas[j].idPlantilla,usuarios[i].plantillas[j].nombre,usuarios[i].plantillas[j].presupuestoDisponible,usuarios[i].plantillas[j].puntuacion);
+            fprintf(PLANTILLAS,"%i-",usuarios[i].plantillas[j].idPlantilla);
+            fprintf(PLANTILLAS,"%s-%i-%i",usuarios[i].plantillas[j].nombre,usuarios[i].plantillas[j].presupuestoDisponible,usuarios[i].plantillas[j].puntuacion);
+            if(i!=usuarioLimite)
+            fprintf(PLANTILLAS,"\n");
+            else if(i==usuarioLimite && j!=usuarios[i].numeroPlantillas-1)
+            fprintf(PLANTILLAS,"\n");
         }
-   }
+        }
+
+    }
    fclose(PLANTILLAS);
 }
-
 void guardarJugadorPlantilla(){
     int i;
     JUGADORESPLANTILLAS = fopen("Jugadores_Plantillas.txt","w");
