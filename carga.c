@@ -324,7 +324,8 @@ void cargarPlantillas(){
             }
         }
 	id=atoi(temp);
-        usuarios[id].plantillas[j].idUsuario = atoi(temp);
+
+        usuarios[id].plantillas[usuarios[id].numeroPlantillas].idUsuario = atoi(temp);
         vaciar(temp);
         aux = '0';
 
@@ -334,7 +335,7 @@ void cargarPlantillas(){
                 temp[k]=aux;
             }
         }
-        usuarios[id].plantillas[j].idPlantilla = atoi(temp);
+        usuarios[id].plantillas[usuarios[id].numeroPlantillas].idPlantilla = atoi(temp);
         vaciar(temp);
         aux = '0';
         
@@ -344,7 +345,7 @@ void cargarPlantillas(){
                 temp[k]=aux;
             }
         }
-        strcpy(usuarios[id].plantillas[j].nombre,temp);
+        strcpy(usuarios[id].plantillas[usuarios[id].numeroPlantillas].nombre,temp);
         vaciar(temp);
         aux = '0';
 
@@ -354,7 +355,7 @@ void cargarPlantillas(){
                 temp[k]=aux;
             }
         }
-        usuarios[id].plantillas[j].presupuestoDisponible = atoi(temp);
+        usuarios[id].plantillas[usuarios[id].numeroPlantillas].presupuestoDisponible = atoi(temp);
         vaciar(temp);
         aux = '0';
 
@@ -364,7 +365,7 @@ void cargarPlantillas(){
                 temp[k]=aux;
             }
         }
-        usuarios[id].plantillas[j].puntuacion = atoi(temp);
+        usuarios[id].plantillas[usuarios[id].numeroPlantillas].puntuacion = atoi(temp);
         vaciar(temp);
         aux = '0';
         usuarios[id].numeroPlantillas++;
