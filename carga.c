@@ -5,6 +5,9 @@
 
 int contadorLineas(FILE *FICHERO);
 //Carga los datos del fichero equipos.txt en la estructura equipo
+//Cabecera: void cargarEquipos()
+//Precondición: Existe fichero Jugadores.txt
+//Postcondición: Carga los jugadores en la estructura jugadores
 void cargarEquipos(){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
     char aux;
@@ -60,6 +63,10 @@ void cargarEquipos(){
     fclose(EQUIPOS);
 }
 //Carga los datos del fichero futbolista en la estructura jugadores.
+
+//Cabecera: void cargarJugadores()
+//Precondición: Existe fichero Jugadores.txt
+//Postcondición: Carga los jugadores en la estructura jugadores
 
 void cargarJugadores (){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
@@ -135,11 +142,15 @@ void cargarJugadores (){
     fclose(FUTBOLISTAS);
 }
 
+//Cabecera: void cargarConfiguración()
+//Precondición: Existe fichero Configuracion.txt
+//Postcondición: Carga la configuración en la estructura config
+
 void cargarConfiguracion(){
     char temp[50];
     int i;
     int j;
-    char aux='0';
+    char aux;
     CONFIGURACION = fopen("Configuracion.txt", "r");
     if (CONFIGURACION == NULL){
         printf("Error al cargar la configuración.\n");
@@ -186,6 +197,10 @@ void cargarConfiguracion(){
     }
     fclose(CONFIGURACION);
 }
+
+//Cabecera: void cargarUsuarios()
+//Precondición: Existe fichero Usuarios.txt
+//Postcondición: Carga la configuración en la estructura usuarios
 
 void cargarUsuarios(){
     char aux = '0';
@@ -266,9 +281,13 @@ void cargarUsuarios(){
     fclose(USUARIOS);
 }
 
+//Cabecera: void cargarPlantillas()
+//Precondición: Existe fichero Plantillas.txt
+//Postcondición: Carga la configuración en la estructura plantillas dentro de la estructura usuarios
+
 void cargarPlantillas(){
     char temp[50];
-    char aux='0';
+    char aux;
     int i,j,k,l,id;
 
     PLANTILLAS = fopen("Plantillas.txt","r");
@@ -280,9 +299,13 @@ void cargarPlantillas(){
     numeroPlantillas = contadorLineas(PLANTILLAS);
     rewind(PLANTILLAS);
     printf("%iNUNM",numeroPlantillas);
+    
     for(i=0; i<numeroUsuarios;i++){
         usuarios[i].numeroPlantillas = 0;
         usuarios[i].plantillas = (plantilla*)malloc(1*sizeof(plantilla));
+        if(usuarios[i].plantillas==NULL){
+            printf("ERROR\n");
+        }
 	}
     if(numeroPlantillas!=0){
     for(j=0;!feof(PLANTILLAS);j++){
@@ -381,6 +404,10 @@ void cargarPlantillas(){
     }
 }
 
+//Cabecera: void cargarJugadorPlantilla()
+//Precondición: Existe fichero Jugadores_Plantilals.txt
+//Postcondición: Carga la configuración en la estructura jugadorPlantillas
+
 void cargarJugadorPlantilla(){
     char temporal[50]; // Cadena donde almacenaremos los datos que posteriormente copiaremos
     char aux;
@@ -427,13 +454,22 @@ void cargarJugadorPlantilla(){
 
 }
 // Vacia la cadena de caracteres donde se almacenaremos los datos antes te volcarlos en la estructura
+
+//Cabecera: void vaciar(char *)
+//Precondición: char[N] && N<=50
+//Postcondición: Carga la configuración en la estructura usuarios
+
 void vaciar (char temp[]){
     for ( int i = 0; i < 50; i++)
     {
-        temp[i]='\0';
+        temp[i]='\0'; //Recorre la cadena y la vacia
     }
 
 }
+
+//Cabecera: int contadorLineas(FILE *)
+//Precondición: Existe un fichero
+//Postcondición: Cuentas las lineas del fichero, devuelve contador
 
 int contadorLineas(FILE *FICHERO){
 	int contador=0;
