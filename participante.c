@@ -161,6 +161,8 @@ printf("\nintroduce el número de la plantilla: ");
         }
  }
 }while(found==1);
+        printf("IDT:%i\n",IDt);
+
 found=0;
  for(j=0;j<numeroJugadores && found==0 ;j++){
      if(IDt==jugadores[j].id)
@@ -168,14 +170,16 @@ found=0;
          found =1;
         }
 }
+    j--;
     if(found!=1){
         printf("No existe jugador con dicha ID");
     }
 
     if(usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible<jugadores[j].precio){
-    printf("\nimposible añadir al jugador, el presupuesto no alcanza");
+    printf("\nimposible añadir al jugador, el presupuesto no alcanza PRECIO %i TIENES %i\n",jugadores[j].precio,usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible);
     pres=1;
     }
+    printf("ATENTO: %i",usuarios[10].plantillas[1].presupuestoDisponible);
 }while(pres==1 || found==0);
 
 printf("\nAnadiendo al jugador...");
@@ -201,10 +205,15 @@ printf("\nAnadiendo al jugador...");
        
     usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible = usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible - jugadores[j].precio;
     numeroJugadoresPlantillas++;
-    jugadoresPlantillas[numeroJugadoresPlantillas].idJugador=usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].id;
-    jugadoresPlantillas[numeroJugadoresPlantillas].idPlantilla=usuarios[usuarioActual].plantillas[i-1].idPlantilla;
-    jugadoresPlantillas=(jugadorPlantilla*)realloc(jugadoresPlantillas, numeroJugadoresPlantillas*sizeof(jugadoresPlantillas));
+    jugadoresPlantillas=(jugadorPlantilla*)realloc(jugadoresPlantillas, numeroJugadoresPlantillas*sizeof(jugadorPlantilla));
+    if(jugadoresPlantillas==NULL){
+        printf("ERROR");
+        exit(1);
+    }
+    jugadoresPlantillas[numeroJugadoresPlantillas-1].idJugador=usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].id;
+    jugadoresPlantillas[numeroJugadoresPlantillas-1].idPlantilla=usuarios[usuarioActual].plantillas[i-1].idPlantilla;
 printf("AQUI %i\n", jugadores[j].id);
+printf("NUMEROJUGADORESPLANTILLAS:%i\n",numeroJugadoresPlantillas);
 printf("AQUI %i\n", jugadoresPlantillas[numeroJugadoresPlantillas].idPlantilla);
 }
 
