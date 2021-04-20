@@ -17,6 +17,7 @@ void participantes(){
         printf("6-Salir de la sesion\n");
 
         scanf("%i",&selec);
+        fflush(stdin);
         switch (selec)
         {
         case 1:
@@ -110,7 +111,7 @@ do
     printf("\n 5-Salir de la plantilla ");
 
     scanf("%i",&selec);
-
+    fflush(stdin);
     switch (selec)
     {
     case 1:
@@ -148,11 +149,11 @@ do
 {
     do{
     listarPlantillas();
-printf("\nIntroduce el numero de la plantilla: ");
-    fflush(stdin);
+    printf("\nIntroduce el numero de la plantilla: ");
     scanf("%i",&i);
- printf("\nIntroduce la ID del jugador a añadir: ");
- scanf("%i",&IDt); //IDt: id temporal para encontrar al jugador si ya esta en la plantilla
+    fflush(stdin);
+    printf("\nIntroduce la ID del jugador a añadir: ");
+    scanf("%i",&IDt); //IDt: id temporal para encontrar al jugador si ya esta en la plantilla
  pres=0;
  found =0;
  for(jugPlant=0;jugPlant<usuarios[usuarioActual].plantillas[i-1].numJugadores && found==0 ;jugPlant++){
@@ -222,6 +223,7 @@ void remoJug(){
     printf("\nintroduce el número de la plantilla: ");
     fflush(stdin);
     scanf("%i",&i);
+    fflush(stdin);
     printf("\nintroduce la id del jugador a eliminar: ");
     scanf("%i",&idt);
     found =0;
@@ -406,22 +408,16 @@ void ranking(){
 
 
 
-    printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[Pos1].idPlantilla,usuarios[usuarioActual].plantillas[Pos1].nombre, usuarios[usuarioActual].plantillas[Pos1].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos1].puntuacion);
-    printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[Pos2].idPlantilla,usuarios[usuarioActual].plantillas[Pos2].nombre, usuarios[usuarioActual].plantillas[Pos2].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos2].puntuacion);
-    printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[Pos3].idPlantilla,usuarios[usuarioActual].plantillas[Pos3].nombre, usuarios[usuarioActual].plantillas[Pos3].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos3].puntuacion);
+    printf("1 %i-%s-%i-%i\n",usuarios[usuarioActual].plantillas[Pos1].idPlantilla,usuarios[usuarioActual].plantillas[Pos1].nombre, usuarios[usuarioActual].plantillas[Pos1].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos1].puntuacion);
+    printf("2 %i-%s-%i-%i\n",usuarios[usuarioActual].plantillas[Pos2].idPlantilla,usuarios[usuarioActual].plantillas[Pos2].nombre, usuarios[usuarioActual].plantillas[Pos2].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos2].puntuacion);
+    printf("3 %i-%s-%i-%i\n\n",usuarios[usuarioActual].plantillas[Pos3].idPlantilla,usuarios[usuarioActual].plantillas[Pos3].nombre, usuarios[usuarioActual].plantillas[Pos3].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos3].puntuacion);
     }else
    {
-    printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[Pos1].idPlantilla,usuarios[usuarioActual].plantillas[Pos1].nombre, usuarios[usuarioActual].plantillas[Pos1].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos1].puntuacion);
-    printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[Pos2].idPlantilla,usuarios[usuarioActual].plantillas[Pos2].nombre, usuarios[usuarioActual].plantillas[Pos2].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos2].puntuacion);
+    printf("1 %i-%s-%i-%i\n",usuarios[usuarioActual].plantillas[Pos1].idPlantilla,usuarios[usuarioActual].plantillas[Pos1].nombre, usuarios[usuarioActual].plantillas[Pos1].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos1].puntuacion);
+    printf("2 %i-%s-%i-%i\n\n",usuarios[usuarioActual].plantillas[Pos2].idPlantilla,usuarios[usuarioActual].plantillas[Pos2].nombre, usuarios[usuarioActual].plantillas[Pos2].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos2].puntuacion);
    }
     }
     else{
-    printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[Pos1].idPlantilla,usuarios[usuarioActual].plantillas[Pos1].nombre, usuarios[usuarioActual].plantillas[Pos1].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos1].puntuacion); 
-    }
-    
-    
+    printf("1 %i-%s-%i-%i\n\n",usuarios[usuarioActual].plantillas[Pos1].idPlantilla,usuarios[usuarioActual].plantillas[Pos1].nombre, usuarios[usuarioActual].plantillas[Pos1].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos1].puntuacion); 
+    }  
 }
-
-
-
-
