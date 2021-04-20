@@ -60,7 +60,7 @@ char plant[30],aux;
 printf("\nintroduce nombre para la plantilla: ");
 do{
     found =1;
-scanf("%c",&aux);
+fflush(stdin);
 fgets(plant,30,stdin);
 plant[strlen(plant)-1]='\0';
 for(i=0;i<usuarios[usuarioActual].numeroPlantillas && found!=0;i++){
@@ -143,9 +143,11 @@ do
 
 void addJug(){
     int i,IDt,jugPlant,j,found,pres;
+
 do
 {
     do{
+    listarPlantillas();
 printf("\nintroduce el número de la plantilla: ");
     fflush(stdin);
     scanf("%i",&i);
@@ -153,7 +155,7 @@ printf("\nintroduce el número de la plantilla: ");
  scanf("%i",&IDt); //IDt: id temporal para encontrar al jugador si ya esta en la plantilla
  pres=0;
  found =0;
- for(jugPlant=0;j<numeroJugadores && found==0 ;jugPlant++){
+ for(jugPlant=0;jugPlant<usuarios[usuarioActual].plantillas[i-1].numJugadores && found==0 ;jugPlant++){
      if(IDt==usuarios[usuarioActual].plantillas[i-1].jugadores[jugPlant].id)
         {
          printf("este jugador ya esta en la plantilla");
@@ -176,10 +178,9 @@ found=0;
     }
 
     if(usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible<jugadores[j].precio){
-    printf("\nimposible añadir al jugador, el presupuesto no alcanza PRECIO %i TIENES %i\n",jugadores[j].precio,usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible);
+    printf("\nimposible añadir al jugador, el presupuesto no alcanza PRECIO %i TIENES %i, eres %i,%i\n",jugadores[j].precio,usuarios[j].plantillas[i-1].presupuestoDisponible,usuarioActual,i-1);
     pres=1;
     }
-    printf("ATENTO: %i",usuarios[10].plantillas[1].presupuestoDisponible);
 }while(pres==1 || found==0);
 
 printf("\nAnadiendo al jugador...");
@@ -260,7 +261,7 @@ void listarPlantillas(){
 	int i;
 	printf("La lista de plantillas es:\n");
 	for(i=0;i<usuarios[usuarioActual].numeroPlantillas;i++){
-		printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[i].idPlantilla,usuarios[usuarioActual].plantillas[i].nombre, usuarios[usuarioActual].plantillas[i].presupuestoDisponible, usuarios[usuarioActual].plantillas[i].puntuacion);
+		printf("-%i-%s-%i-%i-\n",i+1,usuarios[usuarioActual].plantillas[i].nombre, usuarios[usuarioActual].plantillas[i].presupuestoDisponible, usuarios[usuarioActual].plantillas[i].puntuacion);
 	}
 
 }
