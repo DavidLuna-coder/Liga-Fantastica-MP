@@ -3,6 +3,9 @@
 #include "carga.h"
 #include "guardar.h"
 
+//Cabecera: void guardarConfiguracion
+//Preocondicion: 
+//Postcondicion: 
 void guardarConfiguracion(){
     CONFIGURACION = fopen("Configuracion.txt","w");
     if(CONFIGURACION == NULL){
@@ -15,6 +18,9 @@ void guardarConfiguracion(){
     fclose(CONFIGURACION);
 }
 
+//Cabecera: void guardarEquipos
+//Preocondicion:
+//Postcondicion:
 void guardarEquipos(){
     int i;
     EQUIPOS = fopen("Equipos.txt","w");
@@ -35,6 +41,9 @@ void guardarEquipos(){
     fclose(EQUIPOS);
 }
 
+//Cabecera: guardarFutbolistas
+//Preocondicion:
+//Postcondicion:
 void guardarFutbolistas(){
     int i;
     FUTBOLISTAS = fopen("Futbolistas.txt","w");
@@ -61,6 +70,10 @@ void guardarFutbolistas(){
     fclose(FUTBOLISTAS);
 }
 
+//Cabecera: void guardarUsuarios()
+//Preocondicion:
+//Postcondicion:
+//Guarda los datos de la estructura Usuarios
 void guardarUsuarios(){
     int i;
     USUARIOS = fopen("Usuarios.txt","w");
@@ -81,6 +94,10 @@ void guardarUsuarios(){
 
 }
 
+//Cabecera: guardarPlantillas()
+//Preocondicion:
+//Postcondicion:
+//Guarda los datos de la estructura plantillas en el fichero Plantillas.txt
 void guardarPlantillas(){
     int i,j,usuarioLimite;
     PLANTILLAS = fopen("Plantillas.txt","w");
@@ -115,6 +132,10 @@ void guardarPlantillas(){
     }
    fclose(PLANTILLAS);
 }
+//Cabecera: guardarJugadorPlantilla()
+//Preocondicion:
+//Postcondicion: 
+//Guarda los datos de la estructura JugadorPlantilla en el fichero Jugadores_Plantillas.txt
 void guardarJugadorPlantilla(){
     int i;
     JUGADORESPLANTILLAS = fopen("Jugadores_Plantillas.txt","w");
