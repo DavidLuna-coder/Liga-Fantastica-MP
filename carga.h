@@ -72,7 +72,6 @@ FILE *JUGADORESPLANTILLAS;
 
 
 void cargar();
-
 void vaciar (char *);
 
 #endif

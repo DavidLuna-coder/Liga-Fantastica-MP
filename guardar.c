@@ -69,7 +69,6 @@ void guardarUsuarios(){
         exit(1);
     }
     for (i=0;i<numeroUsuarios;i++){
-        printf("TEST");
         if(usuarios[i].id<10){
             fprintf(USUARIOS,"0");
         }
@@ -93,7 +92,6 @@ void guardarPlantillas(){
             if(usuarios[i].numeroPlantillas != 0)
             usuarioLimite = i;
     }
-    printf("AQUI: %i\n",usuarioLimite);
 
     for(i =0 ; i<=usuarioLimite;i++){
         if(usuarios[i].numeroPlantillas!=0){
@@ -120,13 +118,15 @@ void guardarPlantillas(){
 void guardarJugadorPlantilla(){
     int i;
     JUGADORESPLANTILLAS = fopen("Jugadores_Plantillas.txt","w");
+
+
     for(i=0; i<numeroJugadoresPlantillas;i++){
         if(jugadoresPlantillas[i].idJugador<10)
         fprintf(JUGADORESPLANTILLAS,"0");
         fprintf(JUGADORESPLANTILLAS,"%i-",jugadoresPlantillas[i].idJugador);
         if(jugadoresPlantillas[i].idPlantilla<100)
         fprintf(JUGADORESPLANTILLAS,"0");
-        if(jugadoresPlantillas[i].idJugador<10)
+        if(jugadoresPlantillas[i].idPlantilla<10)
         fprintf(JUGADORESPLANTILLAS,"0");
         fprintf(JUGADORESPLANTILLAS,"%i",jugadoresPlantillas[i].idPlantilla);
         if(i!=numeroJugadoresPlantillas-1)

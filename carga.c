@@ -120,7 +120,7 @@ void cargarJugadores (){
                 temporal[j]=aux;
             }
         }
-        strcpy (jugadores[i].nombre,temporal);
+        strcpy (jugadores[i].nombre,temporal); //Se guarda elnombre de los jugadores en la estructura
         vaciar (temporal);
         aux = '0';
 
@@ -131,7 +131,7 @@ void cargarJugadores (){
             }
         }
 
-        jugadores[i].precio = atoi(temporal);
+        jugadores[i].precio = atoi(temporal);   //Se guarda el precio de los jugadores
         vaciar(temporal);
         
         aux = '0';
@@ -141,7 +141,7 @@ void cargarJugadores (){
                 temporal[j] = aux;
             }
         }
-        jugadores[i].valoracion = atoi(temporal);
+        jugadores[i].valoracion = atoi(temporal); //Se guarda la valoracion de los jugadores
         vaciar (temporal);
 
     }
@@ -174,7 +174,7 @@ void cargarConfiguracion(){
             if (aux!='\n')
             temp[j]=aux;
         }
-        config.maxPlantillas= atoi(temp);
+        config.maxPlantillas= atoi(temp);  //Se carga el máximo de Plantillas
         vaciar(temp);
 
         for (j=0;aux != '-'&& !feof(CONFIGURACION);j++){
@@ -186,7 +186,7 @@ void cargarConfiguracion(){
             if (aux!='\n')
             temp[j]=aux;
         }
-        config.presupuesto= atoi(temp);
+        config.presupuesto= atoi(temp); //Se carga el presupuesto inicial
         vaciar(temp);
 
         for (j=0;aux != '-'&& !feof(CONFIGURACION);j++){
@@ -198,7 +198,7 @@ void cargarConfiguracion(){
             if (aux!='\n')
             temp[j]=aux;
         }
-        config.maxJugadores= atoi(temp);
+        config.maxJugadores= atoi(temp);//Se carga el numero máximo de jugadores
         vaciar(temp);
     }
     fclose(CONFIGURACION);
@@ -219,14 +219,14 @@ void cargarUsuarios(){
         exit(1);
     }
     
-    numeroUsuarios = contadorLineas(USUARIOS);
+    numeroUsuarios = contadorLineas(USUARIOS); //Cuenta el numero de usuarios que hay en el fichero
     usuarios = (usuario *)malloc(numeroUsuarios*sizeof(usuario));
     if(usuarios == NULL){
         printf("Error en la reserva de memoria de usuarios\n");
         exit(1);
     }
     rewind(USUARIOS);
-
+    //Carga los datos en la estructura usuarios
     for(i=0;!feof(USUARIOS);i++){
         vaciar(temp);
 
@@ -247,7 +247,7 @@ void cargarUsuarios(){
                 temp[j]=aux;
             }
         }
-        strcpy(usuarios[i].nombre,temp);
+        strcpy(usuarios[i].nombre,temp); //Carga el nombre de los usuarios
         aux = '0';
         vaciar (temp);
 
@@ -303,8 +303,7 @@ void cargarPlantillas(){
         exit(1);
     }
     numeroPlantillas = contadorLineas(PLANTILLAS);
-    rewind(PLANTILLAS);
-    printf("%iNUNM",numeroPlantillas);
+    rewind(PLANTILLAS); 
     
     for(i=0; i<numeroUsuarios;i++){
         usuarios[i].numeroPlantillas = 0;
@@ -355,7 +354,10 @@ void cargarPlantillas(){
                 temp[k]=aux;
             }
         }
+
         usuarios[id].plantillas[usuarios[id].numeroPlantillas].presupuestoDisponible = atoi(temp);
+
+        
         vaciar(temp);
         aux = '0';
 
