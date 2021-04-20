@@ -9,12 +9,12 @@
 void participantes(){
     int selec;
     do{
-        printf("1-crear plantillas\n");
-        printf("2-configurar plantilla\n");
-        printf("3-listado de las plantillas\n");
-        printf("4-eliminar plantillas\n");
-        printf("5-ranking \n");
-        printf("6-salir de la sesion\n");
+        printf("1-Crear plantillas\n");
+        printf("2-Configurar plantilla\n");
+        printf("3-Listado de las plantillas\n");
+        printf("4-Eliminar plantillas\n");
+        printf("5-Ranking \n");
+        printf("6-Salir de la sesion\n");
 
         scanf("%i",&selec);
         switch (selec)
@@ -38,11 +38,11 @@ void participantes(){
             ranking();
             break;
         case 6:
-         printf("saliendo de la sesion...\n");
+         printf("Saliendo de la sesion...\n");
             break;
         
         default:
-            printf("introduce un numero valido [1,2,3,4 ó 5]: \n");
+            printf("Introduce un numero valido [1,2,3,4 o 5]: \n");
             break;
         }
 
@@ -57,7 +57,7 @@ void participantes(){
 void Cplantilla(){
 int i,j,found,IDt,selec;
 char plant[30],aux;
-printf("\nintroduce nombre para la plantilla: ");
+printf("\nIntroduce nombre para la plantilla: ");
 do{
     found =1;
 fflush(stdin);
@@ -67,8 +67,8 @@ for(i=0;i<usuarios[usuarioActual].numeroPlantillas && found!=0;i++){
     found = strcmp(usuarios[usuarioActual].plantillas[i].nombre,plant);
     printf("%i\n",found);
     if(found==0){
-        printf("\nel nombre de esta plantilla ya existe");
-        printf("\npor favor vuelva a introducir otro nombre: ");
+        printf("\nEl nombre de esta plantilla ya existe");
+        printf("\nPor favor vuelva a introducir otro nombre: ");
     }
 }
 }while(found==0);
@@ -87,11 +87,11 @@ strcpy(usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantill
 usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].presupuestoDisponible=config.presupuesto;
 usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].numJugadores=0;
 usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].puntuacion=0;
-  printf("\npresupuesto disponible: %i $",usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].presupuestoDisponible);
-    printf("\n\n----------------------------------------\n");
+  printf("\nPresupuesto disponible: %i $",usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].presupuestoDisponible);
+    printf("\n----------------------------------------\n");
 usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].jugadores = (jugador*)malloc(1*sizeof(jugador));
                 if(usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].jugadores==NULL){
-                    printf("error en la carga de usuarios al registrarse\n");
+                    printf("Error en la carga de usuarios al registrarse\n");
                     exit(1);
                 }
 }
@@ -102,12 +102,12 @@ int selec;
 do
 {
   
-    printf("\n que desea hacer?");
-    printf("\n 1-listar los jugadores plantilla");
-    printf("\n 2-listar los jugadores disponibles");
-    printf("\n 3-anadir jugador");
-    printf("\n 4-eliminar jugador");
-    printf("\n 5-salir de la plantilla ");
+    printf("\n Que desea hacer?");
+    printf("\n 1-Listar los jugadores plantilla");
+    printf("\n 2-Listar los jugadores disponibles");
+    printf("\n 3-Anadir jugador");
+    printf("\n 4-Eliminar jugador");
+    printf("\n 5-Salir de la plantilla ");
 
     scanf("%i",&selec);
 
@@ -129,11 +129,11 @@ do
         break;
 
     case 5:
-        printf("saliendo de la plantilla...\n");
+        printf("Saliendo de la plantilla...\n");
         break;
 
     default:
-        printf("introduce un numero valido [1,2,3 ó 4]: \n");
+        printf("introduce un numero valido [1,2,3 o 4]: \n");
         break;
     }
 } while (selec=!1);
@@ -148,22 +148,22 @@ do
 {
     do{
     listarPlantillas();
-printf("\nintroduce el número de la plantilla: ");
+printf("\nIntroduce el numero de la plantilla: ");
     fflush(stdin);
     scanf("%i",&i);
- printf("\nintroduce la ID del jugador a añadir: ");
+ printf("\nIntroduce la ID del jugador a añadir: ");
  scanf("%i",&IDt); //IDt: id temporal para encontrar al jugador si ya esta en la plantilla
  pres=0;
  found =0;
  for(jugPlant=0;jugPlant<usuarios[usuarioActual].plantillas[i-1].numJugadores && found==0 ;jugPlant++){
      if(IDt==usuarios[usuarioActual].plantillas[i-1].jugadores[jugPlant].id)
         {
-         printf("este jugador ya esta en la plantilla");
+         printf("Este jugador ya esta en la plantilla");
          found =1;
         }
  }
 }while(found==1);
-        printf("IDT:%i\n",IDt);
+
 
 found=0;
  for(j=0;j<numeroJugadores && found==0 ;j++){
@@ -178,7 +178,7 @@ found=0;
     }
 
     if(usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible<jugadores[j].precio){
-    printf("\nimposible añadir al jugador, el presupuesto no alcanza PRECIO %i TIENES %i, eres %i,%i\n",jugadores[j].precio,usuarios[j].plantillas[i-1].presupuestoDisponible,usuarioActual,i-1);
+    printf("\nImposible añadir al jugador, el presupuesto no alcanza PRECIO %i TIENES %i, eres %i,%i\n",jugadores[j].precio,usuarios[j].plantillas[i-1].presupuestoDisponible,usuarioActual,i-1);
     pres=1;
     }
 }while(pres==1 || found==0);
@@ -199,7 +199,7 @@ printf("\nAnadiendo al jugador...");
          usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].precio = jugadores[j].precio;
          usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].valoracion = jugadores[j].valoracion;
          strcpy(usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].nombre,jugadores[j].nombre);
-            printf("\njugador anadido con exito a la plantilla\n");
+            printf("\nJugador anadido con exito a la plantilla\n");
         }
  
    
@@ -213,9 +213,7 @@ printf("\nAnadiendo al jugador...");
     }
     jugadoresPlantillas[numeroJugadoresPlantillas-1].idJugador=usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].id;
     jugadoresPlantillas[numeroJugadoresPlantillas-1].idPlantilla=usuarios[usuarioActual].plantillas[i-1].idPlantilla;
-printf("AQUI %i\n", jugadores[j].id);
-printf("NUMEROJUGADORESPLANTILLAS:%i\n",numeroJugadoresPlantillas);
-printf("AQUI %i\n", jugadoresPlantillas[numeroJugadoresPlantillas].idPlantilla);
+
 }
 
 
@@ -261,7 +259,7 @@ void listarPlantillas(){
 	int i;
 	printf("La lista de plantillas es:\n");
 	for(i=0;i<usuarios[usuarioActual].numeroPlantillas;i++){
-		printf("-%i-%s-%i-%i-\n",i+1,usuarios[usuarioActual].plantillas[i].nombre, usuarios[usuarioActual].plantillas[i].presupuestoDisponible, usuarios[usuarioActual].plantillas[i].puntuacion);
+		printf("%i-%s-%i-%i\n",i+1,usuarios[usuarioActual].plantillas[i].nombre, usuarios[usuarioActual].plantillas[i].presupuestoDisponible, usuarios[usuarioActual].plantillas[i].puntuacion);
 	}
 
 }
@@ -278,7 +276,6 @@ void eliminarPlantillas(){
 			for(i=0;i<usuarios[usuarioActual].numeroPlantillas&&found!=1;i++){
 				if(select==usuarios[usuarioActual].plantillas[i].idPlantilla){
 					plantillaActual=i;
-					printf("Plantilladortest%i\n",plantillaActual);
 					found=1;
 					select=usuarios[usuarioActual].plantillas[i].idPlantilla;
 					}
@@ -347,7 +344,7 @@ void eliminarPlantillas(){
 		}
 	}
 	else{
-		printf("No hay plantillas que eliminar");
+		printf("No hay plantillas que eliminar\n");
 	}
 }
 //void ranking();
