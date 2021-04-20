@@ -363,7 +363,7 @@ void ranking(){
         }
         
 	}
-
+    if (usuarios[usuarioActual].numeroPlantillas>=2){
      aux2=usuarios[usuarioActual].plantillas[k].puntuacion; 
     Pos2=k;
     if(k==Pos1){
@@ -378,6 +378,7 @@ void ranking(){
         }
         
 	}
+    if (usuarios[usuarioActual].numeroPlantillas>=3){
       aux3=usuarios[usuarioActual].plantillas[k].puntuacion; 
     Pos3=k;
      printf("%i\n", Pos3); 
@@ -408,7 +409,17 @@ void ranking(){
     printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[Pos1].idPlantilla,usuarios[usuarioActual].plantillas[Pos1].nombre, usuarios[usuarioActual].plantillas[Pos1].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos1].puntuacion);
     printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[Pos2].idPlantilla,usuarios[usuarioActual].plantillas[Pos2].nombre, usuarios[usuarioActual].plantillas[Pos2].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos2].puntuacion);
     printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[Pos3].idPlantilla,usuarios[usuarioActual].plantillas[Pos3].nombre, usuarios[usuarioActual].plantillas[Pos3].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos3].puntuacion);
-
+    }else
+   {
+    printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[Pos1].idPlantilla,usuarios[usuarioActual].plantillas[Pos1].nombre, usuarios[usuarioActual].plantillas[Pos1].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos1].puntuacion);
+    printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[Pos2].idPlantilla,usuarios[usuarioActual].plantillas[Pos2].nombre, usuarios[usuarioActual].plantillas[Pos2].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos2].puntuacion);
+   }
+    }
+    else{
+    printf("-%i-%s-%i-%i-\n",usuarios[usuarioActual].plantillas[Pos1].idPlantilla,usuarios[usuarioActual].plantillas[Pos1].nombre, usuarios[usuarioActual].plantillas[Pos1].presupuestoDisponible, usuarios[usuarioActual].plantillas[Pos1].puntuacion); 
+    }
+    
+    
 }
 
 
