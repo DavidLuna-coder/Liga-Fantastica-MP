@@ -14,7 +14,7 @@ int main(){
 	//jugadores>equipos>configuracion>jugadorPlantilla>plantilla>usuarios
 
 	cargar();
-
+	valorarPlantillas();
 	printf("	                    ___x \n");
 	printf("	 o__         o__   |   |x \n");
 	printf("	/|          /|     |   |Xx\n");
@@ -27,6 +27,7 @@ int main(){
 	guardarFutbolistas();
 	guardarUsuarios();
 	guardarPlantillas();
+	guardarJugadorPlantilla();
 
 return 0;
 }

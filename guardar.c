@@ -59,7 +59,7 @@ void guardarFutbolistas(){
                 fprintf(FUTBOLISTAS,"0%i-%i-%s-%i-%i\n",jugadores[i].id,jugadores[i].equipo,jugadores[i].nombre,jugadores[i].precio,jugadores[i].valoracion);
             }
     }   else if(i==numeroJugadores-1){
-        fprintf(FUTBOLISTAS,"0%i-%i-%s-%i-%i",jugadores[i].id,jugadores[i].equipo,jugadores[i].nombre,jugadores[i].precio,jugadores[i].valoracion);
+        fprintf(FUTBOLISTAS,"%i-%i-%s-%i-%i",jugadores[i].id,jugadores[i].equipo,jugadores[i].nombre,jugadores[i].precio,jugadores[i].valoracion);
     }   else if(jugadores[i].equipo<10){
                 fprintf(FUTBOLISTAS,"%i-0%i-%s-%i-%i\n",jugadores[i].id,jugadores[i].equipo,jugadores[i].nombre,jugadores[i].precio,jugadores[i].valoracion);
             } else{
