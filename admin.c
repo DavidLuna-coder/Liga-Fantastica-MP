@@ -203,18 +203,15 @@ void anadirUsuario(){
 	switch(select){
 		case 1:
 			strcpy(usuarios[numeroUsuarios-1].tipoPerfil,"administrador");
-			strcpy(usuarios[numeroUsuarios-1].perfil,"admin");
 			printf("El usuario sera %s",usuarios[numeroUsuarios-1].tipoPerfil);
 
 		break;
 		case 2:
 			strcpy(usuarios[numeroUsuarios-1].tipoPerfil,"cronista");
-			strcpy(usuarios[numeroUsuarios-1].perfil,"croni");
 			printf("El usuario sera %s",usuarios[numeroUsuarios-1].tipoPerfil);
 		break;
 		case 3:
 			strcpy(usuarios[numeroUsuarios-1].tipoPerfil,"participante");
-			strcpy(usuarios[numeroUsuarios-1].perfil,"parti");
 			printf("El usuario sera %s",usuarios[numeroUsuarios-1].tipoPerfil);
 		break;
 		default:
@@ -225,7 +222,7 @@ void anadirUsuario(){
 //Precondicion: Debe tener cargado en memoria los datos de los usuarios
 //Postcondicion: Permite eliminar un usurario
 void eliminarUsuario(){
-	int i,user;
+	int i,j,k,l,m,user,found;
 	char seguir;
 	printf("Que usuario quieres eliminar?\n");
 	scanf("%i",&user);
@@ -233,6 +230,51 @@ void eliminarUsuario(){
 		printf("Usuario no existe\n");
 	}
 	else{
+		if(usuarios[user].numeroPlantillas!=0){
+			for(i=0;i<usuarios[user].numeroPlantillas;i++){
+				for(j=0;j<usuarios[user].plantillas[i].numJugadores;j++){
+					found=0;
+					for(k=0;k<numeroJugadoresPlantillas&&found!=1;k++){
+						printf("%i-%i\n",jugadoresPlantillas[k].idPlantilla,jugadoresPlantillas[k].idJugador);
+						if(usuarios[user].plantillas[i].jugadores[j].id==jugadoresPlantillas[k].idJugador&&usuarios[user].plantillas[i].idPlantilla==jugadoresPlantillas[k].idPlantilla){
+							found=1;
+							for(l=k;l<numeroJugadoresPlantillas;l++){
+								jugadoresPlantillas[l].idPlantilla=jugadoresPlantillas[l+1].idPlantilla;
+								jugadoresPlantillas[l].idJugador=jugadoresPlantillas[l+1].idJugador;
+							}
+							k--;
+							numeroJugadoresPlantillas--;
+							if(numeroJugadoresPlantillas>0){
+								jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,numeroJugadoresPlantillas*sizeof(jugadorPlantilla));
+								if(jugadoresPlantillas==NULL){
+									printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+								}
+							}
+							else{
+								jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,1*sizeof(jugadorPlantilla));
+								if(jugadoresPlantillas==NULL){
+									printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+								}
+							}
+							printf("DELETE!!!\n");
+						}
+					}
+				}
+				if(found==1){
+					for(j=0;j<numeroJugadoresPlantillas;j++){
+						if(usuarios[user].plantillas[i].idPlantilla<jugadoresPlantillas[j].idPlantilla){
+							jugadoresPlantillas[j].idPlantilla--;
+						}
+					}
+					for(m=i+1;m<usuarios[user].numeroPlantillas;m++){
+						usuarios[user].plantillas[m].idPlantilla--;
+					}
+				}
+			}
+		}
+			usuarios[user].numeroPlantillas=0;
+	}
+
 		for(i=user;i<numeroUsuarios;i++){
 			strcpy(usuarios[i-1].nombre,usuarios[i].nombre);
 			strcpy(usuarios[i-1].contrasena,usuarios[i].contrasena);
@@ -242,7 +284,6 @@ void eliminarUsuario(){
 		numeroUsuarios--;
 		usuarios = (usuario*) realloc (usuarios,numeroUsuarios*sizeof(usuario));
 	}
-}
 
 void anadirEquipo(){
 	char temporal[21];
@@ -265,7 +306,7 @@ void anadirEquipo(){
 //Precondicion: Debe tener en cargado en memoria los datos de la configuracion
 //Postcondicion: Permite modificar el presupuesto con el que contaran los participantes
 void modificarPresupuestos(){
-	int dineroGastado,nuevoPresupuesto,i,j,k,l;
+	int dineroGastado,nuevoPresupuesto,found,i,j,k,l,m;
 	printf("Introduzca el nuevo presupuesto");
 	scanf("%i",&nuevoPresupuesto);
 	for(j=0;j<numeroUsuarios;j++){
@@ -276,8 +317,32 @@ void modificarPresupuestos(){
 				dineroGastado=dineroGastado + usuarios[j].plantillas[i].jugadores[k].precio;
 			}
 			if(dineroGastado>nuevoPresupuesto){
+				found=0;
 				usuarios[j].plantillas[i].numJugadores--;
 				usuarios[j].plantillas[i].presupuestoDisponible=nuevoPresupuesto;
+				for(k=0;k<numeroJugadoresPlantillas&&found!=1;k++){
+					if(usuarios[j].plantillas[i].jugadores[usuarios[j].plantillas[j].numJugadores].id==jugadoresPlantillas[k].idJugador&&usuarios[j].plantillas[j].idPlantilla==jugadoresPlantillas[k].idPlantilla){
+						found=1;
+						for(m=k;m<numeroJugadoresPlantillas;m++){
+							jugadoresPlantillas[m].idJugador=jugadoresPlantillas[m+1].idJugador;
+							jugadoresPlantillas[m].idPlantilla=jugadoresPlantillas[m+1].idPlantilla;
+						}
+						k--;
+						numeroJugadoresPlantillas--;
+						if(numeroJugadoresPlantillas>0){
+							jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,numeroJugadoresPlantillas*sizeof(jugadorPlantilla));
+							if(jugadoresPlantillas==NULL){
+								printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+							}
+						}
+						else{	
+							jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,1*sizeof(jugadorPlantilla));
+							if(jugadoresPlantillas==NULL){
+								printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+							}
+						}
+					}
+				}
 				for(l=0;l<usuarios[j].plantillas[i].numJugadores;l++){
 					usuarios[j].plantillas[i].presupuestoDisponible=usuarios[j].plantillas[i].presupuestoDisponible-usuarios[j].plantillas[i].jugadores[j].precio;
 				}
@@ -293,11 +358,36 @@ void modificarPresupuestos(){
 //Precondicion: Debe tener cargado en memoria los datos de la configuracion
 //Postcondicion: Permite modificar el limite de plantillas por usuario
 void limitePlantillas(){
-	int maxPlantillas,k;
+	int maxPlantillas,found,k,j,i,l;
 	printf("Cual sera el nuevo limite de plantillas?");
 	scanf("%i",&config.maxPlantillas);
 	for(k=0;k<numeroUsuarios;k++){
 		if(usuarios[k].numeroPlantillas>config.maxPlantillas){
+			for(i=config.maxPlantillas;i<usuarios[k].numeroPlantillas;i++){
+				for(j=0;j<numeroJugadoresPlantillas;j++){
+					if(usuarios[k].plantillas[i].idPlantilla==jugadoresPlantillas[j].idPlantilla){
+						for(l=j;l<numeroJugadoresPlantillas;l++){
+							jugadoresPlantillas[l].idPlantilla=jugadoresPlantillas[l+1].idPlantilla;
+							jugadoresPlantillas[l].idJugador=jugadoresPlantillas[l+1].idJugador;
+						}
+						j--;
+						numeroJugadoresPlantillas--;
+						if(numeroJugadoresPlantillas>0){
+							jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,numeroJugadoresPlantillas*sizeof(jugadorPlantilla));
+							if(jugadoresPlantillas==NULL){
+								printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+							}
+						}
+						else{	
+							jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,1*sizeof(jugadorPlantilla));
+							if(jugadoresPlantillas==NULL){
+								printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+							}		
+						}
+						j=0;
+					}
+				}
+			}
 			usuarios[k].numeroPlantillas=config.maxPlantillas;
 		}
 		usuarios[k].plantillas = (plantilla*) realloc (usuarios[k].plantillas,config.maxPlantillas*sizeof(plantilla));
@@ -321,6 +411,36 @@ void borrarEquipo(){
 		}
 	}while(found==0);
 	found=0;
+	for(i=0;i<numeroEquipos&&found!=1;i++){
+		if(equipos[i].id==selectDelete){
+			found=1;
+			for(j=0;j<5;j++){
+				for(k=0;k<numeroJugadoresPlantillas;k++){
+					if(equipos[i].jugadores[j].id==jugadoresPlantillas[k].idJugador){
+						for(l=k;l<numeroJugadoresPlantillas;l++){
+							jugadoresPlantillas[l].idPlantilla=jugadoresPlantillas[l+1].idPlantilla;
+							jugadoresPlantillas[l].idJugador=jugadoresPlantillas[l+1].idJugador;
+						}
+						numeroJugadoresPlantillas--;
+						k--;
+						if(numeroJugadoresPlantillas>0){
+							jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,numeroJugadoresPlantillas*sizeof(jugadorPlantilla));
+							if(jugadoresPlantillas==NULL){
+								printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+							}
+						}
+						else{
+							jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,1*sizeof(jugadorPlantilla));
+							if(jugadoresPlantillas==NULL){
+								printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	for(i=0;i<numeroUsuarios;i++){
 		for(j=0;j<usuarios[i].numeroPlantillas;j++){
 			for(k=0;k<usuarios[i].plantillas[j].numJugadores;k++){
@@ -381,7 +501,7 @@ void borrarEquipo(){
 //Precondicion: Debe tener caragado en memoria la informacion de la configuracionl
 //Postcondicion: Permite modficar el limite de jugadores por plantilla
 void jugadoresPlantilla(){
-	int nuevoLimite,i,j,k;
+	int nuevoLimite,i,j,k,l,m,found;
 	do{
 		printf("Cual sera el nuevo limite de jugadores por plantilla?\n");
 		scanf("%i",&nuevoLimite);
@@ -393,6 +513,31 @@ void jugadoresPlantilla(){
 	for(i=0;i<numeroUsuarios;i++){
 		for(j=0;j<usuarios[i].numeroPlantillas;j++){
 			if(nuevoLimite<usuarios[i].plantillas[j].numJugadores){
+				for(m=nuevoLimite;m<usuarios[i].plantillas[j].numJugadores;m++){
+					found=0;
+					for(k=0;k<numeroJugadoresPlantillas&&found!=1;k++){
+						if(usuarios[i].plantillas[j].idPlantilla==jugadoresPlantillas[k].idPlantilla&&usuarios[i].plantillas[j].jugadores[m].id==jugadoresPlantillas[k].idJugador){
+							found=1;
+							for(l=k;l<numeroJugadoresPlantillas;l++){
+								jugadoresPlantillas[l].idPlantilla=jugadoresPlantillas[l+1].idPlantilla;
+								jugadoresPlantillas[l].idJugador=jugadoresPlantillas[l+1].idJugador;
+							}
+							numeroJugadoresPlantillas--;
+							if(numeroJugadoresPlantillas>0){
+								jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,numeroJugadoresPlantillas*sizeof(jugadorPlantilla));
+								if(jugadoresPlantillas==NULL){
+									printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+								}
+							}
+							else{
+								jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,1*sizeof(jugadorPlantilla));
+								if(jugadoresPlantillas==NULL){
+									printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+								}
+							}
+						}	
+					}
+				}
 				usuarios[i].plantillas[j].jugadores=(jugador*) realloc (usuarios[i].plantillas[j].jugadores,nuevoLimite*sizeof(jugador));
 				usuarios[i].plantillas[j].numJugadores=nuevoLimite;
 			}
@@ -409,6 +554,29 @@ void disponibilidadJugadores(){
 	}
 	printf("Selecciona la id del jugador que quieres eliminar");
 	scanf("%i",&selectDelete);
+	for(i=0;i<numeroJugadoresPlantillas;i++){
+		if(selectDelete==jugadoresPlantillas[i].idJugador){
+			printf("Test Delete %i\n",jugadoresPlantillas[i].idPlantilla);
+			for(l=i;l<numeroJugadoresPlantillas;l++){
+				jugadoresPlantillas[l].idPlantilla=jugadoresPlantillas[l+1].idPlantilla;
+				jugadoresPlantillas[l].idJugador=jugadoresPlantillas[l+1].idJugador;
+			}
+			i--;
+			numeroJugadoresPlantillas--;
+			if(numeroJugadoresPlantillas>0){
+				jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,numeroJugadoresPlantillas*sizeof(jugadorPlantilla));
+				if(jugadoresPlantillas==NULL){
+					printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+				}
+			}
+			else{
+				jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,1*sizeof(jugadorPlantilla));
+				if(jugadoresPlantillas==NULL){
+					printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
+				}
+			}
+		}
+	}
 	for(i=0;i<numeroUsuarios;i++){
 		for(j=0;j<usuarios[i].numeroPlantillas;j++){
 			found=0;
