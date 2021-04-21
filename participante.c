@@ -143,7 +143,7 @@ do
 
 
 void addJug(){
-    int i,IDt,jugPlant,j,found, found2,pres;
+    int i,IDt,jugPlant,j,found, found2,pres, contadorderepeticiones=0;
 
 do
 {
@@ -177,21 +177,18 @@ found2=0;
          found2 =1;
         }
 }
-
     j--;
     if(found2!=1){
         printf("No existe jugador con dicha ID");
     }
 
-    if(usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible<jugadores[IDt].precio){
-    printf("\nImposible añadir al jugador, el presupuesto no alcanza PRECIO %i TIENES %i, eres %i,%i\n",jugadores[IDt].precio,usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible,usuarioActual,i-1);
-    
+    if(usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible<jugadores[j].precio){
+    printf("\nImposible añadir al jugador, el presupuesto no alcanza PRECIO %i TIENES %i, eres %i,%i\n",jugadores[j].precio,usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible,usuarioActual,i-1);
     pres=1;
     }
-   
+    contadorderepeticiones++;
     }
-    
-}while(pres==1 || found2==0 || found==1 && usuarios[usuarioActual].plantillas[i-1].numJugadores<config.maxJugadores);
+}while((pres==1 || found2==0 || found==1) && usuarios[usuarioActual].plantillas[i-1].numJugadores<config.maxJugadores);
 if(usuarios[usuarioActual].plantillas[i-1].numJugadores<config.maxJugadores){
 
 printf("\nAnadiendo al jugador...");
@@ -205,14 +202,14 @@ printf("\nAnadiendo al jugador...");
         }
         else
         {
-         usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores-1].id = jugadores[IDt].id;
-         usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores-1].equipo = jugadores[IDt].equipo;
-         usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores-1].precio = jugadores[IDt].precio;
-         usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores-1].valoracion = jugadores[IDt].valoracion;
-         strcpy(usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores-1].nombre,jugadores[IDt].nombre);
+         usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].id = jugadores[j].id;
+         usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].equipo = jugadores[j].equipo;
+         usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].precio = jugadores[j].precio;
+         usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].valoracion = jugadores[j].valoracion;
+         strcpy(usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].nombre,jugadores[j].nombre);
             printf("\nJugador anadido con exito a la plantilla\n");
-            printf("%s\n",usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores-1].nombre);
-            printf("%i\n",usuarios[usuarioActual].plantillas[i-1].numJugadores-1) ;
+            printf("%s\n",usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].nombre);
+            printf("%i\n",usuarios[usuarioActual].plantillas[i-1].numJugadores) ;
             printf("%i\n",i-1);
         }
  
@@ -225,15 +222,15 @@ printf("\nAnadiendo al jugador...");
         printf("ERROR");
         exit(1);
     }
-    jugadoresPlantillas[numeroJugadoresPlantillas-1].idJugador=usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores-1].id;
+    jugadoresPlantillas[numeroJugadoresPlantillas-1].idJugador=usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores].id;
     jugadoresPlantillas[numeroJugadoresPlantillas-1].idPlantilla=usuarios[usuarioActual].plantillas[i-1].idPlantilla;
     
-    
+
     } 
     else{
         printf("Numero maximo de jugadores por plantilla alcanzado\n");
     }
-    valorarPlantillas();
+
 }
 
 
@@ -272,7 +269,7 @@ void remoJug(){
         {
             printf("\njugador eliminado con exito a la plantilla\n");
         }
-    valorarPlantillas();
+ 
 }
 void listaJugadoresplantillas(){
 int i, j;
