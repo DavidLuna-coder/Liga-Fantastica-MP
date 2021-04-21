@@ -6,8 +6,8 @@
 //Cabecera: void guardarConfiguracion
 //Preocondicion: 
 //Postcondicion: 
-void guardarConfiguracion(){
-    CONFIGURACION = fopen("Configuracion.txt","w");
+void guardarConfiguracion(){ //Guarda todos los datos de la configuración en su fichero correspondiente.
+    CONFIGURACION = fopen("Configuracion.txt","w"); 
     if(CONFIGURACION == NULL){
         printf("Error al abrir el fichero de configuracion");
         exit(1);
@@ -28,7 +28,7 @@ void guardarEquipos(){
         printf("Error al guardar los equipos\n");
         exit(1);
     }
-    for (i=0;i<numeroEquipos;i++){
+    for (i=0;i<numeroEquipos;i++){  // Recorre todos los equipos e imprime en los ficheros los datos de las estructuras de equipos
         if(equipos[i].id<10&&i!=numeroEquipos-1){
         fprintf(EQUIPOS,"0%i-%s\n",equipos[i].id,equipos[i].nombre);
         }
@@ -51,7 +51,7 @@ void guardarFutbolistas(){
         printf("Error al guardar los futbolistas\n");
         exit(1);
     }
-    for (i=0;i<numeroJugadores;i++){
+    for (i=0;i<numeroJugadores;i++){ //Recorre todas las estructuras de futbolistas y las umprime en el fichero futbolistas.txt
         if(jugadores[i].id<10&&i!=numeroJugadores-1){
             if(jugadores[i].equipo<10){
                 fprintf(FUTBOLISTAS,"0%i-0%i-%s-%i-%i\n",jugadores[i].id,jugadores[i].equipo,jugadores[i].nombre,jugadores[i].precio,jugadores[i].valoracion);
@@ -81,7 +81,7 @@ void guardarUsuarios(){
         printf("Error al guardar los usuarios");
         exit(1);
     }
-    for (i=0;i<numeroUsuarios;i++){
+    for (i=0;i<numeroUsuarios;i++){ //Almacena los datos de la estructua usuarios por cada uno de ellos.
         if(usuarios[i].id<10){
             fprintf(USUARIOS,"0");
         }
@@ -106,11 +106,11 @@ void guardarPlantillas(){
         exit(1);
     }
     for(i=0;i<numeroUsuarios;i++){
-            if(usuarios[i].numeroPlantillas != 0)
+            if(usuarios[i].numeroPlantillas != 0) //Encuentra cuál es el último usuarios con plantillas.
             usuarioLimite = i;
     }
 
-    for(i =0 ; i<=usuarioLimite;i++){
+    for(i =0 ; i<=usuarioLimite;i++){ // Imprime los datos de la estructura plantilla en el fichero
         if(usuarios[i].numeroPlantillas!=0){
         for(j=0;j<usuarios[i].numeroPlantillas;j++){
             if(usuarios[i].plantillas[j].idUsuario<10)
@@ -141,7 +141,7 @@ void guardarJugadorPlantilla(){
     JUGADORESPLANTILLAS = fopen("Jugadores_Plantillas.txt","w");
 
 
-    for(i=0; i<numeroJugadoresPlantillas;i++){
+    for(i=0; i<numeroJugadoresPlantillas;i++){ //Recorre todo el vector de estructuras de JugadoresPlantillas y se imprimen los datos en el fichero.
         if(jugadoresPlantillas[i].idJugador<10)
         fprintf(JUGADORESPLANTILLAS,"0");
         fprintf(JUGADORESPLANTILLAS,"%i-",jugadoresPlantillas[i].idJugador);
