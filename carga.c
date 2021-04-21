@@ -512,11 +512,18 @@ void cargar(){
 //Postcondicion: Asigna a cada plantilla su puntuación
 void valorarPlantillas(){
     int i,j,k,suma=0;
+    if(numeroUsuarios<0){
+        printf("El numero de usuarios no es valido\n");
+        exit(1);
+    }
     for(i=0;i<numeroUsuarios;i++){
         for(j=0;j<usuarios[i].numeroPlantillas;j++){
             suma=0;
             for(k=0;k<usuarios[i].plantillas[j].numJugadores;k++){
+                if(usuarios[i].plantillas[j].jugadores[k].valoracion>=0 && usuarios[i].plantillas[j].jugadores[k].valoracion<=10 )
                 suma+=usuarios[i].plantillas[j].jugadores[k].valoracion;
+                else
+                printf("El jugador tiene una valoracion no valida\n");
         }   
             if(usuarios[i].plantillas[j].numJugadores!=0){
                 usuarios[i].plantillas[j].puntuacion=suma/usuarios[i].plantillas[j].numJugadores;
