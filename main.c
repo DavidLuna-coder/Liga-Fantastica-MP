@@ -21,7 +21,6 @@ int main(){
 	printf("	/ > o       <|     |   |XXx \n");
 	printf(	"---BIENVENIDO A LIGA FANTASTICA!---\n");
 
-	printf("%s",usuarios[1].contrasena);
 	users();	//users() lleva al usuario al menu de inicio de sesion/ registro
 	guardarConfiguracion();
 	guardarEquipos();
