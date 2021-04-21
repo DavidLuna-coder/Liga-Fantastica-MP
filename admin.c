@@ -170,44 +170,51 @@ void modificarUsuarios(){
 //Postcondicion:Permite crear un nuevo usuario con sus respectivos datos;
 void anadirUsuario(){
 	int error,i,select;
+	char aux;
 	char temporal[20];//Cadena que permite guardar parte de los datos
 	char temporal2[20];
 	//A la variable global de numero de usuarios se le suma uno (ya que se esta creando uno nuevo) y crea un nuevo espacio de memoria donde se almacenaran los datos de este usuario;
-	usuarios = (usuario*) realloc (usuarios,numeroUsuarios*sizeof(usuario));
-	printf("Que nombre le quieres dar a el usuario?");
+	printf("Que nombre le quieres dar a el usuario?\n");
 	//Bucle que se encarga de revisar que el nombre de usuario este disponible
 	do{
 		error=1;
+		scanf("%c",&aux);
 		fgets(temporal,20,stdin);
 		temporal[strlen(temporal)-1]='\0';
 		for(i=0;i<numeroUsuarios&&error==1;i++){
 			error=strcmp(temporal,usuarios[i].nombre);
 			if(error==0){
-				printf("Nombre de usuario no disponible");
+				printf("Nombre de usuario no disponible\n");
 			}
 		}
 	}while(error==0);
+	printf("Que nombre de perfil desea?\n");
 	do{
 		error=1;
 		fgets(temporal2,20,stdin);
-		temporal[strlen(temporal)-1]='\0';
+		temporal2[strlen(temporal2)-1]='\0';
 		for(i=0;i<numeroUsuarios&&error==1;i++){
 			error=strcmp(temporal2,usuarios[i].perfil);
 			if(error==0){
-				printf("Nombre de usuario no disponible");
+				printf("Nombre de usuario no disponible\n");
 			}
 		}
 	}while(error==0);
 	numeroUsuarios++;
+	usuarios = (usuario*) realloc (usuarios,numeroUsuarios*sizeof(usuario));
+	if(usuarios==NULL){
+		printf("Error al reservar memoria de usuario\n");
+	}
 	strcpy(usuarios[numeroUsuarios-1].nombre,temporal);
 	strcpy(usuarios[numeroUsuarios-1].perfil,temporal2);
-	printf("Su usuario es %s",usuarios[numeroUsuarios-1].nombre);
-	printf("Que contrasena quieres?");
+	printf("Su usuario es %s\n",usuarios[numeroUsuarios-1].nombre);
+	printf("Que contrasena quieres?\n");
 	fgets(temporal,8,stdin);
+	temporal[strlen(temporal)-1]='\0';
 	strcpy(usuarios[numeroUsuarios-1].contrasena,temporal);
-	printf("Su contrasena es %s", usuarios[numeroUsuarios-1].contrasena);
-	usuarios[numeroUsuarios-1].id=numeroUsuarios;
-	printf("Su ID es %i",numeroUsuarios);
+	printf("Su contrasena es %s\n", usuarios[numeroUsuarios-1].contrasena);
+	usuarios[numeroUsuarios-1].id=numeroUsuarios-1;
+	printf("Su ID es %i",numeroUsuarios-1);
 	printf("Que tipo de usuario sera?\n1-Administrador\n2-Cronista\n3-Participante");
 	scanf("%i",&select);
 	switch(select){
