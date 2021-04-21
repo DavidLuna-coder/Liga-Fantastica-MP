@@ -130,17 +130,14 @@ void modificarUsuarios(){
 			       		switch(select_2){
 				       			case 1:
 						       		strcpy(usuarios[user-1].tipoPerfil,"participante");
-					       			strcpy(usuarios[user-1].perfil,"parti");
 								printf("Usuario cambiado correctamente");
 							break;
 					       		case 2:
 								strcpy(usuarios[user-1].tipoPerfil,"cronista");
-								strcpy(usuarios[user-1].perfil,"croni");
 								printf("Usuario cambiado correctamente");
 							break;
 					       		case 3:
 								strcpy(usuarios[user-1].tipoPerfil,"administrador");
-								strcpy(usuarios[user-1].perfil,"admin");
 								printf("Usuario cambiado correctamente");
 							break;
 							case 4:
@@ -174,6 +171,7 @@ void modificarUsuarios(){
 void anadirUsuario(){
 	int error,i,select;
 	char temporal[20];//Cadena que permite guardar parte de los datos
+	char temporal2[20];
 	//A la variable global de numero de usuarios se le suma uno (ya que se esta creando uno nuevo) y crea un nuevo espacio de memoria donde se almacenaran los datos de este usuario;
 	usuarios = (usuario*) realloc (usuarios,numeroUsuarios*sizeof(usuario));
 	printf("Que nombre le quieres dar a el usuario?");
@@ -189,8 +187,20 @@ void anadirUsuario(){
 			}
 		}
 	}while(error==0);
+	do{
+		error=1;
+		fgets(temporal2,20,stdin);
+		temporal[strlen(temporal)-1]='\0';
+		for(i=0;i<numeroUsuarios&&error==1;i++){
+			error=strcmp(temporal2,usuarios[i].perfil);
+			if(error==0){
+				printf("Nombre de usuario no disponible");
+			}
+		}
+	}while(error==0);
 	numeroUsuarios++;
 	strcpy(usuarios[numeroUsuarios-1].nombre,temporal);
+	strcpy(usuarios[numeroUsuarios-1].perfil,temporal2);
 	printf("Su usuario es %s",usuarios[numeroUsuarios-1].nombre);
 	printf("Que contrasena quieres?");
 	fgets(temporal,8,stdin);
