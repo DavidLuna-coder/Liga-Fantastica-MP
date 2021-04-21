@@ -68,9 +68,9 @@ void valorar (){
                 scanf("%i",&val);
             }
             jugadores[i].valoracion=val;
+            valorarPlantillas();
             find=1;
         }
     }
+    
 }
-
-
