@@ -72,6 +72,7 @@ FILE *JUGADORESPLANTILLAS;
 
 
 void cargar();
+void valorarPlantillas();
 void vaciar (char *);
 
 #endif

@@ -1,4 +1,3 @@
-//Módulo dedicado a la creación de usuarios y login de los mismos al programa, encargandose de derivar a los usuarios que acceden al sistema a los módulos correspondientes(administrador, cronista y participante) 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,13 +7,9 @@
 #include "administrador.h"
 #include "participante.h"
 
-
-//void users();
-//Precondicion:Debe tener los datos en memoria principal cargados
-//Postcondicion:Redirecciona a la funcion respectiva que pida el usuario
 void users(){
 
-int elec;//variable encargada de alamacenar el dato en base al cual se selecciona lo que el usuario quiere hacer en el menú a continuación
+int elec;
 
 do{
     printf("1-Registro\n"); // menu para seleccionar si quieres acceder al sistema con un usuario existente, registrar un nuevo usuario o salir del sistema
@@ -47,44 +42,33 @@ do{
 }while(elec!=3);
 }
 
-//void acceso();
-//Precondicion:Debe tener cargado en memoria los datos de usuarios
-//Postcondicion:Accedes al sistema como uno de los usuarios ya existentes tras introducir el nombre de usuario y su contraseña correctamente
+
 
 void acceso(){  // Inicio de sesion
-    int comprobador1=0; //variables usadas para comprobar que el nombre de usuario y contraseña coinciden con los de un usuario existente
+    int comprobador1=0;
     int comprobador2=0;
 
-    char adm[]="administrador"; // strings utilizados para comparar y saber que tipo de usuario es el que se ha introducido
-    char part[]="participante"; 
+    char adm[]="administrador";
+    char part[]="participante";
     char cron[]="cronista";
-    char pasword[9]; //string auxiliar donde guardar la contraseña insertada por quien inicia el programa
-    char user[21]; //string auxiliar donde guardar el nombre de usuario, insertado por quien inicia el programa
+    char pasword[8];
+    char user[20];
 do{
     printf("Insertar nombre de usuario \n");
     fflush(stdin);
-    fgets(user,21,stdin);
-    fflush(stdin);
+    fgets(user,20,stdin);
     strtok(user, "\n");
     printf("Insertar nombre contrasena \n");
     fflush(stdin);
-    fgets(pasword,9,stdin);
-    fflush(stdin);
+    fgets(pasword,8,stdin);
     strtok(pasword, "\n");
 
-//se comprueba que el nombre de usuario y contraseña coinciden con los de un usuario existente     
+     
     for(int i=0; i<numeroUsuarios;i++){
         if(strcmp(user,usuarios[i].nombre)==0){
             comprobador1=1;
         
                 usuarioActual=usuarios[i].id;
-                 if(strcmp(pasword,usuarios[usuarioActual].contrasena)==0){
-                        comprobador2=1;
-            
-                }
-                else{
-                comprobador1=0;
-                }
                
                 
         }
@@ -101,21 +85,21 @@ do{
 if(comprobador1==1 && comprobador2==1){
     printf("Ha iniciado sesion correctamente\n");
     
-if(strcmp(cron, usuarios[usuarioActual].tipoPerfil)==0){ //te desvía al módulo cronista si se detecta que tu usuario es cronista
+if(strcmp(cron, usuarios[usuarioActual].tipoPerfil)==0){
 printf("Bienvenido Cronista\n");
 cronista();
 }
-if(strcmp(adm, usuarios[usuarioActual].tipoPerfil)==0){ //te desvía al módulo administrador si se detecta que tu usuario es administrador
+if(strcmp(adm, usuarios[usuarioActual].tipoPerfil)==0){
     printf("Bienvenido Administrador\n");
 menuAdmin();
 }
-if(strcmp(part, usuarios[usuarioActual].tipoPerfil)==0){ //te desvía al módulo participante si se detecta que tu usuario es participante
+if(strcmp(part, usuarios[usuarioActual].tipoPerfil)==0){
 printf("Bienvenido Participante\n");
 participantes();
 }
 }
 else{
-   printf("Inicio de sesion incorrecto, vuelva a intentarlo\n");
+   printf("inicio de sesion incorrecto, vuelva a intentarlo\n");
 }
 
 
@@ -124,19 +108,22 @@ else{
 }while(comprobador1==0 || comprobador2==0);
 }
 
-//void registro();
-//Precondicion:Debe tener cargado en memoria los datos de usuarios
-//Postcondicion:Crea un usuario nuevo con nombre y contraseña distintos a los de cualquier usuario existente
+
 
 void registro(){  //Registrarse
 
-    int comprobador1; //variables usadas para comprobar que el nombre de acceso y el nombre del usuario son distintos a cualquiera previos
+    int comprobador1;
     int comprobador2;
-    int elec2=0; //variable encargada de alamacenar el dato en base al cual se selecciona lo que el usuario quiere hacer en el menú a continuación
+    int elec2=0;
+    int len=0;
     
-    char paswordR[8]; //string auxiliar donde guardar la contraseña insertada por quien inicia el programa
-    char userR[20]; //string auxiliar donde guardar el nombre de usuario, insertado por quien inicia el programa
-    char useraccessR[5]; //string auxiliar donde guardar el nombre de acceso del usuario, insertado por quien inicia el programa
+    char admin[]="administrador";
+    char parti[]="participante";
+    char cronista[]="cronista";
+    
+    char paswordR[8];
+    char userR[20];
+    char useraccessR[5];
    do{
        comprobador1=0;
        comprobador2=0;
@@ -181,7 +168,7 @@ else{
    printf("Perfil en creacion...\n");
     numeroUsuarios=numeroUsuarios+1;
 
-    printf("Que tipo de usuario va a ser: \n 1-Participante\n 2-Cronista \n 3-Administrador\n"); 
+    printf("Que tipo de usuario va a ser: \n 1-Participante\n 2-Cronista \n 3-Administrador\n");
     usuarios=(usuario*)realloc(usuarios,numeroUsuarios*sizeof(usuario));
         if(usuarios==NULL){
             printf("Ha habido un error al reservar un espacio de memoria ");
@@ -191,19 +178,19 @@ else{
            for(int j=0;j<numeroUsuarios;j++){
             if(j==numeroUsuarios-1){
                 do{
-                
-                scanf("%i", &elec2);
                 fflush(stdin);
+                scanf("%i", &elec2);
                 switch(elec2){
                     case 1:
                         strcpy(usuarios[j].tipoPerfil, "participante");
                         break;
                     case 2:
-                        strcpy(usuarios[j].tipoPerfil, "cronista");
+                    strcpy(usuarios[j].tipoPerfil, "cronista");
                         
                         break;
                     case 3:
-                        strcpy(usuarios[j].tipoPerfil, "administrador");
+                   strcpy(usuarios[j].tipoPerfil, "administrador");
+                        
                         break;
                     default:
                     printf("introduce un numero valido[1,2 o 3]:\n");
@@ -211,16 +198,15 @@ else{
 
                 }
             
-                }while(elec2!=1 && elec2!=2 && elec2!=3); // si no se selecciona una opción correcta no se sale del bucle
+                }while(elec2!=1 && elec2!=2 && elec2!=3);
 
-                usuarios[j].id=j; // se asignan los datos que va a tener este usuario tales como el nombre, contraseña,etc
+                usuarios[j].id=j;
                 usuarios[j].numeroPlantillas=0;
                 usuarios[j].plantillas = (plantilla*)malloc(1*sizeof(plantilla));
                 if(usuarios[j].plantillas==NULL){
-                    printf("Error en la carga de usuarios al registrarse\n");
+                    printf("error en la carga de usuarios al registrarse\n");
                     exit(1);
                 }
-               
                  strcpy(usuarios[j].contrasena, paswordR);
                  strcpy(usuarios[j].perfil, useraccessR);
                  strcpy(usuarios[j].nombre, userR);
@@ -229,7 +215,6 @@ else{
            }
         }
     }
-     
      }while(comprobador1==1 || comprobador2==1);
 
 

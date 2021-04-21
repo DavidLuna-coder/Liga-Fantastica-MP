@@ -506,3 +506,21 @@ void cargar(){
     cargarUsuarios();
     cargarPlantillas();
 }
+
+//Cabecera: void valorarPlantilla
+//Precondicion:
+//Postcondicion: Asigna a cada plantilla su puntuación
+void valorarPlantillas(){
+    int i,j,k,suma=0;
+    for(i=0;i<numeroUsuarios;i++){
+        for(j=0;j<usuarios[i].numeroPlantillas;j++){
+            suma=0;
+            for(k=0;k<usuarios[i].plantillas[j].numJugadores;k++){
+                suma+=usuarios[i].plantillas[j].jugadores[k].valoracion;
+        }   
+            if(usuarios[i].plantillas[j].numJugadores!=0){
+                usuarios[i].plantillas[j].puntuacion=suma/usuarios[i].plantillas[j].numJugadores;
+            }
+    }
+}
+}
