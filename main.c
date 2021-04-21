@@ -13,12 +13,7 @@ int main(){
 	//orden de carga:
 	//jugadores>equipos>configuracion>jugadorPlantilla>plantilla>usuarios
 
-	cargarJugadores();
-	cargarEquipos();
-    cargarJugadorPlantilla();
-	cargarPlantillas();
-	cargarUsuarios();
-	cargarConfiguracion();
+	cargar();
 
 	printf("	                    ___x \n");
 	printf("	 o__         o__   |   |x \n");
@@ -26,6 +21,7 @@ int main(){
 	printf("	/ > o       <|     |   |XXx \n");
 	printf(	"---BIENVENIDO A LIGA FANTASTICA!---\n");
 
+	printf("%s",usuarios[1].contrasena);
 	users();	//users() lleva al usuario al menu de inicio de sesion/ registro
 	guardarConfiguracion();
 	guardarEquipos();
@@ -33,9 +29,5 @@ int main(){
 	guardarUsuarios();
 	guardarPlantillas();
 
-int i;
-for(i=0;i<=numeroJugadores;i++){
-printf("%i,%s\n",jugadores[i].id,jugadores[i].nombre);
-}
 return 0;
 }

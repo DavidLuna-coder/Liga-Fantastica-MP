@@ -33,11 +33,11 @@ do{
     break;
 
     case 3:
-    printf("saliendo del porgrama...\n");
+    printf("Saliendo del programa...\n");
     break;
 
     default:
-    printf("introduce un numero valido[1,2 o 3]:\n");
+    printf("Introduce un numero valido[1,2 o 3]:\n");
     break;
 
     }
@@ -58,16 +58,18 @@ void acceso(){  // Inicio de sesion
     char adm[]="administrador"; // strings utilizados para comparar y saber que tipo de usuario es el que se ha introducido
     char part[]="participante"; 
     char cron[]="cronista";
-    char pasword[8]; //string auxiliar donde guardar la contraseña insertada por quien inicia el programa
-    char user[20]; //string auxiliar donde guardar el nombre de usuario, insertado por quien inicia el programa
+    char pasword[9]; //string auxiliar donde guardar la contraseña insertada por quien inicia el programa
+    char user[21]; //string auxiliar donde guardar el nombre de usuario, insertado por quien inicia el programa
 do{
     printf("Insertar nombre de usuario \n");
     fflush(stdin);
-    fgets(user,20,stdin);
+    fgets(user,21,stdin);
+    fflush(stdin);
     strtok(user, "\n");
     printf("Insertar nombre contrasena \n");
     fflush(stdin);
-    fgets(pasword,8,stdin);
+    fgets(pasword,9,stdin);
+    fflush(stdin);
     strtok(pasword, "\n");
 
 //se comprueba que el nombre de usuario y contraseña coinciden con los de un usuario existente     
@@ -113,7 +115,7 @@ participantes();
 }
 }
 else{
-   printf("inicio de sesion incorrecto, vuelva a intentarlo\n");
+   printf("Inicio de sesion incorrecto, vuelva a intentarlo\n");
 }
 
 
@@ -215,7 +217,7 @@ else{
                 usuarios[j].numeroPlantillas=0;
                 usuarios[j].plantillas = (plantilla*)malloc(1*sizeof(plantilla));
                 if(usuarios[j].plantillas==NULL){
-                    printf("error en la carga de usuarios al registrarse\n");
+                    printf("Error en la carga de usuarios al registrarse\n");
                     exit(1);
                 }
                

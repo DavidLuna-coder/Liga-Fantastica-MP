@@ -15,6 +15,7 @@ do{      //menu de selecion de las funciones del cronista
 printf("2-valorar un jugador\n");
 printf("3-Salir de la sesion\n");
     scanf("%i",&elec);
+    fflush(stdin);
 switch(elec){
     case 1: 
     lista();
