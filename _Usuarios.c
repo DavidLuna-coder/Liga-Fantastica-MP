@@ -6,9 +6,7 @@
 #include "Cronista.h"
 #include "administrador.h"
 #include "participante.h"
-//void users();
-//Precondicion:Debe tener los datos en memoria principal cargados
-//Postcondicion:Redirecciona a la funcion respectiva que pida el usuario
+
 void users(){
 
 int elec;
@@ -45,18 +43,16 @@ do{
 }
 
 
-//void acceso();
-//Precondicion:Debe tener cargado en memoria los datos de usuarios
-//Postcondicion:Accedes al sistema como uno de los usuarios ya existentes tras introducir el nombre de usuario y su contraseña correctamente
+
 void acceso(){  // Inicio de sesion
-    int comprobador1=0;//variables usadas para comprobar que el nombre de usuario y contraseña coinciden con los de un usuario existente
+    int comprobador1=0;
     int comprobador2=0;
 
-    char adm[]="administrador";// strings utilizados para comparar y saber que tipo de usuario es el que se ha introducido
+    char adm[]="administrador";
     char part[]="participante";
     char cron[]="cronista";
-    char pasword[8];//string auxiliar donde guardar la contraseña insertada por quien inicia el programa
-    char user[20];//string auxiliar donde guardar el nombre de usuario, insertado por quien inicia el programa
+    char pasword[8];
+    char user[20];
 do{
     printf("Insertar nombre de usuario \n");
     fflush(stdin);
@@ -67,7 +63,7 @@ do{
     fgets(pasword,8,stdin);
     strtok(pasword, "\n");
 
-     //se comprueba que el nombre de usuario y contraseña coinciden con los de un usuario existente 
+     
     for(int i=0; i<numeroUsuarios;i++){
         if(strcmp(user,usuarios[i].nombre)==0){
             comprobador1=1;
@@ -89,15 +85,15 @@ do{
 if(comprobador1==1 && comprobador2==1){
     printf("Ha iniciado sesion correctamente\n");
     
-if(strcmp(cron, usuarios[usuarioActual].tipoPerfil)==0){//te desvía al módulo cronista si se detecta que tu usuario es cronista
+if(strcmp(cron, usuarios[usuarioActual].tipoPerfil)==0){
 printf("Bienvenido Cronista\n");
 cronista();
 }
-if(strcmp(adm, usuarios[usuarioActual].tipoPerfil)==0){//te desvía al módulo administrador si se detecta que tu usuario es administrador
+if(strcmp(adm, usuarios[usuarioActual].tipoPerfil)==0){
     printf("Bienvenido Administrador\n");
 menuAdmin();
 }
-if(strcmp(part, usuarios[usuarioActual].tipoPerfil)==0){ //te desvía al módulo participante si se detecta que tu usuario es participante
+if(strcmp(part, usuarios[usuarioActual].tipoPerfil)==0){
 printf("Bienvenido Participante\n");
 participantes();
 }
@@ -113,19 +109,21 @@ else{
 }
 
 
-//void registro();
-//Precondicion:Debe tener cargado en memoria los datos de usuarios
-//Postcondicion:Crea un usuario nuevo con nombre y contraseña distintos a los de cualquier usuario existente
+
 void registro(){  //Registrarse
 
-    int comprobador1;//variables usadas para comprobar que el nombre de acceso y el nombre del usuario son distintos a cualquiera previos
+    int comprobador1;
     int comprobador2;
-    int elec2=0;//variable encargada de alamacenar el dato en base al cual se selecciona lo que el usuario quiere hacer en el menú a continuación
-
+    int elec2=0;
+    int len=0;
     
-    char paswordR[8];//string auxiliar donde guardar la contraseña insertada por quien inicia el programa
-    char userR[20];//string auxiliar donde guardar el nombre de usuario, insertado por quien inicia el programa
-    char useraccessR[5]; //string auxiliar donde guardar el nombre de acceso del usuario, insertado por quien inicia el programa
+    char admin[]="administrador";
+    char parti[]="participante";
+    char cronista[]="cronista";
+    
+    char paswordR[8];
+    char userR[20];
+    char useraccessR[5];
    do{
        comprobador1=0;
        comprobador2=0;
@@ -200,9 +198,9 @@ else{
 
                 }
             
-                }while(elec2!=1 && elec2!=2 && elec2!=3); // si no se selecciona una opción correcta no se sale del bucle
+                }while(elec2!=1 && elec2!=2 && elec2!=3);
 
-                usuarios[j].id=j;// se asignan los datos que va a tener este usuario tales como el nombre, contraseña,etc
+                usuarios[j].id=j;
                 usuarios[j].numeroPlantillas=0;
                 usuarios[j].plantillas = (plantilla*)malloc(1*sizeof(plantilla));
                 if(usuarios[j].plantillas==NULL){
