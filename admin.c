@@ -2,6 +2,18 @@
 #include "administrador.h"
 #include <stdio.h>
 #include <string.h>
+void listarEquipos();
+void listarUsuarios();
+void modificarUsuarios();
+void anadirUsuario();
+void modificarPresupuestos();
+void eliminarUsuario();
+void anadirEquipo();
+void limitePlantillas();
+void borrarEquipo();
+void jugadoresPlantilla();
+void disponibilidadJugadores();
+void disponibilidadJugadores2();
 //void menuAdmin();
 //Precondicion:Debe tener los datos en memoria principal cargados;
 //Postcondicion:Redirecciona a la funcion respectiva que pida el usuario
