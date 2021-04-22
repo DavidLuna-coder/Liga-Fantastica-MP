@@ -4,7 +4,5 @@
 #include <stdio.h>
 #include <string.h>
 void cronista();
-void lista();
-void valorar ();
 
 #endif
