@@ -6,13 +6,5 @@
 #define participante
 
 void participantes();
-void Cplantilla();
-void configu();
-void addJug();
-void remoJug();
-void listarPlantillas();
-void eliminarPlantillas();
-void ranking();
-void listaJugadoresplantillas();
-void listaJugadoresdisponibles();
+
 #endif

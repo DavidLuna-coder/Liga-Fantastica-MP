@@ -6,8 +6,20 @@
 #include "carga.h"
 #include "_Usuarios.h"
 
+void Cplantilla();
+void configu();
+void addJug();
+void remoJug();
+void listarPlantillas();
+void eliminarPlantillas();
+void ranking();
+void listaJugadoresplantillas();
+void listaJugadoresdisponibles();
+//Cabecera: void participantes()
+//Precondición: 
+//Postcondición:
 void participantes(){
-    int selec;
+    int selec; //Variable que actúa como selector en el menú
     do{
         printf("1-Crear plantillas\n");
         printf("2-Configurar plantilla\n");
@@ -54,19 +66,22 @@ void participantes(){
 
 }
 
-
+//Cabecera: void Cplantilla()
+//Precondicición:
+//Postcondición: Nº plantillas + 1, se añade una nueva plantilla
 void Cplantilla(){
-int i,j,found,IDt,selec;
+int i,j,found,selec; //
 char plant[30],aux;
-if(usuarios[usuarioActual].numeroPlantillas<config.maxPlantillas){
+if(usuarios[usuarioActual].numeroPlantillas<config.maxPlantillas){ //Comprueba si se ha alcanzado el máximo de plantillas
 printf("\nIntroduce nombre para la plantilla: ");
 
 do{
     found =1;
 fflush(stdin);
+fflush(stdin);
 fgets(plant,30,stdin);
 plant[strlen(plant)-1]='\0';
-for(i=0;i<usuarios[usuarioActual].numeroPlantillas && found!=0;i++){
+for(i=0;i<usuarios[usuarioActual].numeroPlantillas && found!=0;i++){ //Comprueba si el nombre de la plantilla ya existe
     found = strcmp(usuarios[usuarioActual].plantillas[i].nombre,plant);
     printf("%i\n",found);
     if(found==0){
@@ -76,14 +91,14 @@ for(i=0;i<usuarios[usuarioActual].numeroPlantillas && found!=0;i++){
 }
 }while(found==0);
 
-usuarios[usuarioActual].numeroPlantillas++;
+usuarios[usuarioActual].numeroPlantillas++; // Aumenta el numero de Plantillas en 1
 numeroPlantillas++;
-usuarios[usuarioActual].plantillas = (plantilla*)realloc(usuarios[usuarioActual].plantillas,(usuarios[usuarioActual].numeroPlantillas)*sizeof(plantilla)); 
+usuarios[usuarioActual].plantillas = (plantilla*)realloc(usuarios[usuarioActual].plantillas,(usuarios[usuarioActual].numeroPlantillas)*sizeof(plantilla)); //Se reasigna el tamaño de la estructura dentro de usuarios
 
     if(usuarios[usuarioActual].plantillas==NULL){
         printf("Error en la reserva de memoria de la plantilla\n");
         }
-        else{
+        else{ //Se introducen todos los datos correspondientes a la nueva estructura
 usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].idPlantilla=numeroPlantillas;
 usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].idUsuario=usuarios[usuarioActual].id;
 strcpy(usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].nombre,plant);
@@ -99,14 +114,18 @@ usuarios[usuarioActual].plantillas[usuarios[usuarioActual].numeroPlantillas-1].j
                 }
 }
 }else 
-printf ("Has alcanzado el maximo de plantillas disponibles.\n");
+printf ("Has alcanzado el maximo de plantillas disponibles.\n"); //Imprime esto en caso de superar el numero de plantillas máximas
 }
+//Cabecera: void configu()
+//Precondicion:
+//Postcondicion:
+//Permite cambiar la configuración de la plantilla
 void configu(){
 
 int selec;
 do
 {
-  
+   //Menú de configuración de la plantilla
     printf("\n Que desea hacer?");
     printf("\n 1-Listar los jugadores plantilla");
     printf("\n 2-Listar los jugadores disponibles");
@@ -145,26 +164,30 @@ do
 
 }
 
+//cabecera: void addJug()
+//precondicion:
+//Postcondición: numeroJugadores ++
 
+//Añade un jugadore a la plantilla deseada
 void addJug(){
-    int i,IDt,jugPlant,j,found, found2,pres;
+    int i,IDt,jugPlant,j,found, found2,pres; 
 
 do
 {
     
     listarPlantillas();
-    printf("\nIntroduce el numero de la plantilla: ");
+    printf("\nIntroduce el numero de la plantilla: "); 
     fflush(stdin);
-    scanf("%i",&i);
+    scanf("%i",&i); //Almacena la posicion de memoria de la plantilla
     if(usuarios[usuarioActual].plantillas[i-1].numJugadores<config.maxJugadores){
     
    
     fflush(stdin);
     printf("\nIntroduce la ID del jugador a anadir: ");
-    scanf("%i",&IDt); //IDt: id temporal para encontrar al jugador si ya esta en la plantilla
+    scanf("%i",&IDt); //IDt: id temporal para encontrar al jugador si ya esta en la plantilla,almacena la id del jugador
  pres=0;
  found =0;
- for(jugPlant=0;jugPlant<usuarios[usuarioActual].plantillas[i-1].numJugadores && found==0 ;jugPlant++){
+ for(jugPlant=0;jugPlant<usuarios[usuarioActual].plantillas[i-1].numJugadores && found==0 ;jugPlant++){ //Comprueba que el jugador no esté en la plantilla
      if(IDt==usuarios[usuarioActual].plantillas[i-1].jugadores[jugPlant].id)
         {
          printf("Este jugador ya esta en la plantilla");
@@ -175,7 +198,7 @@ do
 
 
 found2=0;
- for(j=0;j<numeroJugadores && found2==0 ;j++){
+ for(j=0;j<numeroJugadores && found2==0 ;j++){ //Comprueba que exista un jugador con dicha id
      if(IDt==jugadores[j].id)
         {
          found2 =1;
@@ -187,7 +210,7 @@ found2=0;
         printf("No existe jugador con dicha ID");
     }
 
-    if(usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible<jugadores[IDt].precio){
+    if(usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible<jugadores[IDt].precio){ //Comprueba que la plantilla tenga suficiente dinero para el fichaje
     printf("\nImposible añadir al jugador, el presupuesto no alcanza PRECIO %i TIENES %i, eres %i,%i\n",jugadores[IDt].precio,usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible,usuarioActual,i-1);
     
     pres=1;
@@ -200,14 +223,14 @@ if(usuarios[usuarioActual].plantillas[i-1].numJugadores<config.maxJugadores){
 
 printf("\nAnadiendo al jugador...");
 
-    usuarios[usuarioActual].plantillas[i-1].numJugadores ++;
-    usuarios[usuarioActual].plantillas[i-1].jugadores = (jugador*)realloc(usuarios[usuarioActual].plantillas[i-1].jugadores,(usuarios[usuarioActual].plantillas[i-1].numJugadores + 1)*sizeof(jugador));
+    usuarios[usuarioActual].plantillas[i-1].numJugadores ++; //Añade 1 al numero de jugadores total
+    usuarios[usuarioActual].plantillas[i-1].jugadores = (jugador*)realloc(usuarios[usuarioActual].plantillas[i-1].jugadores,(usuarios[usuarioActual].plantillas[i-1].numJugadores + 1)*sizeof(jugador)); //Aumenta el tamaño de la estructura de jugadores
    
         if(usuarios[usuarioActual].plantillas[i-1].jugadores==NULL){
         printf("Error en la reserva de memoria de los jugadores de la plantilla\n");
         exit(1);
         }
-        else
+        else //Almacena los datos de los jugadores correspondientes en las estructuras
         {
          usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores-1].id = jugadores[IDt].id;
          usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores-1].equipo = jugadores[IDt].equipo;
@@ -216,12 +239,11 @@ printf("\nAnadiendo al jugador...");
          strcpy(usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores-1].nombre,jugadores[IDt].nombre);
             printf("\nJugador anadido con exito a la plantilla\n");
             printf("%s\n",usuarios[usuarioActual].plantillas[i-1].jugadores[usuarios[usuarioActual].plantillas[i-1].numJugadores-1].nombre);
-            printf("%i\n",usuarios[usuarioActual].plantillas[i-1].numJugadores-1) ;
-            printf("%i\n",i-1);
+            
         }
  
    
-       
+    //Vuelca los datos en la estructura jugadoresPlantillas   
     usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible = usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible - jugadores[j].precio;
     numeroJugadoresPlantillas++;
     jugadoresPlantillas=(jugadorPlantilla*)realloc(jugadoresPlantillas, numeroJugadoresPlantillas*sizeof(jugadorPlantilla));
@@ -240,25 +262,29 @@ printf("\nAnadiendo al jugador...");
     valorarPlantillas();
 }
 
+//Cabecera: void remoJug()
+//Precondicion: 
+//Postcondicion:
 
+//Elimina un jugador de las plantillas
 void remoJug(){
     int idt,j,found,found2,k,i,l,m;
     listarPlantillas();
     printf("\nIntroduce el número de la plantilla: ");
     fflush(stdin);
-    scanf("%i",&i);
+    scanf("%i",&i); //Almacena la posición de memoria de la plantilla
     fflush(stdin);
     printf("\nIntroduce la id del jugador a eliminar: ");
-    scanf("%i",&idt);
+    scanf("%i",&idt);// Almacena la id del jugador que va a ser eliminado
     found =0;
-    for(j=0;j<usuarios[usuarioActual].plantillas[i-1].numJugadores && found==0;j++){
+    for(j=0;j<usuarios[usuarioActual].plantillas[i-1].numJugadores && found==0;j++){//Localiza al jugador
         if(idt==usuarios[usuarioActual].plantillas[i-1].jugadores[j].id){
             found=1;
         }
     }
     j--;
     found2=0;
-    for(l=0;l<numeroJugadoresPlantillas&&found2==0;l++){
+    for(l=0;l<numeroJugadoresPlantillas&&found2==0;l++){ //Localiza la plantilla
         if(usuarios[usuarioActual].plantillas[i-1].idPlantilla == jugadoresPlantillas[l].idPlantilla && usuarios[usuarioActual].plantillas[i-1].jugadores[j].id == jugadoresPlantillas[l].idJugador){
             found2=1;
             for(m=l;m<numeroJugadoresPlantillas;m++){
@@ -281,6 +307,7 @@ void remoJug(){
     }
 
 if(found==1){
+    //Se reasignan los datos para poder eliminar a la plantilla.
     usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible = usuarios[usuarioActual].plantillas[i-1].presupuestoDisponible + usuarios[usuarioActual].plantillas[i-1].jugadores[j].precio;
 
   for(k=j;k<usuarios[usuarioActual].plantillas[i-1].numJugadores;k++){
@@ -291,7 +318,7 @@ if(found==1){
     strcpy(usuarios[usuarioActual].plantillas[i-1].jugadores[k].nombre,(usuarios[usuarioActual].plantillas[i-1].jugadores[k+1].nombre));
 
   }
-  ;
+    //Se reduce el numero de jugadores y se reasigna su espacion de memoria.
     usuarios[usuarioActual].plantillas[i-1].numJugadores --;
     if (usuarios[usuarioActual].plantillas[i-1].numJugadores>0)
     {
@@ -308,19 +335,24 @@ if(found==1){
         }
         else
         {
-            printf("\njugador eliminado con exito a la plantilla\n");
+            printf("\nJugador eliminado con exito a la plantilla\n");
         }
     valorarPlantillas();
 }else
     printf("Ese jugador no se encuentra en la plantilla\n");
 }
+
+//Cabecera: void listaJugadoresPlantillas
+//Precondición: void listaJugadoresplantillas()
+//Postcondicion:
+
+//Imprime los jugadores que pertenecen a las plantillas junto a la plantilla correspondiente.
 void listaJugadoresplantillas(){
 int i, j;
 for(i=0;i<usuarios[usuarioActual].numeroPlantillas ;i++){
     printf("%i-%s\n",usuarios[usuarioActual].plantillas[i].idPlantilla,usuarios[usuarioActual].plantillas[i].nombre);
     
     for(j=0;j<usuarios[usuarioActual].plantillas[i].numJugadores ;j++){
-        printf("%i\n",j);
         printf("     %i-%s\n",usuarios[usuarioActual].plantillas[i].jugadores[j].id,usuarios[usuarioActual].plantillas[i].jugadores[j].nombre);
 
     }
@@ -328,12 +360,17 @@ for(i=0;i<usuarios[usuarioActual].numeroPlantillas ;i++){
 }
 }
 
+//void listaJugadoresdisponibles
+//Precondición:
+//Postcondición:
+
+//Lista los jugadores que cumplen los requisitos de presupuesto.
 void listaJugadoresdisponibles(){
 for(int i=0;i<usuarios[usuarioActual].numeroPlantillas;i++){
     printf("%i-%s\n",usuarios[usuarioActual].plantillas[i].idPlantilla,usuarios[usuarioActual].plantillas[i].nombre);
     for(int j=0;j<numeroJugadores;j++){
     if(jugadores[j].precio<=usuarios[usuarioActual].plantillas[i].presupuestoDisponible){
-        printf("      %i-%s-%i\n",jugadores[j].id,jugadores[j].nombre,jugadores[j].precio);
+        printf("   %i-%s-%i\n",jugadores[j].id,jugadores[j].nombre,jugadores[j].precio);
     }
 
 }
@@ -341,10 +378,11 @@ for(int i=0;i<usuarios[usuarioActual].numeroPlantillas;i++){
 }
 
 
+//Cabecera: listarPlantillas()
+//Precondición:
+//Postcondición
 
-
-
-
+//Lista todas lasp las plantillas
 void listarPlantillas(){
 
 	int i;
@@ -356,16 +394,18 @@ void listarPlantillas(){
 }
 //void eliminarPlantillas();
 //Precondicion:Debe tener cargado en memoria los datos de plantillas y de jugadores plantillas
-//Pos
+//Postcondicion: Elimina una Plantilla
+
+//Elimina una plantilla
 void eliminarPlantillas(){
 	int i,j,k,select,found=0,plantillaActual;
 	listarPlantillas();
 	if(usuarios[usuarioActual].numeroPlantillas!=0){
 		do{
 			printf("Introduzca la id de la plantilla que quiere eliminar\n");
-			scanf("%i",&select);
+			scanf("%i",&select); //Seleccioa la plantilla a borrar
 			for(i=0;i<usuarios[usuarioActual].numeroPlantillas&&found!=1;i++){
-				if(select==usuarios[usuarioActual].plantillas[i].idPlantilla){
+				if(select==usuarios[usuarioActual].plantillas[i].idPlantilla){ //Busca la plantilla
 					plantillaActual=i;
 					found=1;
 					select=usuarios[usuarioActual].plantillas[i].idPlantilla;
@@ -375,7 +415,7 @@ void eliminarPlantillas(){
 				printf("Plantilla no encontrada\n");
 			}
 		}while(found==0);
-		for(i=0;i<usuarios[usuarioActual].plantillas[plantillaActual].numJugadores;i++){
+		for(i=0;i<usuarios[usuarioActual].plantillas[plantillaActual].numJugadores;i++){ //Si la encuentra reasigna los valores de las estructuras
 			found=0;
 			for(j=0;j<numeroJugadoresPlantillas&&found!=1;j++){
 				if(usuarios[usuarioActual].plantillas[plantillaActual].jugadores[i].id==jugadoresPlantillas[j].idJugador&&usuarios[usuarioActual].plantillas[plantillaActual].idPlantilla==jugadoresPlantillas[j].idPlantilla){
@@ -384,6 +424,7 @@ void eliminarPlantillas(){
 						jugadoresPlantillas[k].idPlantilla=jugadoresPlantillas[k+1].idPlantilla;
 						jugadoresPlantillas[k].idJugador=jugadoresPlantillas[k+1].idJugador;
 					}
+                //Reduce el número de jugadores Plantillas y reasigna el tamaño del vector de estructuras
 				numeroJugadoresPlantillas--;
                 if(numeroJugadoresPlantillas>0)
 				jugadoresPlantillas= (jugadorPlantilla*) realloc (jugadoresPlantillas,numeroJugadoresPlantillas*sizeof(jugadorPlantilla));
@@ -402,6 +443,7 @@ void eliminarPlantillas(){
 					jugadoresPlantillas[k].idPlantilla--;
 				}
 			}
+            //Reasigna los datos de los numero de plantillas del usuario y reasigna su espacio de memoria
 		if(usuarios[usuarioActual].numeroPlantillas>1){
 			for(i=plantillaActual;i<usuarios[usuarioActual].numeroPlantillas-1;i++){
 				usuarios[usuarioActual].plantillas[i].numJugadores=usuarios[usuarioActual].plantillas[i+1].numJugadores;
@@ -447,11 +489,13 @@ void eliminarPlantillas(){
 //Precondicion:Debe tener cargado los datos de usuarios, y por lo tanto sus plantillas, en memoria
 //Poscondicion: 
 
+//Imprime las 3 mejores plantillas del usuario.
 void ranking(){
 	int i, aux, aux2, aux3, Pos1,Pos2,Pos3, k=0;
 	printf("Las plantillas con mayor puntuacion son:\n");
     aux=usuarios[usuarioActual].plantillas[k].puntuacion;
     Pos1=k;
+    //Asigna la posición del vector según la puntuación
 	for(i=0;i<usuarios[usuarioActual].numeroPlantillas;i++){
 		if (aux<usuarios[usuarioActual].plantillas[i].puntuacion){
             aux=usuarios[usuarioActual].plantillas[i].puntuacion;
