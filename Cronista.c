@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include "carga.h"
 #include "Cronista.h"
+
+void lista();
+void valorar ();
+
 //void cronista(jugador *);
 
     //cabecera: void cronista();
