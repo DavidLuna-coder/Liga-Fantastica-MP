@@ -293,9 +293,9 @@ void remoJug(){
             }
             numeroJugadoresPlantillas--;
             if(numeroJugadoresPlantillas>0){
-                jugadoresPlantillas=(jugadorPlantilla *)realloc(jugadoresPlantillas,numeroJugadoresPlantillas*sizeof(jugadoresPlantilla));
+                jugadoresPlantillas=(jugadorPlantilla *)realloc(jugadoresPlantillas,numeroJugadoresPlantillas*sizeof(jugadorPlantilla));
             } else
-             jugadoresPlantillas=(jugadorPlantilla *)realloc(jugadoresPlantillas,1*sizeof(jugadoresPlantilla));
+             jugadoresPlantillas=(jugadorPlantilla *)realloc(jugadoresPlantillas,1*sizeof(jugadorPlantilla));
 
             if (jugadoresPlantillas==NULL)
             {
