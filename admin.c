@@ -227,25 +227,27 @@ void anadirUsuario(){
 	printf("Su contrasena es %s\n", usuarios[numeroUsuarios-1].contrasena);
 	usuarios[numeroUsuarios-1].id=numeroUsuarios-1;
 	printf("Su ID es %i",numeroUsuarios-1);
-	printf("Que tipo de usuario sera?\n1-Administrador\n2-Cronista\n3-Participante");
-	scanf("%i",&select);
-	switch(select){
-		case 1:
-			strcpy(usuarios[numeroUsuarios-1].tipoPerfil,"administrador");
-			printf("El usuario sera %s",usuarios[numeroUsuarios-1].tipoPerfil);
+	do{
+		printf("Que tipo de usuario sera?\n1-Administrador\n2-Cronista\n3-Participante");
+		scanf("%i",&select);
+		switch(select){
+			case 1:
+				strcpy(usuarios[numeroUsuarios-1].tipoPerfil,"administrador");
+				printf("El usuario sera %s",usuarios[numeroUsuarios-1].tipoPerfil);
 
-		break;
-		case 2:
-			strcpy(usuarios[numeroUsuarios-1].tipoPerfil,"cronista");
-			printf("El usuario sera %s",usuarios[numeroUsuarios-1].tipoPerfil);
-		break;
-		case 3:
-			strcpy(usuarios[numeroUsuarios-1].tipoPerfil,"participante");
-			printf("El usuario sera %s",usuarios[numeroUsuarios-1].tipoPerfil);
-		break;
-		default:
-			printf("Opcion no disponible");
-	}
+			break;
+			case 2:
+				strcpy(usuarios[numeroUsuarios-1].tipoPerfil,"cronista");
+				printf("El usuario sera %s",usuarios[numeroUsuarios-1].tipoPerfil);
+			break;
+			case 3:
+				strcpy(usuarios[numeroUsuarios-1].tipoPerfil,"participante");
+				printf("El usuario sera %s",usuarios[numeroUsuarios-1].tipoPerfil);
+			break;
+			default:
+				printf("Opcion no disponible");
+		}
+	}while(select<1||select>3);
 }
 //void eliminarUsuario();
 //Precondicion: Debe tener cargado en memoria los datos de los usuarios
